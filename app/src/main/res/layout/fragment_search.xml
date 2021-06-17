@@ -8,17 +8,36 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            android:id="@+id/btnGetPokemons"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Get Pokemons" />
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Search for Pokemon"/>
+
+            <Button
+                android:id="@+id/btnGetPokemons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Search"
+                android:layout_toEndOf="@+id/etSearch"/>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPokemons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/btnGetPokemons"/>
+            android:layout_below="@id/searchBar"/>
 
     </RelativeLayout>
 

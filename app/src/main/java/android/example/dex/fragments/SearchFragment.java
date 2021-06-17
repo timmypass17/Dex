@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.example.dex.R;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,9 +45,11 @@ public class SearchFragment extends Fragment {
 
     private List<Pokemon> pokeData;
     private PokeAdapter pokeAdapter;
+    private PokeService pokeService;
     private RecyclerView rvPokemons;
     private Button btnGetPokemons;
-
+    private EditText etSearch;
+    private PokeService service;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -61,10 +64,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvPokemons = view.findViewById(R.id.rvPokemons);
         pokeData = new ArrayList<>();
 
+        rvPokemons = view.findViewById(R.id.rvPokemons);
         btnGetPokemons = view.findViewById(R.id.btnGetPokemons);
+        etSearch = view.findViewById(R.id.etSearch);
 
         // 1. Create the adapter
         pokeAdapter = new PokeAdapter(getContext(), pokeData);
@@ -93,22 +97,25 @@ public class SearchFragment extends Fragment {
                 .client(httpClient.build())
                 .build();
 
-        PokeService service = retrofit.create(PokeService.class);
-        fetchPokemons(service);
+        service = retrofit.create(PokeService.class);
+
+        fetchPokemons(querySet("swsh5")); // default cards
 
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Getting more pokemons!", Toast.LENGTH_SHORT).show();
-                fetchPokemons(service);
+                String pokemon = etSearch.getText().toString().toLowerCase();
+                fetchPokemons(queryName(pokemon));
             }
         });
+
     }
 
     // Custom method to get
-    private void fetchPokemons(PokeService service) {
+    private void fetchPokemons(String query) {
         // Network request (cant expect operation to be immediate)
-        Call<PokeResponse> call = service.getPokemons(querySet("swsh5"));
+        Call<PokeResponse> call = service.getPokemons(query);
         call.enqueue(new Callback<PokeResponse>() {
             @Override
             public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
@@ -134,5 +141,8 @@ public class SearchFragment extends Fragment {
     // Helper method
     private String querySet(String setId) {
         return String.format("set.id:%s", setId);
+    }
+    private String queryName(String name) {
+        return String.format("name:%s*", name);
     }
 }
