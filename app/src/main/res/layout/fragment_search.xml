@@ -9,12 +9,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabCards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pokemon" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trainer" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item" />
+        </com.google.android.material.tabs.TabLayout>
+
         <LinearLayout
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_below="@+id/tabCards">
 
             <EditText
                 android:id="@+id/etSearch"

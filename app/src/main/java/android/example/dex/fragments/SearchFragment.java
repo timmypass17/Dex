@@ -1,7 +1,7 @@
 package android.example.dex.fragments;
 
-import android.example.dex.PokeResponse;
-import android.example.dex.PokeService;
+import android.example.dex.api.PokeResponse;
+import android.example.dex.api.PokeService;
 import android.example.dex.adapters.PokeAdapter;
 import android.example.dex.models.Pokemon;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -36,6 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// TODO:
+// 1. App crashes (null pointer exception) when querying set "base1", works fine for newer sets
 
 public class SearchFragment extends Fragment {
 
@@ -45,11 +49,14 @@ public class SearchFragment extends Fragment {
 
     private List<Pokemon> pokeData;
     private PokeAdapter pokeAdapter;
-    private PokeService pokeService;
+    private PokeService service;
     private RecyclerView rvPokemons;
     private Button btnGetPokemons;
     private EditText etSearch;
-    private PokeService service;
+    private TabLayout tabCard;
+    String currentTab = "Pokemon"; // Default value
+    String currentSearch = "";
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -69,6 +76,8 @@ public class SearchFragment extends Fragment {
         rvPokemons = view.findViewById(R.id.rvPokemons);
         btnGetPokemons = view.findViewById(R.id.btnGetPokemons);
         etSearch = view.findViewById(R.id.etSearch);
+        tabCard = view.findViewById(R.id.tabCards);
+
 
         // 1. Create the adapter
         pokeAdapter = new PokeAdapter(getContext(), pokeData);
@@ -101,12 +110,58 @@ public class SearchFragment extends Fragment {
 
         fetchPokemons(querySet("swsh5")); // default cards
 
+        // Search button
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Getting more pokemons!", Toast.LENGTH_SHORT).show();
-                String pokemon = etSearch.getText().toString().toLowerCase();
-                fetchPokemons(queryName(pokemon));
+                currentSearch = etSearch.getText().toString().toLowerCase();
+                // TODO: Make switch statement into a function
+                switch (currentTab) {
+                    case "Pokemon":
+                        fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
+                        break;
+                    case "Trainer":
+                        fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
+                        break;
+                    case "Item":
+                        fetchPokemons(queryBySuperType(currentSearch, "Item"));
+                        break;
+                }
+            }
+        });
+
+        // Tab Layout on click listener
+        tabCard.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                currentTab = (String) tab.getText();
+                // Handle tab select
+                Toast.makeText(getContext(), currentTab, Toast.LENGTH_SHORT).show();
+                // Filter cards
+                switch (currentTab) {
+                    case "Pokemon":
+                        fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
+                        break;
+                    case "Trainer":
+                        fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
+                        break;
+                    case "Item":
+                        fetchPokemons(queryBySuperType(currentSearch, "Item"));
+                        break;
+                }
+                // Change text of search bar (might remove, kinda annoying)
+                etSearch.setHint("Search for " + tab.getText());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
@@ -126,9 +181,9 @@ public class SearchFragment extends Fragment {
                     pokeAdapter.notifyDataSetChanged();
                 }
                 Log.d("MainActivity", "Pokemon Size: " + pokeData.size());
-//                Log.d("MainActivity", "onSuccess: " + response);
-//                Log.d("MainActivity", "Pokemon Response: " + pokemonResponse);
-//                Log.d("MainActivity", "Pokemon Data: " + pokeData);
+                Log.d("MainActivity", "onSuccess: " + response);
+                Log.d("MainActivity", "Pokemon Response: " + pokemonResponse);
+                Log.d("MainActivity", "Pokemon Data: " + pokeData);
             }
 
             @Override
@@ -142,7 +197,11 @@ public class SearchFragment extends Fragment {
     private String querySet(String setId) {
         return String.format("set.id:%s", setId);
     }
-    private String queryName(String name) {
+    private String queryByName(String name) {
         return String.format("name:%s*", name);
     }
+    private String queryBySuperType(String name, String superType) {
+        return String.format("name:%s* supertype:%s", name, superType);
+    }
+
 }

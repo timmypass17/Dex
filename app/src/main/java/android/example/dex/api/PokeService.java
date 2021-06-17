@@ -1,4 +1,6 @@
-package android.example.dex;
+package android.example.dex.api;
+
+import android.example.dex.api.PokeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

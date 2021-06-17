@@ -8,6 +8,9 @@ public class Pokemon {
     @SerializedName("name")
     private String name;
 
+    @SerializedName("supertype")
+    private String supertype;
+
     @SerializedName("id")
     private String id;
 
@@ -22,6 +25,10 @@ public class Pokemon {
 
     public String getName() {
         return name;
+    }
+
+    public String getSupertype() {
+        return supertype;
     }
 
     public String getId() {
