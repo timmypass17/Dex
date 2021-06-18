@@ -2,8 +2,8 @@ package android.example.dex.adapters;
 
 import android.content.Context;
 import android.example.dex.R;
-import android.example.dex.models.Pokemon;
-import android.example.dex.models.Prices;
+import android.example.dex.models.pokemon.Pokemon;
+import android.example.dex.models.pokemon.Prices;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

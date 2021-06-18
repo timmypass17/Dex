@@ -1,6 +1,6 @@
 package android.example.dex.api;
 
-import android.example.dex.models.Pokemon;
+import android.example.dex.models.pokemon.Pokemon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.example.dex.fragments.SearchFragment;
+import android.example.dex.fragments.SetFragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-
     public static FragmentManager fragmentManager;
     private BottomNavigationView bottomNavigationView;
 
@@ -34,17 +34,14 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = new SearchFragment(); // Todo: change default here
                 int itemID = item.getItemId();
 
+                // Switch to screen to whatever was selected in bottom nav
                 if (itemID == R.id.action_home) {
-                    Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                    // Todo
-                } else if (itemID == R.id.action_compose) {
-                    Toast.makeText(MainActivity.this, "Compose", Toast.LENGTH_SHORT).show();
-                    // Todo
+                    // TODO: Create home fragment (whatever that is)
+                } else if (itemID == R.id.action_set) {
+                    fragment = new SetFragment();
                 } else if (itemID == R.id.action_search) {
-                    Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
                     fragment = new SearchFragment();
                 } else {
-                    Toast.makeText(MainActivity.this, "Unknown Fragment", Toast.LENGTH_SHORT).show();
                     fragment = new SearchFragment();
                 }
                 // Change fragment

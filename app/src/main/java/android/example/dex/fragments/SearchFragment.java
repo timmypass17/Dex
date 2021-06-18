@@ -3,7 +3,7 @@ package android.example.dex.fragments;
 import android.example.dex.api.PokeResponse;
 import android.example.dex.api.PokeService;
 import android.example.dex.adapters.PokeAdapter;
-import android.example.dex.models.Pokemon;
+import android.example.dex.models.pokemon.Pokemon;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchFragment extends Fragment {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "SearchFragment";
     private static final String BASE_URL = "https://api.pokemontcg.io/v2/";
     private static final String API_KEY = "19118357-6a69-4cc5-8b9e-02ccf48daf44";
 
@@ -125,7 +125,7 @@ public class SearchFragment extends Fragment {
                         fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
                         break;
                     case "Item":
-                        fetchPokemons(queryBySuperType(currentSearch, "Item"));
+                        fetchPokemons(queryBySuperType(currentSearch, "Energy"));
                         break;
                 }
             }
@@ -147,7 +147,7 @@ public class SearchFragment extends Fragment {
                         fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
                         break;
                     case "Item":
-                        fetchPokemons(queryBySuperType(currentSearch, "Item"));
+                        fetchPokemons(queryBySuperType(currentSearch, "Energy"));
                         break;
                 }
                 // Change text of search bar (might remove, kinda annoying)
@@ -180,15 +180,15 @@ public class SearchFragment extends Fragment {
                     pokeData.addAll(pokemonResponse.pokemons);
                     pokeAdapter.notifyDataSetChanged();
                 }
-                Log.d("MainActivity", "Pokemon Size: " + pokeData.size());
-                Log.d("MainActivity", "onSuccess: " + response);
-                Log.d("MainActivity", "Pokemon Response: " + pokemonResponse);
-                Log.d("MainActivity", "Pokemon Data: " + pokeData);
+                Log.d(TAG, "Pokemon Size: " + pokeData.size());
+                Log.d(TAG, "onSuccess: " + response);
+                Log.d(TAG, "Pokemon Response: " + pokemonResponse);
+                Log.d(TAG, "Pokemon Data: " + pokeData);
             }
 
             @Override
             public void onFailure(Call<PokeResponse> call, Throwable t) {
-                Log.d("SearchActivity", "onFailure ", t);
+                Log.d(TAG, "onFailure ", t);
             }
         });
     }
@@ -197,9 +197,7 @@ public class SearchFragment extends Fragment {
     private String querySet(String setId) {
         return String.format("set.id:%s", setId);
     }
-    private String queryByName(String name) {
-        return String.format("name:%s*", name);
-    }
+
     private String queryBySuperType(String name, String superType) {
         return String.format("name:%s* supertype:%s", name, superType);
     }

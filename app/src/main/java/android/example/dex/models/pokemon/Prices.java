@@ -1,4 +1,4 @@
-package android.example.dex.models;
+package android.example.dex.models.pokemon;
 
 import androidx.annotation.Nullable;
 

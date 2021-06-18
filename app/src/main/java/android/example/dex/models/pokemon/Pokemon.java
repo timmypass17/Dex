@@ -1,4 +1,4 @@
-package android.example.dex.models;
+package android.example.dex.models.pokemon;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,9 +17,6 @@ public class Pokemon {
     @SerializedName("images")
     private Image image;
 
-    @SerializedName("set")
-    private Set set;
-
     @SerializedName("tcgplayer")
     private TCGPlayer tcgplayer;
 
@@ -37,10 +34,6 @@ public class Pokemon {
 
     public Image getImage() {
         return image;
-    }
-
-    public Set getSet() {
-        return set;
     }
 
     public TCGPlayer getTcgplayer() {
