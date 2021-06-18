@@ -54,7 +54,7 @@ public class SearchFragment extends Fragment {
     private Button btnGetPokemons;
     private EditText etSearch;
     private TabLayout tabCard;
-    String currentTab = "Pokemon"; // Default value
+    String currentTab = "Pokémon"; // Default value
     String currentSearch = "";
 
     public SearchFragment() {
@@ -77,7 +77,6 @@ public class SearchFragment extends Fragment {
         btnGetPokemons = view.findViewById(R.id.btnGetPokemons);
         etSearch = view.findViewById(R.id.etSearch);
         tabCard = view.findViewById(R.id.tabCards);
-
 
         // 1. Create the adapter
         pokeAdapter = new PokeAdapter(getContext(), pokeData);
@@ -108,26 +107,17 @@ public class SearchFragment extends Fragment {
 
         service = retrofit.create(PokeService.class);
 
-        fetchPokemons(querySet("swsh5")); // default cards
+        // default fetch
+        fetchPokemons(queryBySuperType("char", "Pokémon"));
 
         // Search button
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Getting more pokemons!", Toast.LENGTH_SHORT).show();
                 currentSearch = etSearch.getText().toString().toLowerCase();
-                // TODO: Make switch statement into a function
-                switch (currentTab) {
-                    case "Pokemon":
-                        fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
-                        break;
-                    case "Trainer":
-                        fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
-                        break;
-                    case "Item":
-                        fetchPokemons(queryBySuperType(currentSearch, "Energy"));
-                        break;
-                }
+                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
+                getCardsByTab();
+
             }
         });
 
@@ -136,22 +126,9 @@ public class SearchFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 currentTab = (String) tab.getText();
-                // Handle tab select
-                Toast.makeText(getContext(), currentTab, Toast.LENGTH_SHORT).show();
-                // Filter cards
-                switch (currentTab) {
-                    case "Pokemon":
-                        fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
-                        break;
-                    case "Trainer":
-                        fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
-                        break;
-                    case "Item":
-                        fetchPokemons(queryBySuperType(currentSearch, "Energy"));
-                        break;
-                }
-                // Change text of search bar (might remove, kinda annoying)
-                etSearch.setHint("Search for " + tab.getText());
+                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
+                getCardsByTab();
+                etSearch.setHint("Search for " + tab.getText()); // Change text of search bar (might remove, kinda annoying)
             }
 
             @Override
@@ -191,6 +168,21 @@ public class SearchFragment extends Fragment {
                 Log.d(TAG, "onFailure ", t);
             }
         });
+    }
+
+    // Get data determine by current tab
+    private void getCardsByTab() {
+        switch (currentTab) {
+            case "Pokemon":
+                fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
+                break;
+            case "Trainer":
+                fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
+                break;
+            case "Item":
+                fetchPokemons(queryBySuperType(currentSearch, "Energy"));
+                break;
+        }
     }
 
     // Helper method

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.example.dex.R;
 import android.example.dex.models.pokemon.Pokemon;
 import android.example.dex.models.pokemon.Prices;
+import android.example.dex.models.pokemon.TCGPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,7 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
 //            tvPrice = itemView.findViewById(R.id.tvPrice);
         }
 
+
         public void bind(Pokemon pokemon) {
 //            tvName.setText(pokemon.getName());
 //            tvPrice.setText(String.valueOf(pokemon.getTcgplayer().getPrices().getNormal().getMarket()));
@@ -74,19 +77,29 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
                     .load(pokemon.getImage().getSmallImage())
                     .into(ivCard);
 
-            // Check if there are prices
-            Prices.Normal priceNormal = pokemon.getTcgplayer().getPrices().getNormal(); // TODO: null pointer when querying "base1"
-            String price = "No price yet.";
-            if (priceNormal != null) {
-                price = "$" + String.valueOf(priceNormal.getMarket());
+            String marketPrice;
+            // Recall: Some cards do not even have TCGPlayer for some reason
+            // TODO: Future me, clean up code, its a little nasty
+            TCGPlayer tcgPlayer = pokemon.getTcgplayer();
+            // Null checking json values
+            if (tcgPlayer == null) {
+                marketPrice = "No price yet.";
             }
-            final String marketPrice = price;
+            else {
+                // Check if there are prices
+                Prices.Normal normalPrice = pokemon.getTcgplayer().getPrices().getNormal();
+                // If there is a price, get it
+                if (normalPrice != null) {
+                    marketPrice = "$" + String.valueOf(normalPrice.getMarket()); // TODO: null pointer when querying "base1"
+                } else {
+                    marketPrice = "No price yet.";
+                }
+            }
 
             ivCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: fix null pointer exceptions on prices (some prices arent available)
-                    Toast.makeText(context, marketPrice , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, marketPrice, Toast.LENGTH_SHORT).show();
                 }
             });
         }

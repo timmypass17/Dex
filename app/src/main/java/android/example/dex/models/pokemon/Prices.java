@@ -8,6 +8,7 @@ public class Prices {
     private HoloFoil holofoil;
     @Nullable
     private Normal normal;
+
     @Nullable
     public HoloFoil getHolofoil() {
         return holofoil;
