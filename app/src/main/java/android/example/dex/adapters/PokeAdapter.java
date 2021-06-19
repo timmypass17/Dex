@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,22 +60,19 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivCard;
-        TextView tvName;
-        TextView tvPrice;
 
         public ViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
             ivCard = itemView.findViewById(R.id.ivCard);
-//            tvName = itemView.findViewById(R.id.tvName);
-//            tvPrice = itemView.findViewById(R.id.tvPrice);
         }
 
 
         public void bind(Pokemon pokemon) {
-//            tvName.setText(pokemon.getName());
-//            tvPrice.setText(String.valueOf(pokemon.getTcgplayer().getPrices().getNormal().getMarket()));
+            // Make image size smaller by using RequestOption(). Makes app run much faster too ^_^
+            // TODO: Might change width/height values, currently I just kept inputting values until it looks nice
             Glide.with(context)
                     .load(pokemon.getImage().getSmallImage())
+                    .apply(new RequestOptions().override(400, 600))
                     .into(ivCard);
 
             String marketPrice;
