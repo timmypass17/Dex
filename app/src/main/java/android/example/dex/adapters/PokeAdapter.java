@@ -1,7 +1,9 @@
 package android.example.dex.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.example.dex.R;
+import android.example.dex.activities.CardDetailActivity;
 import android.example.dex.models.pokemon.Pokemon;
 import android.example.dex.models.pokemon.Prices;
 import android.example.dex.models.pokemon.TCGPlayer;
@@ -20,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -94,10 +97,18 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
                 }
             }
 
+            // 1. Register click listener on card
             ivCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, marketPrice, Toast.LENGTH_SHORT).show();
+                    // 2. Navigate to a new activity on tap
+                    Intent i = new Intent(context, CardDetailActivity.class);
+                    // 3. Pass pokeSet object into details activity through parcel
+                    i.putExtra("pokeCard", Parcels.wrap(pokemon));
+                    i.putExtra("pokePrice", marketPrice);
+                    // 4. Begin navigation
+                    context.startActivity(i);
                 }
             });
         }

@@ -2,7 +2,12 @@ package android.example.dex.models.pokemon;
 
 import androidx.annotation.Nullable;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Prices {
+
+    public Prices(){}
 
     @Nullable
     private HoloFoil holofoil;
@@ -18,7 +23,11 @@ public class Prices {
         return normal;
     }
 
+    @Parcel
     public static class HoloFoil {
+
+        public HoloFoil(){}
+
         private double low;
         private double mid;
         private double high;
@@ -46,7 +55,11 @@ public class Prices {
         }
     }
 
+    @Parcel
     public static class Normal {
+
+        public Normal(){}
+
         private double low;
         private double mid;
         private double high;

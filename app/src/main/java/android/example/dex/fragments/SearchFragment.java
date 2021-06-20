@@ -173,7 +173,7 @@ public class SearchFragment extends Fragment {
     // Get data determine by current tab
     private void getCardsByTab() {
         switch (currentTab) {
-            case "Pokemon":
+            case "Pokémon":
                 fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
                 break;
             case "Trainer":

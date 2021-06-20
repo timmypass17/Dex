@@ -1,10 +1,19 @@
 package android.example.dex.models.pokemon;
 
+import android.example.dex.models.set.PokeSet;
+
 import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
 
 // Note: Use @SerializedName tag if name is not the same as json key.
 //       (I just add it for consistency)
+
+@Parcel
 public class Pokemon {
+
+    public Pokemon(){}
+
     @SerializedName("name")
     private String name;
 
