@@ -10,9 +10,9 @@ public class Prices {
     public Prices(){}
 
     @Nullable
-    private HoloFoil holofoil;
-    @Nullable
     private Normal normal;
+    @Nullable
+    private HoloFoil holofoil;
 
     @Nullable
     public HoloFoil getHolofoil() {
@@ -21,6 +21,38 @@ public class Prices {
     @Nullable
     public Normal getNormal() {
         return normal;
+    }
+
+    @Parcel
+    public static class Normal {
+
+        public Normal(){}
+
+        private double low;
+        private double mid;
+        private double high;
+        private double market;
+        private double directLow;
+
+        public double getLow() {
+            return low;
+        }
+
+        public double getMid() {
+            return mid;
+        }
+
+        public double getHigh() {
+            return high;
+        }
+
+        public double getMarket() {
+            return market;
+        }
+
+        public double getDirectLow() {
+            return directLow;
+        }
     }
 
     @Parcel
@@ -55,35 +87,5 @@ public class Prices {
         }
     }
 
-    @Parcel
-    public static class Normal {
 
-        public Normal(){}
-
-        private double low;
-        private double mid;
-        private double high;
-        private double market;
-        private double directLow;
-
-        public double getLow() {
-            return low;
-        }
-
-        public double getMid() {
-            return mid;
-        }
-
-        public double getHigh() {
-            return high;
-        }
-
-        public double getMarket() {
-            return market;
-        }
-
-        public double getDirectLow() {
-            return directLow;
-        }
-    }
 }

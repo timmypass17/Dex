@@ -78,35 +78,37 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
                     .apply(new RequestOptions().override(400, 600))
                     .into(ivCard);
 
-            String marketPrice;
+            String normalPrice = "No price yet.";
+            String holoPrice = "No price yet.";
             // Recall: Some cards do not even have TCGPlayer for some reason
             // TODO: Future me, clean up code, its a little nasty
             TCGPlayer tcgPlayer = pokemon.getTcgplayer();
             // Null checking json values
-            if (tcgPlayer == null) {
-                marketPrice = "No price yet.";
-            }
-            else {
+            if (tcgPlayer != null) {
                 // Check if there are prices
-                Prices.Normal normalPrice = pokemon.getTcgplayer().getPrices().getNormal();
+                Prices.Normal normal = pokemon.getTcgplayer().getPrices().getNormal();
+                Prices.HoloFoil holoFoil = pokemon.getTcgplayer().getPrices().getHolofoil();
                 // If there is a price, get it
-                if (normalPrice != null) {
-                    marketPrice = "$" + String.valueOf(normalPrice.getMarket()); // TODO: null pointer when querying "base1"
-                } else {
-                    marketPrice = "No price yet.";
+                if (normal != null) {
+                    normalPrice = "$" + String.valueOf(normal.getMarket());
+                }
+                if (holoFoil != null) {
+                    holoPrice = "$" + String.valueOf(holoFoil.getMarket());
                 }
             }
 
             // 1. Register click listener on card
+            String finalNormalPrice = normalPrice;
+            String finalHoloPrice = holoPrice;
             ivCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, marketPrice, Toast.LENGTH_SHORT).show();
                     // 2. Navigate to a new activity on tap
                     Intent i = new Intent(context, CardDetailActivity.class);
-                    // 3. Pass pokeSet object into details activity through parcel
+                    // 3. Pass pokemon object into details activity through parcel
                     i.putExtra("pokeCard", Parcels.wrap(pokemon));
-                    i.putExtra("pokePrice", marketPrice);
+                    i.putExtra("pokeNormalPrice", finalNormalPrice);
+                    i.putExtra("pokeHoloPrice", finalHoloPrice);
                     // 4. Begin navigation
                     context.startActivity(i);
                 }
