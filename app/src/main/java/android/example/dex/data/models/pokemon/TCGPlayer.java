@@ -1,4 +1,8 @@
-package android.example.dex.models.pokemon;
+package android.example.dex.data.models.pokemon;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,13 +11,14 @@ import org.parceler.Parcel;
 @Parcel
 public class TCGPlayer {
 
-    public TCGPlayer() {}
-
     @SerializedName("url")
-    private String url;
+    public String url;
 
+    @Embedded
     @SerializedName("prices")
-    private Prices prices;
+    public Prices prices;
+
+    public TCGPlayer() {}
 
     public String getUrl() {
         return url;

@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.example.dex.fragments.SearchFragment;
-import android.example.dex.fragments.SetFragment;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Switch to screen to whatever was selected in bottom nav
                 if (itemID == R.id.action_home) {
-                    // TODO: Create home fragment (whatever that is)
+                    fragment = new HomeFragment();
                 } else if (itemID == R.id.action_set) {
                     fragment = new SetFragment();
                 } else if (itemID == R.id.action_search) {

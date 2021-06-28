@@ -1,4 +1,4 @@
-package android.example.dex.models.set;
+package android.example.dex.data.models.set;
 
 import com.google.gson.annotations.SerializedName;
 

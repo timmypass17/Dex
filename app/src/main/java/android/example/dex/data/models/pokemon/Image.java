@@ -1,4 +1,7 @@
-package android.example.dex.models.pokemon;
+package android.example.dex.data.models.pokemon;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,10 +13,10 @@ public class Image {
     public Image(){}
 
     @SerializedName("small")
-    private String smallImage;
+    public String smallImage;
 
     @SerializedName("large")
-    private String largeImage;
+    public String largeImage;
 
     public String getSmallImage() {
         return smallImage;

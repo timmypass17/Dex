@@ -1,17 +1,15 @@
-package android.example.dex.activities;
+package android.example.dex;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.example.dex.R;
 import android.example.dex.adapters.PokeAdapter;
 import android.example.dex.api.PokeResponse;
 import android.example.dex.api.PokeService;
-import android.example.dex.models.pokemon.Pokemon;
-import android.example.dex.models.set.PokeSet;
+import android.example.dex.data.models.pokemon.Pokemon;
+import android.example.dex.data.models.set.PokeSet;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 

@@ -3,15 +3,13 @@ package android.example.dex.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.example.dex.R;
-import android.example.dex.activities.SetDetailActivity;
-import android.example.dex.models.pokemon.Pokemon;
-import android.example.dex.models.set.PokeSet;
+import android.example.dex.SetDetailActivity;
+import android.example.dex.data.models.set.PokeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -78,7 +76,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder>{
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Series: " + pokeSet.getSeries(), Toast.LENGTH_SHORT).show();
                     // 2. Navigate to a new activity on tap
                     Intent i = new Intent(context, SetDetailActivity.class);
                     // 3. Pass pokeSet object into details activity through parcel

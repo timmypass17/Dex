@@ -1,10 +1,7 @@
 package android.example.dex.api;
 
-import android.example.dex.models.pokemon.Pokemon;
-import android.example.dex.models.set.PokeSet;
+import android.example.dex.data.models.set.PokeSet;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

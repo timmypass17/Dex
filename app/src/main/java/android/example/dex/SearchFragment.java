@@ -1,9 +1,9 @@
-package android.example.dex.fragments;
+package android.example.dex;
 
 import android.example.dex.api.PokeResponse;
 import android.example.dex.api.PokeService;
 import android.example.dex.adapters.PokeAdapter;
-import android.example.dex.models.pokemon.Pokemon;
+import android.example.dex.data.models.pokemon.Pokemon;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.example.dex.R;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -60,6 +59,8 @@ public class SearchFragment extends Fragment {
     public SearchFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,7 +109,7 @@ public class SearchFragment extends Fragment {
         service = retrofit.create(PokeService.class);
 
         // default fetch
-        fetchPokemons(queryBySuperType("char", "Pokémon"));
+        fetchPokemons(querySet("base1"));
 
         // Search button
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {

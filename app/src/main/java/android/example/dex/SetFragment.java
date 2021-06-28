@@ -1,12 +1,9 @@
-package android.example.dex.fragments;
+package android.example.dex;
 
 import android.example.dex.adapters.SetAdapter;
-import android.example.dex.api.PokeResponse;
 import android.example.dex.api.PokeService;
 import android.example.dex.api.PokeSetResponse;
-import android.example.dex.models.pokemon.Pokemon;
-import android.example.dex.models.set.PokeSet;
-import android.example.dex.models.set.PokeSetImage;
+import android.example.dex.data.models.set.PokeSet;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.example.dex.R;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CardDetailActivity">
+    tools:context=".CardDetailActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/Card"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="420dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         app:cardCornerRadius="8dp"

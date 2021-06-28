@@ -1,0 +1,130 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e384c6cdd0613ab0f715d68745ed0857",
+    "entities": [
+      {
+        "tableName": "Pokemon",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `supertype` TEXT, `smallImage` TEXT, `largeImage` TEXT, `url` TEXT, `normal_low` REAL, `normal_mid` REAL, `normal_high` REAL, `normal_market` REAL, `normal_directLow` REAL, `holofoil_low` REAL, `holofoil_mid` REAL, `holofoil_high` REAL, `holofoil_market` REAL, `holofoil_directLow` REAL, `setID` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "supertype",
+            "columnName": "supertype",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "images.smallImage",
+            "columnName": "smallImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "images.largeImage",
+            "columnName": "largeImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.normal.low",
+            "columnName": "normal_low",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.normal.mid",
+            "columnName": "normal_mid",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.normal.high",
+            "columnName": "normal_high",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.normal.market",
+            "columnName": "normal_market",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.normal.directLow",
+            "columnName": "normal_directLow",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.holofoil.low",
+            "columnName": "holofoil_low",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.holofoil.mid",
+            "columnName": "holofoil_mid",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.holofoil.high",
+            "columnName": "holofoil_high",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.holofoil.market",
+            "columnName": "holofoil_market",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tcgplayer.prices.holofoil.directLow",
+            "columnName": "holofoil_directLow",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "setID.id",
+            "columnName": "setID",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e384c6cdd0613ab0f715d68745ed0857')"
+    ]
+  }
+}

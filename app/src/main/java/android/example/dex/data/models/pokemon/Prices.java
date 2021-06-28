@@ -1,18 +1,24 @@
-package android.example.dex.models.pokemon;
+package android.example.dex.data.models.pokemon;
 
 import androidx.annotation.Nullable;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import org.parceler.Parcel;
 
 @Parcel
 public class Prices {
 
-    public Prices(){}
+    @Embedded(prefix = "normal_")
+    @Nullable
+    public Normal normal;
 
+    @Embedded(prefix = "holofoil_") // Table now looks like holofoil_low, holofoil_mid, holofoil_market...
     @Nullable
-    private Normal normal;
-    @Nullable
-    private HoloFoil holofoil;
+    public HoloFoil holofoil;
+
+    public Prices(){}
 
     @Nullable
     public HoloFoil getHolofoil() {
@@ -28,11 +34,11 @@ public class Prices {
 
         public Normal(){}
 
-        private double low;
-        private double mid;
-        private double high;
-        private double market;
-        private double directLow;
+        public double low;
+        public double mid;
+        public double high;
+        public double market;
+        public double directLow;
 
         public double getLow() {
             return low;
@@ -60,11 +66,11 @@ public class Prices {
 
         public HoloFoil(){}
 
-        private double low;
-        private double mid;
-        private double high;
-        private double market;
-        private double directLow;
+        public double low;
+        public double mid;
+        public double high;
+        public double market;
+        public double directLow;
 
         public double getLow() {
             return low;

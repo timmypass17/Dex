@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Dex">
-        <activity android:name=".activities.CardDetailActivity"></activity>
-        <activity android:name=".activities.SetDetailActivity" />
+        <activity android:name=".NewPokemonActivity"></activity>
+        <activity android:name=".CardDetailActivity" />
+        <activity android:name=".SetDetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
