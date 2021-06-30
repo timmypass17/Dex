@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+// Usually, you only need one instance of a Room database for the whole app.
 @Database(entities = {Pokemon.class}, version = 1, exportSchema = false)
 public abstract class PokemonRoomDatabase extends RoomDatabase {
 
@@ -58,11 +59,11 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 PokemonDao dao = INSTANCE.pokemonDao();
                 dao.deleteAll();
-
-                Pokemon pokemon = new Pokemon("Samplemon");
-                dao.insert(pokemon);
-                pokemon = new Pokemon("Samplemon2");
-                dao.insert(pokemon);
+//
+//                Pokemon pokemon = new Pokemon("Samplemon");
+//                dao.insert(pokemon);
+//                pokemon = new Pokemon("Samplemon");
+//                dao.insert(pokemon);
             });
         }
     };

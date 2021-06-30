@@ -54,21 +54,21 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        ImageView ivSymbol;
+        ImageView ivLogo;
         TextView tvSetName;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cvSet);
-            ivSymbol = itemView.findViewById(R.id.ivSymbol);
+            ivLogo = itemView.findViewById(R.id.ivLogo);
             tvSetName = itemView.findViewById(R.id.tvSetName);
         }
 
         public void bind(PokeSet pokeSet) {
             // Add symbol image
             Glide.with(context)
-                    .load(pokeSet.getSetImages().getSymbol())
-                    .into(ivSymbol);
+                    .load(pokeSet.getSetImages().getLogo())
+                    .into(ivLogo);
             // Add set name
             tvSetName.setText(pokeSet.getSetName());
 

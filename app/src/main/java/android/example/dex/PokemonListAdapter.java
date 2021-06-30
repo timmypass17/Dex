@@ -25,7 +25,7 @@ public class PokemonListAdapter extends ListAdapter<Pokemon, PokemonViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull PokemonViewHolder holder, int position) {
         Pokemon pokemon = getItem(position);
-        holder.bind(pokemon.getName());
+        holder.bind(pokemon);
     }
 
     static class WordDiff extends DiffUtil.ItemCallback<Pokemon> {

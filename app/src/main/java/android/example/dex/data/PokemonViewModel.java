@@ -36,4 +36,8 @@ public class PokemonViewModel extends AndroidViewModel {
     public void insert(Pokemon pokemon) {
         mRepository.insert(pokemon);
     }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
 }

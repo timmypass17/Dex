@@ -9,7 +9,7 @@
         android:id="@+id/rvSet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp">
+        tools:listitem="@layout/item_set">
 
     </androidx.recyclerview.widget.RecyclerView>
 

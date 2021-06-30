@@ -2,8 +2,11 @@ package android.example.dex;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import android.content.Intent;
+import android.example.dex.data.PokemonViewModel;
 import android.example.dex.data.models.pokemon.Pokemon;
 import android.example.dex.data.models.pokemon.Prices;
 import android.example.dex.data.models.pokemon.TCGPlayer;
@@ -11,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +24,9 @@ import org.parceler.Parcels;
 
 public class CardDetailActivity extends AppCompatActivity {
 
+    private PokemonViewModel mPokemonViewModel;
+
+    Button btnAddToCollection;
     ImageView ivCardImage;
     CardView cvNormalPrice;
     TextView tvNormalPrice;
@@ -34,6 +41,7 @@ public class CardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_detail);
 
         // Get handle on views
+        btnAddToCollection = findViewById(R.id.btnAddToCollection);
         ivCardImage = findViewById(R.id.ivCardImage);
         cvNormalPrice = findViewById(R.id.cvNormalPrice);
         tvNormalPrice = findViewById(R.id.tvNormalPrice);
@@ -42,6 +50,9 @@ public class CardDetailActivity extends AppCompatActivity {
 
         // Unwrapping pokemon object from parent
         Pokemon pokeCard = Parcels.unwrap(getIntent().getParcelableExtra("pokeCard"));
+
+        // Get a new or existing ViewModel from the ViewModelProvider.
+        mPokemonViewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
 
         // Bind data
         bind(pokeCard);
@@ -52,6 +63,12 @@ public class CardDetailActivity extends AppCompatActivity {
         Glide.with(this).load(pokemon.getImages().getLargeImage()).into(ivCardImage);
         tvNormalPrice.setText(normalPrice);
         tvHoloPrice.setText(holoPrice);
+        btnAddToCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPokemonViewModel.insert(pokemon);
+            }
+        });
         cvNormalPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

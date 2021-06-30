@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvSet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
-    android:layout_margin="5dp">
+    android:layout_marginBottom="1dp">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="15dp">
 
         <ImageView
-            android:id="@+id/ivSymbol"
+            android:id="@+id/ivLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            tools:srcCompat="@drawable/symbol_sample" />
+            android:layout_centerVertical="true"
+            tools:srcCompat="@drawable/logo_sample" />
 
         <TextView
             android:id="@+id/tvSetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Sword and Shield" />
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/ivLogo"
+            android:fontFamily="sans-serif"
+            android:text="Sword and Shield"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-</androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

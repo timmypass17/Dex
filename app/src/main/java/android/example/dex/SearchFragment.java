@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -59,8 +61,6 @@ public class SearchFragment extends Fragment {
     public SearchFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,14 +109,14 @@ public class SearchFragment extends Fragment {
         service = retrofit.create(PokeService.class);
 
         // default fetch
-        fetchPokemons(querySet("base1"));
+        fetchPokemons(querySet("swsh5"));
 
         // Search button
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentSearch = etSearch.getText().toString().toLowerCase();
-                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
                 getCardsByTab();
 
             }
@@ -127,7 +127,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 currentTab = (String) tab.getText();
-                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
                 getCardsByTab();
                 etSearch.setHint("Search for " + tab.getText()); // Change text of search bar (might remove, kinda annoying)
             }

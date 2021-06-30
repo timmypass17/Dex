@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment {
             adapter.submitList(pokemons);
         });
 
+
         FloatingActionButton fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,10 +100,16 @@ public class HomeFragment extends Fragment {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         //There are no request codes
                         Intent data = result.getData();
+                        String operation = data.getStringExtra(NewPokemonActivity.EXTRA_OPERATION);
                         // your operations...
-                        Pokemon pokemon = new Pokemon(data.getStringExtra(NewPokemonActivity.EXTRA_REPLY));
-                        Log.d("HomeFragment", "Data received: " + data.getStringExtra(NewPokemonActivity.EXTRA_REPLY));
-                        mPokemonViewModel.insert(pokemon);
+                        // 1. Insert a pokemon
+                        if (operation.equals("1")) {
+                            Pokemon pokemon = new Pokemon(data.getStringExtra(NewPokemonActivity.EXTRA_DATA));
+                            mPokemonViewModel.insert(pokemon);
+                        // 2. Delete all pokemon
+                        } else if (operation.equals("2")) {
+                            mPokemonViewModel.deleteAll();
+                        }
 
                     }
                 }

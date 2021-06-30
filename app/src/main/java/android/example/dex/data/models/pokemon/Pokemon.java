@@ -20,7 +20,7 @@ public class Pokemon {
     @PrimaryKey(autoGenerate = true)
     public int pid;
 
-    public String pokeID;
+    public String id;
 
     public String name;
 
@@ -34,7 +34,7 @@ public class Pokemon {
 
     // Table representing Pokemon object now contains columns in SetID
     @Embedded
-    public SetID setID;
+    public SetID set;
 
 
     public Pokemon(String name){
@@ -51,7 +51,7 @@ public class Pokemon {
         return supertype;
     }
     public String getId() {
-        return pokeID;
+        return id;
     }
     public Image getImages() {
         return images;
@@ -60,6 +60,6 @@ public class Pokemon {
         return tcgplayer;
     }
     public SetID getSetID() {
-        return setID;
+        return set;
     }
 }

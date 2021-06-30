@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -57,10 +58,12 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        CardView cardPokemon;
         ImageView ivCard;
 
         public ViewHolder(@NonNull @org.jetbrains.annotations.NotNull View itemView) {
             super(itemView);
+            cardPokemon = itemView.findViewById(R.id.cardPokemon);
             ivCard = itemView.findViewById(R.id.ivCard);
         }
 
@@ -74,7 +77,7 @@ public class PokeAdapter extends RecyclerView.Adapter<PokeAdapter.ViewHolder>{
                     .into(ivCard);
 
             // 1. Register click listener on card
-            ivCard.setOnClickListener(new View.OnClickListener() {
+            cardPokemon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // 2. Navigate to a new activity on tap

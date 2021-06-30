@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey;
 import org.parceler.Parcel;
 
 @Parcel
-@Entity
 public class SetID {
-    @PrimaryKey
+
     @ColumnInfo(name = "setID")
     public String id;
 
