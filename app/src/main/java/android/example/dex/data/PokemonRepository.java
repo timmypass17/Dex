@@ -2,6 +2,7 @@ package android.example.dex.data;
 
 import android.app.Application;
 import android.example.dex.data.models.pokemon.Pokemon;
+import android.example.dex.data.models.pokemon.SumPojo;
 
 import androidx.lifecycle.LiveData;
 
@@ -14,17 +15,23 @@ public class PokemonRepository {
 
     private PokemonDao mPokemonDao;
     private LiveData<List<Pokemon>> mAllPokemons;
+    private LiveData<SumPojo> mTotalPrice;
 
     PokemonRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mPokemonDao = db.pokemonDao();
         mAllPokemons = mPokemonDao.getAlphabetizedPokemons();
+        mTotalPrice = mPokemonDao.getCollectionPrice();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
+    }
+
+    public LiveData<SumPojo> getTotalPrice() {
+        return mTotalPrice;
     }
 
     // TODO: I changed these methods to public, idk why

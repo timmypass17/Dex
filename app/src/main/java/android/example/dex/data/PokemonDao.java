@@ -1,6 +1,7 @@
 package android.example.dex.data;
 
 import android.example.dex.data.models.pokemon.Pokemon;
+import android.example.dex.data.models.pokemon.SumPojo;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -25,8 +26,9 @@ public interface PokemonDao {
     @Query("SELECT * FROM pokemon_table ORDER BY name ASC")
     LiveData<List<Pokemon>> getAlphabetizedPokemons();
 
-//    @Query("SELECT SUM(normal_market OR holofoil_market) as value FROM pokemon_table")
-//    LiveData<BigDecimal> getCollectionPrice();
+    // Get normal price
+    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table")
+    LiveData<SumPojo> getCollectionPrice();
 
 //    @Query("SELECT * FROM pokemon_table WHERE name = :query")
 //    List<Pokemon> loadPokemons(String query);

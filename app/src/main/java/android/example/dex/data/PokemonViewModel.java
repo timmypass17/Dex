@@ -2,6 +2,7 @@ package android.example.dex.data;
 
 import android.app.Application;
 import android.example.dex.data.models.pokemon.Pokemon;
+import android.example.dex.data.models.pokemon.SumPojo;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,16 +20,21 @@ public class PokemonViewModel extends AndroidViewModel {
 
     private PokemonRepository mRepository;
     private final LiveData<List<Pokemon>> mAllPokemons;
+    private LiveData<SumPojo> mTotalPrice;
 
     public PokemonViewModel(@NonNull @NotNull Application application) {
         super(application);
         mRepository = new PokemonRepository(application);
         mAllPokemons = mRepository.getAllPokemons(); // Intialized the allPokemons LiveData using the repository
+        mTotalPrice = mRepository.getTotalPrice();
     }
 
     // Return a cached list of pokemons
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
+    }
+    public LiveData<SumPojo> getTotalPrice() {
+        return mTotalPrice;
     }
 
     // Created a wrapper insert() method that calls the Repository's insert() method.
@@ -40,4 +46,5 @@ public class PokemonViewModel extends AndroidViewModel {
     public void deleteAll() {
         mRepository.deleteAll();
     }
+
 }
