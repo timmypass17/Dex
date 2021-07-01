@@ -46,9 +46,15 @@ public class PokemonRepository {
             mPokemonDao.insert(pokemon);
         });
     }
+    public void deletePokemon(Pokemon pokemon) {
+        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mPokemonDao.deletePokemon(pokemon);
+        });
+    }
     public void deleteAll() {
         PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
             mPokemonDao.deleteAll();
         });
     }
+
 }

@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -51,12 +49,13 @@ public class SearchFragment extends Fragment {
     private List<Pokemon> pokeData;
     private PokeAdapter pokeAdapter;
     private PokeService service;
+
     private RecyclerView rvPokemons;
     private Button btnGetPokemons;
     private EditText etSearch;
     private TabLayout tabCard;
-    String currentTab = "Pokémon"; // Default value
-    String currentSearch = "";
+    String currentTab;
+    String cardName;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -65,7 +64,6 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
@@ -109,27 +107,28 @@ public class SearchFragment extends Fragment {
         service = retrofit.create(PokeService.class);
 
         // default fetch
-        fetchPokemons(querySet("swsh5"));
+        cardName = "Pikachu";
+        currentTab = "Pokémon";
+        fetchPokemons(queryBySuperType(cardName, currentTab));
 
-        // Search button
+        // Search Button onClick listener
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentSearch = etSearch.getText().toString().toLowerCase();
-//                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
-                getCardsByTab();
-
+                // Update search value
+                cardName = etSearch.getText().toString().toLowerCase();
+                // Get cards
+                getCards(cardName);
             }
         });
 
-        // Tab Layout on click listener
+        // Tab Layout onClick listener
         tabCard.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                // Update tab
                 currentTab = (String) tab.getText();
-//                Toast.makeText(getContext(), "Searching for: \"" + currentSearch + "\" in " + currentTab, Toast.LENGTH_SHORT).show();
-                getCardsByTab();
-                etSearch.setHint("Search for " + tab.getText()); // Change text of search bar (might remove, kinda annoying)
+                getCards(cardName);
             }
 
             @Override
@@ -145,7 +144,7 @@ public class SearchFragment extends Fragment {
 
     }
 
-    // Custom method to get
+    // Get pokemon cards
     private void fetchPokemons(String query) {
         // Network request (cant expect operation to be immediate)
         Call<PokeResponse> call = service.getPokemons(query);
@@ -171,17 +170,17 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    // Get data determine by current tab
-    private void getCardsByTab() {
+    // Get pokemon card by supertype
+    private void getCards(String cardName) {
         switch (currentTab) {
             case "Pokémon":
-                fetchPokemons(queryBySuperType(currentSearch, "Pokémon"));
+                fetchPokemons(queryBySuperType(cardName, "Pokémon"));
                 break;
             case "Trainer":
-                fetchPokemons(queryBySuperType(currentSearch, "Trainer"));
+                fetchPokemons(queryBySuperType(cardName, "Trainer"));
                 break;
             case "Item":
-                fetchPokemons(queryBySuperType(currentSearch, "Energy"));
+                fetchPokemons(queryBySuperType(cardName, "Energy"));
                 break;
         }
     }

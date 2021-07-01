@@ -5,6 +5,7 @@ import android.example.dex.data.models.pokemon.SumPojo;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -29,6 +30,9 @@ public interface PokemonDao {
     // Get normal price
     @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table")
     LiveData<SumPojo> getCollectionPrice();
+
+    @Delete
+    void deletePokemon(Pokemon pokemon);
 
 //    @Query("SELECT * FROM pokemon_table WHERE name = :query")
 //    List<Pokemon> loadPokemons(String query);

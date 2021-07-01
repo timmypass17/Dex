@@ -24,8 +24,6 @@ import org.parceler.Parcels;
 
 public class CardDetailActivity extends AppCompatActivity {
 
-    private PokemonViewModel mPokemonViewModel;
-
     Button btnAddToCollection;
     ImageView ivCardImage;
     CardView cvNormalPrice;
@@ -51,9 +49,6 @@ public class CardDetailActivity extends AppCompatActivity {
         // Unwrapping pokemon object from parent
         Pokemon pokeCard = Parcels.unwrap(getIntent().getParcelableExtra("pokeCard"));
 
-        // Get a new or existing ViewModel from the ViewModelProvider.
-        mPokemonViewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
-
         // Bind data
         bind(pokeCard);
     }
@@ -66,7 +61,7 @@ public class CardDetailActivity extends AppCompatActivity {
         btnAddToCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPokemonViewModel.insert(pokemon);
+                MainActivity.mPokemonViewModel.insert(pokemon);
             }
         });
         cvNormalPrice.setOnClickListener(new View.OnClickListener() {

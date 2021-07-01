@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetDetailActivity"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#FAFAFA">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,18 +15,20 @@
 
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/logo_sample"
-            android:padding="15dp"
-            android:contentDescription="A banner of the pokemon set" />
+            android:layout_centerHorizontal="true"
+            android:contentDescription="A banner of the pokemon set"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/logo_sample" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivLogo">
+            android:layout_below="@id/ivLogo"
+            android:layout_margin="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +57,8 @@
                         android:id="@+id/tvSetName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Guardians Rising" />
+                        android:text="Guardians Rising"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvSeries"
@@ -75,7 +79,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total" />
+                        android:text="Total"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvCardCount"
@@ -96,14 +101,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Released" />
+                        android:text="Released"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvReleaseDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2017/05/05"
-                        android:textSize="16sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </LinearLayout>

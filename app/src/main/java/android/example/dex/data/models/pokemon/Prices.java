@@ -29,6 +29,16 @@ public class Prices {
         return normal;
     }
 
+    public double getPrice() {
+        if (getNormal() != null) {
+            return getNormal().getMarket();
+        } else if (getHolofoil() != null) {
+            return getHolofoil().getMarket();
+        } else {
+            return -1;
+        }
+    }
+
     @Parcel
     public static class Normal {
 
