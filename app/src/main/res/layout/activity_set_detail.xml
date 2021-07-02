@@ -13,21 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="A banner of the pokemon set"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/logo_sample" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="30dp">
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="A banner of the pokemon set"
+                    app:srcCompat="@drawable/logo_sample" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ivLogo"
+            android:layout_below="@id/logo"
             android:layout_margin="1dp">
 
             <LinearLayout

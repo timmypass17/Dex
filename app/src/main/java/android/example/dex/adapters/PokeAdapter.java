@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.example.dex.R;
 import android.example.dex.CardDetailActivity;
 import android.example.dex.data.models.pokemon.Pokemon;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,5 +1,7 @@
 package android.example.dex.data.models.pokemon;
 
+import java.text.DecimalFormat;
+
 public class SumPojo {
     public float normalTotal;
     public float hoilTotal;
@@ -12,7 +14,8 @@ public class SumPojo {
         return hoilTotal;
     }
 
-    public float getNormalAndHoilPrice() {
-        return normalTotal + hoilTotal;
+    public String getNormalAndHoilPrice() {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return "$" + df.format(normalTotal + hoilTotal);
     }
 }

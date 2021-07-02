@@ -30,36 +30,62 @@
             android:text="Energy" />
     </com.google.android.material.tabs.TabLayout>
 
-    <LinearLayout
-        android:id="@+id/searchBar"
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_below="@+id/tabCards">
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textPersonName"
-            android:hint="Search for Pokemon"/>
+            android:layout_below="@+id/tabCards"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <Button
-            android:id="@+id/btnGetPokemons"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            app:icon="@drawable/ic_baseline_search_24" />
+            <LinearLayout
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Search for Pokemon"
+                    android:inputType="textPersonName" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPokemons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/searchBar"/>
+                <Button
+                    android:id="@+id/btnGetPokemons"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/etSearch"
+                    app:icon="@drawable/ic_baseline_search_24" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPokemons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/searchBar" />
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpNavigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_arrow_upward_24"
+        app:backgroundTint="@color/white" />
 
 </RelativeLayout>

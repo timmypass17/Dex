@@ -35,7 +35,7 @@ public class Prices {
         } else if (getHolofoil() != null) {
             return getHolofoil().getMarket();
         } else {
-            return -1;
+            return 0.0;
         }
     }
 

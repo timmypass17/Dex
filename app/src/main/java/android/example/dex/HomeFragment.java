@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         // Set price
         MainActivity.mPokemonViewModel.getTotalPrice().observe((LifecycleOwner) getContext(), sumPojo -> {
-            tvTotalPrice.setText("$" + String.valueOf(sumPojo.getNormalAndHoilPrice()));
+            tvTotalPrice.setText(sumPojo.getNormalAndHoilPrice());
         });
 
 

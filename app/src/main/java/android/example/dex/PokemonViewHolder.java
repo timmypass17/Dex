@@ -2,6 +2,9 @@ package android.example.dex;
 
 import android.example.dex.data.PokemonViewModel;
 import android.example.dex.data.models.pokemon.Pokemon;
+import android.example.dex.data.models.pokemon.Prices;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,10 +40,23 @@ public class PokemonViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
-        tvPrice.setText("$" + String.valueOf(pokemon.getTcgplayer().getPrices().getPrice()));
+        if (pokemon.getTcgplayer() != null) {
+            tvPrice.setText("$" + pokemon.getTcgplayer().getPrices().getPrice());
+        } else {
+            tvPrice.setText("No price found.");
+        }
         Glide.with(itemView)
                 .load(pokemon.getImages().getSmallImage())
                 .into(ivCardImage);
+
+        btnDeletePokemon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from collection...", Snackbar.LENGTH_SHORT).show();
+                MainActivity.mPokemonViewModel.deletePokemon(pokemon);
+            }
+        });
+
     }
 
     static PokemonViewHolder create(ViewGroup parent) {

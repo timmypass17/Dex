@@ -19,11 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.parceler.Parcels;
 
 public class CardDetailActivity extends AppCompatActivity {
 
+    View contextView;
     Button btnAddToCollection;
     ImageView ivCardImage;
     CardView cvNormalPrice;
@@ -39,6 +41,7 @@ public class CardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_detail);
 
         // Get handle on views
+        contextView = findViewById(R.id.context_view);
         btnAddToCollection = findViewById(R.id.btnAddToCollection);
         ivCardImage = findViewById(R.id.ivCardImage);
         cvNormalPrice = findViewById(R.id.cvNormalPrice);
@@ -61,6 +64,7 @@ public class CardDetailActivity extends AppCompatActivity {
         btnAddToCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Snackbar.make(contextView, "Adding \"" + pokemon.getName() + "\" to collection...", Snackbar.LENGTH_SHORT).show();
                 MainActivity.mPokemonViewModel.insert(pokemon);
             }
         });

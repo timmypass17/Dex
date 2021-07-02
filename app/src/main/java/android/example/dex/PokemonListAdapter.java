@@ -31,12 +31,6 @@ public class PokemonListAdapter extends ListAdapter<Pokemon, PokemonViewHolder> 
     public void onBindViewHolder(@NonNull @NotNull PokemonViewHolder holder, int position) {
         Pokemon pokemon = getItem(position);
         holder.bind(pokemon);
-        holder.btnDeletePokemon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.mPokemonViewModel.deletePokemon(pokemon);
-            }
-        });
     }
 
     static class WordDiff extends DiffUtil.ItemCallback<Pokemon> {

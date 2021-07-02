@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,10 +52,12 @@ public class SearchFragment extends Fragment {
     private PokeAdapter pokeAdapter;
     private PokeService service;
 
+    private NestedScrollView nestedScrollView;
     private RecyclerView rvPokemons;
     private Button btnGetPokemons;
     private EditText etSearch;
     private TabLayout tabCard;
+    private FloatingActionButton fabUpArrow;
     String currentTab;
     String cardName;
 
@@ -72,10 +76,12 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pokeData = new ArrayList<>();
 
+        nestedScrollView = view.findViewById(R.id.nestedScroll);
         rvPokemons = view.findViewById(R.id.rvPokemons);
         btnGetPokemons = view.findViewById(R.id.btnGetPokemons);
         etSearch = view.findViewById(R.id.etSearch);
         tabCard = view.findViewById(R.id.tabCards);
+        fabUpArrow = view.findViewById(R.id.fabUpNavigation);
 
         // 1. Create the adapter
         pokeAdapter = new PokeAdapter(getContext(), pokeData);
@@ -109,7 +115,15 @@ public class SearchFragment extends Fragment {
         // default fetch
         cardName = "Pikachu";
         currentTab = "Pokémon";
-        fetchPokemons(queryBySuperType(cardName, currentTab));
+        fetchPokemons(querySet("base3"));
+
+        fabUpArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nestedScrollView.smoothScrollTo(0, etSearch.getTop());
+                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Search Button onClick listener
         btnGetPokemons.setOnClickListener(new View.OnClickListener() {
