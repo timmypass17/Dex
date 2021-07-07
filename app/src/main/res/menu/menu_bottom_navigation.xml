@@ -17,4 +17,10 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="Search"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_test"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Search"
+        app:showAsAction="always" />
 </menu>

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
         <TextView
             android:id="@+id/CollectionWorth"
@@ -34,7 +34,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/recyclerview_item"
+            tools:listitem="@layout/item_collection"
             android:layout_below="@+id/tvTotalPrice"/>
 
 <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
