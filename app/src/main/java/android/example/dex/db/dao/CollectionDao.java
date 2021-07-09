@@ -23,17 +23,25 @@ public interface CollectionDao {
     @Query("DELETE FROM pokemon_table")
     void deleteAll();
 
-    @Query("SELECT * FROM pokemon_table ORDER BY name ASC")
-    LiveData<List<Pokemon>> getAlphabetizedPokemons();
+    // Get ALL pokemons
+    @Query("SELECT * FROM pokemon_table")
+    LiveData<List<Pokemon>> getAllPokemons();
+
+    // SQLite does not have a separate Boolean storage class.
+    // Instead, Boolean values are stored as integers 0 (false) and 1 (true).
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name ASC ")
+    LiveData<List<Pokemon>> getOwnedPokemons();
 
     // Get normal price
-    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table")
+    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isOwned = 1")
     LiveData<SumPojo> getCollectionPrice();
 
     @Delete
     void deletePokemon(Pokemon pokemon);
 
-//    @Query("SELECT * FROM pokemon_table WHERE name = :query")
-//    List<Pokemon> loadPokemons(String query);
+    @Query("SELECT * FROM pokemon_table WHERE name = :name")
+    LiveData<List<Pokemon>> getPokemonByName(String name);
 
+    @Query("UPDATE pokemon_table SET isOwned = 1 WHERE id = :id")
+    void addToCollection(String id);
 }

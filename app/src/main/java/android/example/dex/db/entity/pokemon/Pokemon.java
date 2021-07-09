@@ -1,5 +1,6 @@
 package android.example.dex.db.entity.pokemon;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -13,9 +14,8 @@ import org.parceler.Parcel;
 @Entity(tableName = "pokemon_table")
 public class Pokemon {
 
-    @PrimaryKey(autoGenerate = true)
-    public int pid;
-
+    @PrimaryKey
+    @NonNull
     public String id;
 
     public String name;
@@ -32,6 +32,7 @@ public class Pokemon {
     @Embedded
     public SetID set;
 
+    public int isOwned = 0;
 
     public Pokemon(String name){
         this.name = name;
@@ -43,18 +44,23 @@ public class Pokemon {
     public String getName() {
         return name;
     }
+
     public String getSupertype() {
         return supertype;
     }
+
     public String getId() {
         return id;
     }
+
     public Image getImages() {
         return images;
     }
+
     public TCGPlayer getTcgplayer() {
         return tcgplayer;
     }
+
     public SetID getSetID() {
         return set;
     }

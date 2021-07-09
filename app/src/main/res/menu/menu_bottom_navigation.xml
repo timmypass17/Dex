@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_home"
+        android:id="@+id/action_collection"
         android:icon="@drawable/ic_baseline_all_inbox_24"
         android:title="Collection"
         app:showAsAction="always" />

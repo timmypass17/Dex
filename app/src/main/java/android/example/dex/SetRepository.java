@@ -22,7 +22,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+// Repository modules handle data operations.
+// They provide a clean API so that the rest of the app can retrieve this data easily.
+// They know where to get the data from and what API calls to make when data is updated.
+// You can consider repositories to be mediators between different data sources, such as persistent models, web services, and caches.
 public class SetRepository {
 
     private SetDao mSetDao;
@@ -59,12 +62,15 @@ public class SetRepository {
         PokeService service = retrofit.create(PokeService.class);
 
         Call<PokeSetResponse> call = service.getSets();
+
         call.enqueue(new Callback<PokeSetResponse>() {
             @Override
             public void onResponse(Call<PokeSetResponse> call, retrofit2.Response<PokeSetResponse> response) {
                 PokeSetResponse pokeSetResponse = response.body();
                 if (pokeSetResponse != null) {
                     List<PokeSet> pokeSetData = pokeSetResponse.getPokeSets();
+                    // TODO: Maybe insert a list instead of 1 by 1
+                    Log.d("SetRepository", "Inserting data");
                     for (PokeSet pokeSet : pokeSetData) {
                         insert(pokeSet);
                     }
@@ -73,7 +79,7 @@ public class SetRepository {
 
             @Override
             public void onFailure(Call<PokeSetResponse> call, Throwable t) {
-                Log.d("SetRepository", "onFailure ", t);
+                Log.d("SetRepository", "onFailure", t);
             }
         });
     }

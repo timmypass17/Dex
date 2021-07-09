@@ -5,6 +5,7 @@ import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.network.PokeResponse;
 import android.example.dex.network.PokeService;
 import android.example.dex.ui.adapters.PokeAdapter;
+import android.example.dex.viewmodel.CollectionViewModel;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

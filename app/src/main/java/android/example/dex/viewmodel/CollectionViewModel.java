@@ -17,13 +17,13 @@ import java.util.List;
 // A ViewModel acts as a communication center between the Repository and the UI.
 // The Repository and the UI are completely separated by the ViewModel.
 
-public class PokemonViewModel extends AndroidViewModel {
+public class CollectionViewModel extends AndroidViewModel {
 
-    private CollectionRepository mRepository;
+    private final CollectionRepository mRepository;
     private final LiveData<List<Pokemon>> mAllPokemons;
-    private LiveData<SumPojo> mTotalPrice;
+    private final LiveData<SumPojo> mTotalPrice;
 
-    public PokemonViewModel(@NonNull @NotNull Application application) {
+    public CollectionViewModel(@NonNull @NotNull Application application) {
         super(application);
         mRepository = new CollectionRepository(application);
         mAllPokemons = mRepository.getAllPokemons(); // Intialized the allPokemons LiveData using the repository
@@ -34,6 +34,7 @@ public class PokemonViewModel extends AndroidViewModel {
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
     }
+
     public LiveData<SumPojo> getTotalPrice() {
         return mTotalPrice;
     }
@@ -46,6 +47,10 @@ public class PokemonViewModel extends AndroidViewModel {
 
     public void deletePokemon(Pokemon pokemon) {
         mRepository.deletePokemon(pokemon);
+    }
+
+    public void addToCollection(String id) {
+        mRepository.addToCollection(id);
     }
 
     public void deleteAll() {

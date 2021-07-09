@@ -16,7 +16,10 @@ public class PokeResponse {
         pokemons = new ArrayList<>();
     }
 
-    // wat this for
+    public List<Pokemon> getPokemons() {
+        return pokemons;
+    }
+// wat this for
 //    public static PokeResponse parseJSON(String response) {
 //        Gson gson = new GsonBuilder().create();
 //        PokeResponse pokemonResponse = gson.fromJson(response, PokeResponse.class);

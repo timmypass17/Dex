@@ -12,4 +12,7 @@ public interface PokeService {
 
     @GET("sets")
     Call<PokeSetResponse> getSets();
+
+    @GET("cards")
+    Call<PokeResponse> getAllPokemons();
 }

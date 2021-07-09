@@ -5,6 +5,9 @@ import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.dao.SetDao;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
+import android.example.dex.network.PokeService;
+import android.example.dex.network.PokeSetResponse;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -14,14 +17,25 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // Usually, you only need one instance of a Room database for the whole app.
 @Database(entities = {Pokemon.class, PokeSet.class}, version = 1, exportSchema = false)
 public abstract class PokemonRoomDatabase extends RoomDatabase {
 
-    public abstract CollectionDao pokemonDao();
+    public abstract CollectionDao collectionDao();
     public abstract SetDao setDao();
 
     // Singleton, to prevent having multiple instances of the database opened at the same time.
@@ -57,21 +71,16 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull @NotNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                CollectionDao dao = INSTANCE.pokemonDao();
+                CollectionDao dao = INSTANCE.collectionDao();
                 SetDao setDao = INSTANCE.setDao();
                 dao.deleteAll();
-
-//                Pokemon pokemon = new Pokemon("Samplemon");
-//                dao.insert(pokemon);
-//                pokemon = new Pokemon("Samplemon");
-//                dao.insert(pokemon);
             });
         }
     };
+
 }

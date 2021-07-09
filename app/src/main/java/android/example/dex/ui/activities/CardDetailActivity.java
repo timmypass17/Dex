@@ -2,6 +2,7 @@ package android.example.dex.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.example.dex.R;
@@ -9,6 +10,7 @@ import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.db.entity.pokemon.TCGPlayer;
 import android.example.dex.ui.MainActivity;
+import android.example.dex.viewmodel.CollectionViewModel;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ import org.parceler.Parcels;
 
 public class CardDetailActivity extends AppCompatActivity {
 
+    CollectionViewModel mCollectionViewModel;
     View contextView;
     Button btnAddToCollection;
     ImageView ivCardImage;
@@ -38,6 +41,8 @@ public class CardDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
+
+        mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
 
         // Get handle on views
         contextView = findViewById(R.id.context_view);
@@ -64,7 +69,8 @@ public class CardDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Snackbar.make(contextView, "Adding \"" + pokemon.getName() + "\" to collection...", Snackbar.LENGTH_SHORT).show();
-                MainActivity.mPokemonViewModel.insert(pokemon);
+                // TODO: Update room entity's setOwned to true
+                mCollectionViewModel.addToCollection(pokemon.getId());
             }
         });
         cvNormalPrice.setOnClickListener(new View.OnClickListener() {

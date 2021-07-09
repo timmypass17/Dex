@@ -1,8 +1,8 @@
 package android.example.dex.ui.adapters;
 
 import android.example.dex.R;
-import android.example.dex.ui.MainActivity;
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.ui.MainActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +33,15 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         btnDeletePokemon = itemView.findViewById(R.id.btnDeletePokemon);
     }
 
+    public static CollectionViewHolder create(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_collection, parent, false);
+        return new CollectionViewHolder(view);
+    }
+
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
-        if (pokemon.getTcgplayer() != null) {
+        if (pokemon.getTcgplayer() != null && pokemon.getTcgplayer().getPrices() != null) {
             tvPrice.setText("$" + pokemon.getTcgplayer().getPrices().getPrice());
         } else {
             tvPrice.setText("No price found.");
@@ -48,15 +54,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from collection...", Snackbar.LENGTH_SHORT).show();
-                MainActivity.mPokemonViewModel.deletePokemon(pokemon);
+                MainActivity.mCollectionViewModel.deletePokemon(pokemon);
             }
         });
 
-    }
-
-    public static CollectionViewHolder create(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_collection, parent, false);
-        return new CollectionViewHolder(view);
     }
 }

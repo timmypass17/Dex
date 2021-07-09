@@ -40,18 +40,23 @@ public class PokeSet {
     public String getmTotal() {
         return mTotal;
     }
+
     public String getReleaseDate() {
         return mReleaseDate;
     }
+
     public String getId() {
         return mId;
     }
+
     public String getmName() {
         return mName;
     }
+
     public String getmSeries() {
         return mSeries;
     }
+
     public PokeSetImage getmImages() {
         return mImages;
     }

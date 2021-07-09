@@ -19,18 +19,17 @@ import android.example.dex.R;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SampleFragment extends Fragment {
+public class SetFragment extends Fragment {
 
     private SetViewModel mSetViewModel;
 
-    public SampleFragment() {
+    public SetFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_set, container, false);
     }
 
@@ -43,7 +42,7 @@ public class SampleFragment extends Fragment {
         rvSet.setAdapter(adapter);
         rvSet.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mSetViewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(SetViewModel.class);
+        mSetViewModel = new ViewModelProvider(this).get(SetViewModel.class);
 
         mSetViewModel.getAllSets().observe(getViewLifecycleOwner(), pokeSets -> {
             // Update the cached copy of the words in the adapter.
