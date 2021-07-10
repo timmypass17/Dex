@@ -46,10 +46,14 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
                 .apply(new RequestOptions().override(400, 600))
                 .into(ivCard);
 
-        if (pokemon.isOwned == 0) {
-            ColorMatrix matrix = new ColorMatrix();
-            matrix.setSaturation(0);
-            ivCard.setColorFilter(new ColorMatrixColorFilter(matrix));
+        // Cards not owned are grayed out
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ivCard.setColorFilter(new ColorMatrixColorFilter(matrix));
+
+        // Card owned becomes "normalized"
+        if (pokemon.isOwned == 1) {
+            ivCard.setColorFilter(null);
         }
 
         // Card Onclick listener

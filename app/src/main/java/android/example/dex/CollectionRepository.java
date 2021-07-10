@@ -11,7 +11,9 @@ import android.example.dex.network.PokeService;
 import android.example.dex.network.PokeSetResponse;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,20 +42,22 @@ public class CollectionRepository {
         mCollectionDao = db.collectionDao();
         mAllPokemons = mCollectionDao.getOwnedPokemons();
         mTotalPrice = mCollectionDao.getCollectionPrice();
-        Log.d("CollectionRepository", "Getting more Ampharos!");
-        mAllPokemonByName = mCollectionDao.getPokemonByName("Ampharos");
+        // TODO: Initialize mAllPokemonByName by something
         populateCards();
     }
 
+    public LiveData<List<Pokemon>> getAllPokemonByName() {
+        return mAllPokemonByName;
+    }
+
+    public LiveData<List<Pokemon>> getNewPokemon(String name) {
+        return mCollectionDao.getPokemonByName(name);
+    }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
-    }
-
-    public LiveData<List<Pokemon>> getAllPokemonByName() {
-        return mAllPokemonByName;
     }
 
     public LiveData<SumPojo> getTotalPrice() {
@@ -77,12 +81,6 @@ public class CollectionRepository {
     public void deleteAll() {
         PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
             mCollectionDao.deleteAll();
-        });
-    }
-
-    public void updatePokemonBySet(String name) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mAllPokemonByName = mCollectionDao.getPokemonByName(name);
         });
     }
 

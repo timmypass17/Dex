@@ -76,9 +76,8 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                CollectionDao dao = INSTANCE.collectionDao();
-                SetDao setDao = INSTANCE.setDao();
-                dao.deleteAll();
+//                CollectionDao dao = INSTANCE.collectionDao();
+//                SetDao setDao = INSTANCE.setDao();
             });
         }
     };
