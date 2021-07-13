@@ -1,5 +1,6 @@
 package android.example.dex.ui.fragments;
 
+import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.SetAdapter;
 import android.example.dex.viewmodel.SetViewModel;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SetFragment extends Fragment {
 
-    private SetViewModel mSetViewModel;
+    public SetViewModel mSetViewModel;
 
     public SetFragment() {
         // Required empty public constructor
@@ -42,11 +43,13 @@ public class SetFragment extends Fragment {
         rvSet.setAdapter(adapter);
         rvSet.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mSetViewModel = new ViewModelProvider(this).get(SetViewModel.class);
+        mSetViewModel = MainActivity.mSetViewModel;
 
         mSetViewModel.getAllSets().observe(getViewLifecycleOwner(), pokeSets -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(pokeSets);
         });
+
+
     }
 }

@@ -8,12 +8,9 @@ import android.example.dex.db.entity.pokemon.SumPojo;
 import android.example.dex.db.entity.set.PokeSet;
 import android.example.dex.network.PokeResponse;
 import android.example.dex.network.PokeService;
-import android.example.dex.network.PokeSetResponse;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,16 +32,23 @@ public class CollectionRepository {
     private final CollectionDao mCollectionDao;
     private final LiveData<List<Pokemon>> mAllPokemons;
     private final LiveData<SumPojo> mTotalPrice;
-    private LiveData<List<Pokemon>> mAllPokemonByName;
+    private LiveData<List<Pokemon>> mAllPokemonByName; // TODO: Initialize mAllPokemonByName by something
+    private LiveData<List<Pokemon>> mWishListPokemons;
+    private LiveData<SumPojo> mWishPrice;
+    private LiveData<List<Pokemon>>  mAllPokemonBySet;
 
     public CollectionRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mCollectionDao = db.collectionDao();
         mAllPokemons = mCollectionDao.getOwnedPokemons();
         mTotalPrice = mCollectionDao.getCollectionPrice();
-        // TODO: Initialize mAllPokemonByName by something
-        populateCards();
+        mWishListPokemons = mCollectionDao.getWishlistPokemons();
+        mWishPrice = mCollectionDao.getWishlistPrice();
+        // populateCards();
     }
+
+    // Room executes all queries on a separate thread.
+    // Observed LiveData will notify the observer when the data has changed.
 
     public LiveData<List<Pokemon>> getAllPokemonByName() {
         return mAllPokemonByName;
@@ -54,8 +58,10 @@ public class CollectionRepository {
         return mCollectionDao.getPokemonByName(name);
     }
 
-    // Room executes all queries on a separate thread.
-    // Observed LiveData will notify the observer when the data has changed.
+    public LiveData<List<Pokemon>> getWishListPokemons() {
+        return mWishListPokemons;
+    }
+
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
     }
@@ -64,25 +70,16 @@ public class CollectionRepository {
         return mTotalPrice;
     }
 
-    // 1. You must call this on a non-UI thread or your app will throw an exception. Room ensures
-    // that you're not doing any long running operations on the main thread, blocking the UI.
-    // 2. We need to not run the insert on the main thread, so we use the ExecutorService we created
-    // in the WordRoomDatabase to perform the insert on a background thread.
-    public void insert(Pokemon pokemon) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCollectionDao.insert(pokemon);
-        });
+    public LiveData<SumPojo> getWishPrice() {
+        return mWishPrice;
     }
-    public void deletePokemon(Pokemon pokemon) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCollectionDao.deletePokemon(pokemon);
-        });
+
+    public LiveData<List<Pokemon>> getAllPokemonBySet() {
+        return mAllPokemonBySet;
     }
-    public void deleteAll() {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCollectionDao.deleteAll();
-        });
-    }
+
+    // 1. You must call this on a non-UI thread or your app will throw an exception.
+    // 2. Use the ExecutorService we created in the WordRoomDatabase to perform the DAO methods on a background thread.
 
     public void addToCollection(String id) {
         PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
@@ -90,48 +87,21 @@ public class CollectionRepository {
         });
     }
 
-    // Fetch ALL cards and insert into database
-    public void populateCards() {
-        String BASE_URL = "https://api.pokemontcg.io/v2/";
-        String API_KEY = "19118357-6a69-4cc5-8b9e-02ccf48daf44";
-
-        // Interceptor
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader("X-Api-Key", API_KEY).build();
-                return chain.proceed(request);
-            }
+    public void removeFromCollection(String id) {
+        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mCollectionDao.removeFromCollection(id);
         });
+    }
 
-        // Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
-                .client(httpClient.build())
-                .build();
+    public void addToWishlist(String id) {
+        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mCollectionDao.addToWishlist(id);
+        });
+    }
 
-        PokeService service = retrofit.create(PokeService.class);
-
-        Call<PokeResponse> call = service.getAllPokemons();
-        call.enqueue(new Callback<PokeResponse>() {
-            @Override
-            public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
-                PokeResponse pokeResponse = response.body();
-                if (pokeResponse != null) {
-                    Log.d("CollectionRepository", "onSuccess: Getting data");
-                    List<Pokemon> pokeData = pokeResponse.getPokemons();
-                    for (Pokemon pokemon : pokeData) {
-                        insert(pokemon);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PokeResponse> call, Throwable t) {
-                Log.d("CollectionRepository", "onFailure: Fail to get data", t);
-            }
+    public void removeFromWishlist(String id) {
+        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mCollectionDao.removeFromWishlist(id);
         });
     }
 

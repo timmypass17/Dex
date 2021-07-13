@@ -39,22 +39,13 @@ public class CollectionViewModel extends AndroidViewModel {
         return mTotalPrice;
     }
 
-    // Created a wrapper insert() method that calls the Repository's insert() method.
-    // In this way, the implementation of insert() is encapsulated from the UI.
-    public void insert(Pokemon pokemon) {
-        mRepository.insert(pokemon);
-    }
-
-    public void deletePokemon(Pokemon pokemon) {
-        mRepository.deletePokemon(pokemon);
-    }
-
+    // Implementation of addToCollection() is encapsulated from the UI.
     public void addToCollection(String id) {
         mRepository.addToCollection(id);
     }
 
-    public void deleteAll() {
-        mRepository.deleteAll();
+    public void removeFromCollection(String id) {
+        mRepository.removeFromCollection(id);
     }
 
 }

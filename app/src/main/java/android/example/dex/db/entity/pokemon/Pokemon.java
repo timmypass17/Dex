@@ -34,6 +34,12 @@ public class Pokemon {
 
     public int isOwned = 0;
 
+    public int isWish = 0;
+
+    public void setIsWish(int isWish) {
+        this.isWish = isWish;
+    }
+
     public Pokemon(String name){
         this.name = name;
     }

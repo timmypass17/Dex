@@ -3,7 +3,9 @@ package android.example.dex.ui.adapters;
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.ui.MainActivity;
-import android.example.dex.viewmodel.CollectionViewModel;
+import android.example.dex.ui.fragments.CollectionFragment;
+import android.example.dex.ui.fragments.WishFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,24 +21,24 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CollectionViewHolder extends RecyclerView.ViewHolder {
+public class WishViewHolder extends RecyclerView.ViewHolder {
 
     private final ImageView ivCardImage;
     private final TextView tvName;
     private final TextView tvPrice;
-    public final Button btnDeletePokemon;
+    public final Button btnRemoveFromWishlist;
 
-    public CollectionViewHolder(@NonNull @NotNull View itemView) {
+    public WishViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         ivCardImage = itemView.findViewById(R.id.ivCardImage);
         tvName = itemView.findViewById(R.id.tvName);
         tvPrice = itemView.findViewById(R.id.tvPrice);
-        btnDeletePokemon = itemView.findViewById(R.id.btnDeletePokemon);
+        btnRemoveFromWishlist = itemView.findViewById(R.id.btnRemoveFromWishlist);
     }
 
-    public static CollectionViewHolder create(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collection, parent, false);
-        return new CollectionViewHolder(view);
+    public static WishViewHolder create(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_wish, parent, false);
+        return new WishViewHolder(view);
     }
 
     public void bind(Pokemon pokemon) {
@@ -50,11 +52,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
                 .load(pokemon.getImages().getSmallImage())
                 .into(ivCardImage);
 
-        btnDeletePokemon.setOnClickListener(v -> {
-            Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from collection...", Snackbar.LENGTH_SHORT).show();
-//                MainActivity.mCollectionViewModel.deletePokemon(pokemon);
-            MainActivity.mCollectionViewModel.removeFromCollection(pokemon.getId());
+        btnRemoveFromWishlist.setOnClickListener(v -> {
+            Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from wishlist...", Snackbar.LENGTH_SHORT).show();
+            MainActivity.mWishViewModel.removeFromWishlist(pokemon.getId());
         });
-
     }
 }

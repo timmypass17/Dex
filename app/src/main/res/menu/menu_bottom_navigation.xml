@@ -8,6 +8,16 @@
         android:title="Collection"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_wish"
+        android:icon="@drawable/ic_baseline_star_24"
+        android:title="Wishlist"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_stat"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:title="Stats"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_set"
         android:icon="@drawable/ic_baseline_auto_awesome_motion_24"
         android:title="Sets"
@@ -18,9 +28,4 @@
         android:title="Search"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_test"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Search"
-        app:showAsAction="always" />
 </menu>

@@ -65,7 +65,7 @@
                         android:contentDescription="An Icon representing a pokemon set" />
 
                     <TextView
-                        android:id="@+id/tvSetName"
+                        android:id="@+id/tvSet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Guardians Rising"

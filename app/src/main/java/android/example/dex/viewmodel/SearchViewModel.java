@@ -30,7 +30,7 @@ public class SearchViewModel extends AndroidViewModel {
         return mAllPokemonsByName;
     }
 
-    public void getNewPokemon(String name) {
+    public void updateAllPokemonByName(String name) {
         mAllPokemonsByName = mRepository.getNewPokemon(name);
     }
 

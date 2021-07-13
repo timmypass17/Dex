@@ -35,62 +35,13 @@ public class SetRepository {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mSetDao = db.setDao();
         mAllSets = mSetDao.getAlphabetizedSets();
-        populateSet();
-    }
-
-    public void populateSet() {
-        String BASE_URL = "https://api.pokemontcg.io/v2/";
-        String API_KEY = "19118357-6a69-4cc5-8b9e-02ccf48daf44";
-
-        // Interceptor
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request request = chain.request().newBuilder().addHeader("X-Api-Key", API_KEY).build();
-                return chain.proceed(request);
-            }
-        });
-
-        // Retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
-                .client(httpClient.build())
-                .build();
-
-        PokeService service = retrofit.create(PokeService.class);
-
-        Call<PokeSetResponse> call = service.getSets();
-
-        call.enqueue(new Callback<PokeSetResponse>() {
-            @Override
-            public void onResponse(Call<PokeSetResponse> call, retrofit2.Response<PokeSetResponse> response) {
-                PokeSetResponse pokeSetResponse = response.body();
-                if (pokeSetResponse != null) {
-                    List<PokeSet> pokeSetData = pokeSetResponse.getPokeSets();
-                    // TODO: Maybe insert a list instead of 1 by 1
-                    Log.d("SetRepository", "Inserting data");
-                    for (PokeSet pokeSet : pokeSetData) {
-                        insert(pokeSet);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PokeSetResponse> call, Throwable t) {
-                Log.d("SetRepository", "onFailure", t);
-            }
-        });
     }
 
     public LiveData<List<PokeSet>> getAllSets() {
         return mAllSets;
     }
 
-    public void insert(PokeSet pokeSet) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mSetDao.insert(pokeSet);
-        });
+    public LiveData<List<Pokemon>> getTotalFromSet(String id) {
+        return mSetDao.getTotalFromSet(id);
     }
 }

@@ -2,6 +2,8 @@ package android.example.dex.viewmodel;
 
 import android.app.Application;
 import android.example.dex.SetRepository;
+import android.example.dex.db.PokemonRoomDatabase;
+import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
 
 import androidx.annotation.NonNull;
@@ -27,5 +29,9 @@ public class SetViewModel extends AndroidViewModel {
     // Returns cached list of sets
     public LiveData<List<PokeSet>> getAllSets() {
         return mAllSets;
+    }
+
+    public LiveData<List<Pokemon>> getTotalFromSet(String id) {
+        return mSetRepository.getTotalFromSet(id);
     }
 }

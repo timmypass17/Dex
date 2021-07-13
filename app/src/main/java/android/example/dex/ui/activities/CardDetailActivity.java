@@ -11,6 +11,7 @@ import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.db.entity.pokemon.TCGPlayer;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.viewmodel.CollectionViewModel;
+import android.example.dex.viewmodel.WishViewModel;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,8 +29,11 @@ import org.parceler.Parcels;
 public class CardDetailActivity extends AppCompatActivity {
 
     CollectionViewModel mCollectionViewModel;
+    WishViewModel mWishViewModel;
+
     View contextView;
     Button btnAddToCollection;
+    Button btnAddToWishlist;
     ImageView ivCardImage;
     CardView cvNormalPrice;
     TextView tvNormalPrice;
@@ -42,11 +47,14 @@ public class CardDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
 
-        mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
+//        mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
+        mCollectionViewModel = MainActivity.mCollectionViewModel;
+        mWishViewModel = MainActivity.mWishViewModel;
 
         // Get handle on views
         contextView = findViewById(R.id.context_view);
         btnAddToCollection = findViewById(R.id.btnAddToCollection);
+        btnAddToWishlist = findViewById(R.id.btnAddToWishlist);
         ivCardImage = findViewById(R.id.ivCardImage);
         cvNormalPrice = findViewById(R.id.cvNormalPrice);
         tvNormalPrice = findViewById(R.id.tvNormalPrice);
@@ -65,26 +73,30 @@ public class CardDetailActivity extends AppCompatActivity {
         Glide.with(this).load(pokemon.getImages().getLargeImage()).into(ivCardImage);
         tvNormalPrice.setText(normalPrice);
         tvHoloPrice.setText(holoPrice);
-        btnAddToCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnAddToCollection.setOnClickListener(v -> {
+            if (pokemon.isOwned == 1) {
+                Snackbar.make(contextView, "Removing \"" + pokemon.getName() + "\" to collection...", Snackbar.LENGTH_SHORT).show();
+                mCollectionViewModel.removeFromCollection(pokemon.getId());
+                btnAddToCollection.setText("Add to Collection");
+            }
+            else {
                 Snackbar.make(contextView, "Adding \"" + pokemon.getName() + "\" to collection...", Snackbar.LENGTH_SHORT).show();
-                // TODO: Update room entity's setOwned to true
                 mCollectionViewModel.addToCollection(pokemon.getId());
+                btnAddToCollection.setText("Remove from Collection");
             }
+            Toast.makeText(this, pokemon.getSetID().getId(), Toast.LENGTH_SHORT).show();
         });
-        cvNormalPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToPurchaseSite(pokemon);
-            }
+
+        if (pokemon.isOwned == 1) {
+            btnAddToCollection.setText("Remove from Collection");
+        }
+
+        btnAddToWishlist.setOnClickListener(v -> {
+            mWishViewModel.addToWishlist(pokemon.getId());
         });
-        cvHoloPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToPurchaseSite(pokemon);
-            }
-        });
+
+        cvNormalPrice.setOnClickListener(v -> goToPurchaseSite(pokemon));
+        cvHoloPrice.setOnClickListener(v -> goToPurchaseSite(pokemon));
     }
 
     // Navigate to TCGPlayer site

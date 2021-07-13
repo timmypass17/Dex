@@ -1,9 +1,10 @@
 package android.example.dex.ui.adapters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.example.dex.R;
+import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
+import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.activities.SetDetailActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,38 +24,42 @@ import com.bumptech.glide.Glide;
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
+import java.util.List;
+
 public class SetViewHolder extends RecyclerView.ViewHolder {
 
     CardView cardView;
     ImageView ivLogo;
-    TextView tvSetName;
+    TextView tvSet;
+    TextView tvSeries;
+    TextView tvTotal;
 
     public SetViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         cardView = itemView.findViewById(R.id.cvSet);
         ivLogo = itemView.findViewById(R.id.ivLogo);
-        tvSetName = itemView.findViewById(R.id.tvSetName);
+        tvSet = itemView.findViewById(R.id.tvSet);
+        tvSeries = itemView.findViewById(R.id.tvSeries);
+        tvTotal = itemView.findViewById(R.id.tvTotal);
     }
 
     public void bind(PokeSet pokeSet) {
-        // Add symbol image
-        Glide.with(ivLogo.getContext())
-                .load(pokeSet.getmImages().getmLogo())
-                .into(ivLogo);
-        // Add set name
-        tvSetName.setText(pokeSet.getmName());
+        Glide.with(ivLogo.getContext()).load(pokeSet.getmImages().getmLogo()).into(ivLogo);
+        tvSet.setText(pokeSet.getmName());
+        tvSeries.setText(pokeSet.getmSeries());
+        LiveData<List<Pokemon>> pokemons = MainActivity.mSetViewModel.getTotalFromSet(pokeSet.getId());
+        pokemons.observe((LifecycleOwner) itemView.getContext(), (Observer<List<Pokemon>>) pokemonList -> {
+            tvTotal.setText(pokemonList.size() + " / " + pokeSet.getmTotal());
+        });
 
-        // 1. Register click listener on card
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 2. Navigate to a new activity on tap
-                Intent i = new Intent(cardView.getContext(), SetDetailActivity.class);
-                // 3. Pass pokeSet object into details activity through parcel
-                i.putExtra("pokeSet", Parcels.wrap(pokeSet));
-                // 4. Begin navigation
-                cardView.getContext().startActivity(i);
-            }
+        // Register click listener on card
+        cardView.setOnClickListener(v -> {
+            // 1. Navigate to a new activity on tap
+            Intent i = new Intent(cardView.getContext(), SetDetailActivity.class);
+            // 2. Pass pokeSet object into details activity through parcel
+            i.putExtra("pokeSet", Parcels.wrap(pokeSet));
+            // 3. Begin navigation
+            cardView.getContext().startActivity(i);
         });
     }
 

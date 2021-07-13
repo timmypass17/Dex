@@ -1,9 +1,12 @@
 package android.example.dex.ui.fragments;
 
+import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.CollectionAdapter;
 import android.example.dex.R;
 import android.example.dex.viewmodel.CollectionViewModel;
+import android.example.dex.viewmodel.WishViewModel;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CollectionFragment extends Fragment {
 
-    CollectionViewModel mPokemonViewModel;
+    public CollectionViewModel mCollectionViewModel;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -33,7 +36,7 @@ public class CollectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_collection, container, false);
     }
 
     @Override
@@ -48,18 +51,22 @@ public class CollectionFragment extends Fragment {
         rvCollection.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Get a new or existing ViewModel from the ViewModelProvider.
-        mPokemonViewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(CollectionViewModel.class);
+        // mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
+
+        mCollectionViewModel = MainActivity.mCollectionViewModel;
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
-        mPokemonViewModel.getAllPokemons().observe((LifecycleOwner) getContext(), pokemons -> {
+        mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             // Update the cached copy of the words in the adapter.
+            Log.d("CollectionFragment", "Submiting List");
             adapter.submitList(pokemons);
         });
 
         // Set price
-        mPokemonViewModel.getTotalPrice().observe((LifecycleOwner) getContext(), sumPojo -> {
+        mCollectionViewModel.getTotalPrice().observe(getViewLifecycleOwner(), sumPojo -> {
+            Log.d("CollectionFragment", "Updating Price");
             tvTotalPrice.setText(sumPojo.getNormalAndHoilPrice());
         });
         // Equivalent to...

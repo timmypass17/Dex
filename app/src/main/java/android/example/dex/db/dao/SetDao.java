@@ -20,6 +20,6 @@ public interface SetDao {
     @Query("SELECT * FROM set_table ORDER BY mReleaseDate ASC")
     LiveData<List<PokeSet>> getAlphabetizedSets();
 
-    @Query("DELETE FROM set_table")
-    void deleteAll();
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 AND setID = :id")
+    LiveData<List<Pokemon>> getTotalFromSet(String id);
 }

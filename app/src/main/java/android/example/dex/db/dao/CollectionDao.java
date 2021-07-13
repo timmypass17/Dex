@@ -1,7 +1,9 @@
 package android.example.dex.db.dao;
 
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.db.entity.pokemon.PokemonUpdate;
 import android.example.dex.db.entity.pokemon.SumPojo;
+import android.example.dex.db.entity.set.PokeSet;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -9,10 +11,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
-
-// "..." It means that zero or more String objects (or a single array of them) may be passed as the argument(s) for that method
 
 @Dao
 public interface CollectionDao {
@@ -20,10 +21,6 @@ public interface CollectionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Pokemon pokemon);
 
-    @Query("DELETE FROM pokemon_table")
-    void deleteAll();
-
-    // Get ALL pokemons
     @Query("SELECT * FROM pokemon_table")
     LiveData<List<Pokemon>> getAllPokemons();
 
@@ -36,12 +33,25 @@ public interface CollectionDao {
     @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isOwned = 1")
     LiveData<SumPojo> getCollectionPrice();
 
-    @Delete
-    void deletePokemon(Pokemon pokemon);
-
     @Query("SELECT * FROM pokemon_table WHERE name = :name")
     LiveData<List<Pokemon>> getPokemonByName(String name);
 
     @Query("UPDATE pokemon_table SET isOwned = 1 WHERE id = :id")
     void addToCollection(String id);
+
+    @Query("UPDATE pokemon_table SET isOwned = 0 WHERE id = :id")
+    void removeFromCollection(String id);
+
+    @Query("SELECT * FROM pokemon_table WHERE isWish = 1")
+    LiveData<List<Pokemon>> getWishlistPokemons();
+
+    @Query("UPDATE pokemon_table SET isWish = 1 WHERE id = :id")
+    void addToWishlist(String id);
+
+    @Query("UPDATE pokemon_table SET isWish = 0 WHERE id = :id")
+    void removeFromWishlist(String id);
+
+    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isWish = 1")
+    LiveData<SumPojo> getWishlistPrice();
+
 }

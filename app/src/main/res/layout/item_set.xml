@@ -24,15 +24,32 @@
             tools:srcCompat="@drawable/logo_sample" />
 
         <TextView
-            android:id="@+id/tvSetName"
+            android:id="@+id/tvSet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/ivLogo"
+            android:layout_alignTop="@+id/ivLogo"
             android:fontFamily="sans-serif"
             android:text="Sword and Shield"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        <TextView
+            android:id="@+id/tvSeries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSet"
+            android:layout_alignStart="@+id/tvSet"
+            android:text="Base" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSeries"
+            android:layout_alignStart="@+id/tvSet"
+            android:text="0  / 143"
+            tools:text="0  / 143" />
 
         <ImageView
             android:id="@+id/imageView"

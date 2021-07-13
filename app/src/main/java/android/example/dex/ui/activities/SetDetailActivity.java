@@ -62,7 +62,7 @@ public class SetDetailActivity extends AppCompatActivity{
         rvPokemons = findViewById(R.id.rvPokemons);
         ivLogo = findViewById(R.id.ivLogo);
         ivSymbol = findViewById(R.id.ivSymbol);
-        tvSetName = findViewById(R.id.tvSetName);
+        tvSetName = findViewById(R.id.tvSet);
         tvSeries = findViewById(R.id.tvSeries);
         tvCardCount = findViewById(R.id.tvCardCount);
         tvReleaseDate = findViewById(R.id.tvReleaseDate);

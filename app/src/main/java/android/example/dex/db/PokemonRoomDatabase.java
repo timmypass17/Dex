@@ -1,10 +1,12 @@
 package android.example.dex.db;
 
 import android.content.Context;
+import android.example.dex.CollectionRepository;
 import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.dao.SetDao;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
+import android.example.dex.network.PokeResponse;
 import android.example.dex.network.PokeService;
 import android.example.dex.network.PokeSetResponse;
 import android.util.Log;
@@ -70,15 +72,84 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull @NotNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-//                CollectionDao dao = INSTANCE.collectionDao();
-//                SetDao setDao = INSTANCE.setDao();
+        super.onCreate(db);
+        // If you want to keep data through app restarts,
+        // comment out the following block
+        databaseWriteExecutor.execute(() -> {
+            CollectionDao mCollectionDao = INSTANCE.collectionDao();
+            SetDao mSetDao = INSTANCE.setDao();
+//            mCollectionDao.deleteAll();
+
+            String BASE_URL = "https://api.pokemontcg.io/v2/";
+            String API_KEY = "19118357-6a69-4cc5-8b9e-02ccf48daf44";
+
+            // Interceptor
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Interceptor.Chain chain) throws IOException {
+                    Request request = chain.request().newBuilder().addHeader("X-Api-Key", API_KEY).build();
+                    return chain.proceed(request);
+                }
             });
+
+            // Retrofit
+            Retrofit retrofit = new Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(BASE_URL)
+                    .client(httpClient.build())
+                    .build();
+
+            PokeService service = retrofit.create(PokeService.class);
+
+            Call<PokeResponse> call = service.getAllPokemons();
+            call.enqueue(new retrofit2.Callback<PokeResponse>() {
+                @Override
+                public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
+                    PokeResponse pokeResponse = response.body();
+                    if (pokeResponse != null) {
+                        Log.d("CollectionRepository", "onSuccess: Getting data");
+                        List<Pokemon> pokeData = pokeResponse.getPokemons();
+                        for (Pokemon pokemon : pokeData) {
+                            databaseWriteExecutor.execute(() -> {
+                                mCollectionDao.insert(pokemon);
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PokeResponse> call, Throwable t) {
+                    Log.d("CollectionRepository", "onFailure: Fail to get data", t);
+                }
+            });
+
+            service = retrofit.create(PokeService.class);
+
+            Call<PokeSetResponse> callSet = service.getSets();
+
+            callSet.enqueue(new retrofit2.Callback<PokeSetResponse>() {
+                @Override
+                public void onResponse(Call<PokeSetResponse> call, retrofit2.Response<PokeSetResponse> response) {
+                    PokeSetResponse pokeSetResponse = response.body();
+                    if (pokeSetResponse != null) {
+                        List<PokeSet> pokeSetData = pokeSetResponse.getPokeSets();
+                        // TODO: Maybe insert a list instead of 1 by 1
+                        Log.d("SetRepository", "Inserting data");
+                        for (PokeSet pokeSet : pokeSetData) {
+                            PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
+                                mSetDao.insert(pokeSet);
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PokeSetResponse> call, Throwable t) {
+                    Log.d("SetRepository", "onFailure", t);
+                }
+            });
+        });
         }
     };
 
