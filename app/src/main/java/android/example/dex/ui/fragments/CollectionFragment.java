@@ -60,13 +60,11 @@ public class CollectionFragment extends Fragment {
         // in the foreground.
         mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             // Update the cached copy of the words in the adapter.
-            Log.d("CollectionFragment", "Submiting List");
             adapter.submitList(pokemons);
         });
 
         // Set price
         mCollectionViewModel.getTotalPrice().observe(getViewLifecycleOwner(), sumPojo -> {
-            Log.d("CollectionFragment", "Updating Price");
             tvTotalPrice.setText(sumPojo.getNormalAndHoilPrice());
         });
         // Equivalent to...

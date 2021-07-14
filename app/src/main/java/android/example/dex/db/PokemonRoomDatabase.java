@@ -32,7 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 // Usually, you only need one instance of a Room database for the whole app.
 @Database(entities = {Pokemon.class, PokeSet.class}, version = 1, exportSchema = false)
 public abstract class PokemonRoomDatabase extends RoomDatabase {
@@ -102,27 +101,36 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
 
             PokeService service = retrofit.create(PokeService.class);
 
-            Call<PokeResponse> call = service.getAllPokemons();
-            call.enqueue(new retrofit2.Callback<PokeResponse>() {
-                @Override
-                public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
-                    PokeResponse pokeResponse = response.body();
-                    if (pokeResponse != null) {
-                        Log.d("CollectionRepository", "onSuccess: Getting data");
-                        List<Pokemon> pokeData = pokeResponse.getPokemons();
-                        for (Pokemon pokemon : pokeData) {
-                            databaseWriteExecutor.execute(() -> {
-                                mCollectionDao.insert(pokemon);
-                            });
+            int pageNum = 1;
+            int totalSeen = 0;
+            int totalCount = 13685;
+            while (totalSeen < totalCount) {
+                Call<PokeResponse> call = service.getPokemonByPage(pageNum);
+                call.enqueue(new retrofit2.Callback<PokeResponse>() {
+                    @Override
+                    public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
+                        PokeResponse pokeResponse = response.body();
+                        if (pokeResponse != null) {
+                            Log.d("CollectionRepository", "onSuccess: Getting data");
+                            List<Pokemon> pokeData = pokeResponse.getPokemons();
+                            for (Pokemon pokemon : pokeData) {
+                                databaseWriteExecutor.execute(() -> {
+                                    mCollectionDao.insert(pokemon);
+                                });
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<PokeResponse> call, Throwable t) {
-                    Log.d("CollectionRepository", "onFailure: Fail to get data", t);
-                }
-            });
+                    @Override
+                    public void onFailure(Call<PokeResponse> call, Throwable t) {
+                        Log.d("CollectionRepository", "onFailure: Fail to get data", t);
+                    }
+                });
+                pageNum += 1;
+                totalSeen += 250;
+                Log.d("PokemonRoomDatabase", "Total Seen: " + totalSeen);
+            }
+
 
             service = retrofit.create(PokeService.class);
 
@@ -135,7 +143,6 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                     if (pokeSetResponse != null) {
                         List<PokeSet> pokeSetData = pokeSetResponse.getPokeSets();
                         // TODO: Maybe insert a list instead of 1 by 1
-                        Log.d("SetRepository", "Inserting data");
                         for (PokeSet pokeSet : pokeSetData) {
                             PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
                                 mSetDao.insert(pokeSet);
@@ -149,8 +156,13 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                     Log.d("SetRepository", "onFailure", t);
                 }
             });
+            Log.d("PokemonRoomDatabase", "Getting Set data");
         });
         }
     };
+
+    public static String querySet(String setId) {
+        return String.format("set.id:%s", setId);
+    }
 
 }

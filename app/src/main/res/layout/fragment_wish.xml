@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="@drawable/background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        tools:context=".ui.MainActivity">
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/Header"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -26,7 +25,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Wishlist Price" />
+                    android:text="Wishlist Price"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <TextView
                     android:id="@+id/tvWishlistPrice"
@@ -36,20 +36,24 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20dp"
                     android:text="$20.92 "
+                    android:textColor="@color/white"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    style="@style/AudioFileInfoOverlayText"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/Cards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Cards" />
+                    android:text="Cards"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <TextView
                     android:id="@+id/tvWishlistCount"
@@ -58,21 +62,24 @@
                     android:layout_below="@+id/Cards"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20dp"
-                    android:text="8 / 10"
+                    android:text="8"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    style="@style/AudioFileInfoOverlayText"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/Pending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Pending" />
+                    android:text="Pending"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <TextView
                     android:id="@+id/tvWishlistPending"
@@ -83,7 +90,8 @@
                     android:layout_marginBottom="20dp"
                     android:text="2"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    style="@style/AudioFileInfoOverlayText"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -92,8 +100,7 @@
             android:id="@+id/rvWishlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Header"/>
+            android:layout_below="@+id/Header" />
 
     </RelativeLayout>
-
 </androidx.core.widget.NestedScrollView>

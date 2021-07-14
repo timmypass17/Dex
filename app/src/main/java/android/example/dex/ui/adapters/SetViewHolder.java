@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     TextView tvSet;
     TextView tvSeries;
     TextView tvTotal;
+    ProgressBar pgbTotal;
 
     public SetViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -41,6 +43,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         tvSet = itemView.findViewById(R.id.tvSet);
         tvSeries = itemView.findViewById(R.id.tvSeries);
         tvTotal = itemView.findViewById(R.id.tvTotal);
+        pgbTotal = itemView.findViewById(R.id.pgbTotal);
     }
 
     public void bind(PokeSet pokeSet) {
@@ -50,7 +53,10 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         LiveData<List<Pokemon>> pokemons = MainActivity.mSetViewModel.getTotalFromSet(pokeSet.getId());
         pokemons.observe((LifecycleOwner) itemView.getContext(), (Observer<List<Pokemon>>) pokemonList -> {
             tvTotal.setText(pokemonList.size() + " / " + pokeSet.getmTotal());
+            pgbTotal.setProgress(pokemonList.size());
+            pgbTotal.setMax(Integer.parseInt(pokeSet.getmTotal()));
         });
+
 
         // Register click listener on card
         cardView.setOnClickListener(v -> {

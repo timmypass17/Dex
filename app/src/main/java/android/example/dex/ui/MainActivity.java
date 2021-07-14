@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     // TODO: Wish List
                     fragment = new WishFragment();
                     title = "Wish";
-                } else if (itemID == R.id.action_stat) {
-                    // TODO: Stats
-                    fragment = new CollectionFragment();
-                    title = "Stat";
                 } else if (itemID == R.id.action_set) {
                     fragment = new SetFragment();
                     title = "Set";

@@ -20,7 +20,6 @@
             android:id="@+id/ivLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
             tools:srcCompat="@drawable/logo_sample" />
 
         <TextView
@@ -49,7 +48,7 @@
             android:layout_below="@+id/tvSeries"
             android:layout_alignStart="@+id/tvSet"
             android:text="0  / 143"
-            tools:text="0  / 143" />
+            tools:text="70  / 143" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -59,6 +58,16 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+        <ProgressBar
+            android:id="@+id/pgbTotal"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivLogo"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="50" />
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

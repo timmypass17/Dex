@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="@drawable/background">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Your Collection Worth:" />
+            android:text="Your Collection Worth:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
             android:id="@+id/tvTotalPrice"
@@ -28,13 +29,13 @@
             android:layout_marginBottom="20dp"
             android:text="$20.92 "
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            style="@style/AudioFileInfoOverlayText"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCollection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_collection"
             android:layout_below="@+id/tvTotalPrice"/>
 
 <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->

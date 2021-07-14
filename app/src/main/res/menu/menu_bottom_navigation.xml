@@ -13,11 +13,6 @@
         android:title="Wishlist"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_stat"
-        android:icon="@drawable/ic_baseline_bar_chart_24"
-        android:title="Stats"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_set"
         android:icon="@drawable/ic_baseline_auto_awesome_motion_24"
         android:title="Sets"

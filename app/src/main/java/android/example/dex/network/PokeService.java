@@ -15,4 +15,7 @@ public interface PokeService {
 
     @GET("cards")
     Call<PokeResponse> getAllPokemons();
+
+    @GET("cards")
+    Call<PokeResponse> getPokemonByPage(@Query("page") int page);
 }
