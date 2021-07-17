@@ -58,6 +58,14 @@ public class CollectionRepository {
         return mCollectionDao.getPokemonByName(name);
     }
 
+    public LiveData<List<Pokemon>> getmAllPokemonBySet() {
+        return mAllPokemonBySet;
+    }
+
+    public LiveData<List<Pokemon>> getPokemonBySet(String set) {
+        return mCollectionDao.getPokemonBySet(set);
+    }
+
     public LiveData<List<Pokemon>> getWishListPokemons() {
         return mWishListPokemons;
     }

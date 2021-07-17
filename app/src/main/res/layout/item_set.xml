@@ -5,16 +5,16 @@
     android:id="@+id/cvSet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="1dp"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="5dp">
+    app:cardCornerRadius="0dp">
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="15dp">
+        android:paddingTop="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <ImageView
             android:id="@+id/ivLogo"
@@ -26,12 +26,12 @@
             android:id="@+id/tvSet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ivLogo"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/ivLogo"
-            android:layout_alignTop="@+id/ivLogo"
             android:fontFamily="sans-serif"
-            android:text="Sword and Shield"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            tools:text="Sword and Shield" />
 
         <TextView
             android:id="@+id/tvSeries"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSet"
             android:layout_alignStart="@+id/tvSet"
-            android:text="Base" />
+            tools:text="Base" />
 
         <TextView
             android:id="@+id/tvTotal"
@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSeries"
             android:layout_alignStart="@+id/tvSet"
-            android:text="0  / 143"
             tools:text="70  / 143" />
 
         <ImageView
@@ -66,8 +65,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivLogo"
             android:indeterminate="false"
-            android:max="100"
-            android:progress="50" />
+            tools:max="100"
+            tools:progress="50" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/pgbTotal"/>
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -1,150 +1,350 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/context_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.CardDetailActivity"
-    android:background="#FAFAFA">
+    android:background="#23272a">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/Card"
-        android:layout_width="wrap_content"
-        android:layout_height="420dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="0dp"
-        app:contentPadding="5dp">
-
-        <!-- adjustViewBounds removes extra top/bottom spaces from images-->
-        <ImageView
-            android:id="@+id/ivCardImage"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/card_big_sample" />
-
-    </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvNormalPrice"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Card"
-        android:layout_alignStart="@+id/Card"
-        android:layout_alignEnd="@+id/Card"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="0dp">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Card"
+            android:layout_width="wrap_content"
+            android:layout_height="420dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="0dp"
+            app:contentPadding="5dp"
+            android:backgroundTint="#2c2f33">
 
             <ImageView
-                android:id="@+id/TCGIcon"
-                android:layout_width="50dp"
+                android:id="@+id/ivCardImage"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                app:srcCompat="@drawable/tcg_icon" />
+                app:srcCompat="@drawable/card_big_sample" />
 
-            <TextView
-                android:id="@+id/NormalPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Normal" />
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/tvNormalPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="$9.50"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvHoloPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cvNormalPrice"
-        android:layout_alignStart="@+id/Card"
-        android:layout_alignEnd="@+id/Card"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="0dp">
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_below="@+id/Card"
+            android:layout_alignStart="@+id/Card"
+            android:layout_alignEnd="@+id/Card"
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="0dp"
+            android:backgroundTint="#2c2f33">
 
-            <ImageView
-                android:layout_width="50dp"
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:paddingStart="10dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                app:srcCompat="@drawable/tcg_icon" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
+                <ImageView
+                    android:id="@+id/TCGIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingStart="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    app:srcCompat="@drawable/tcg_icon" />
+
+                <TextView
+                    android:id="@+id/tvTypePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    style="@style/AudioFileInfoOverlayText"
+                    android:textSize="14dp"
+                    android:text="N/A"
+                    tools:text="Hoilfoil"
+                    />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    style="@style/AudioFileInfoOverlayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="$9.50"
+                    android:textColor="#7289da"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/Buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/Card"
+            android:layout_alignEnd="@+id/Card"
+            android:orientation="horizontal"
+            android:layout_below="@+id/cardPrice">
+
+            <Button
+                android:id="@+id/btnAddToCollection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="HoloFoil" />
+                android:text="Not owned"
+                app:icon="@drawable/ic_baseline_all_inbox_24" />
 
-            <TextView
-                android:id="@+id/tvHoloPrice"
+            <Button
+                android:id="@+id/btnAddToWishlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="$15.00"
-                android:textStyle="bold" />
-
+                android:text="Save"
+                app:icon="@drawable/ic_baseline_bookmark_border_24" />
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/Card2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Buttons"
+            android:layout_alignStart="@+id/Card"
+            android:layout_alignEnd="@+id/Card"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="0dp"
+            android:backgroundTint="#2c2f33">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddToCollection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cvHoloPrice"
-        android:layout_alignStart="@+id/Card"
-        android:layout_alignEnd="@+id/Card"
-        android:text="Add to Collection"
-        app:cornerRadius="0dp"
-        app:icon="@drawable/ic_baseline_add_24"
-        app:iconGravity="textStart" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:layout_below="@id/ivLogo"
+                android:orientation="horizontal"
+                android:background="#2c2f33">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddToWishlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnAddToCollection"
-        android:layout_alignStart="@+id/Card"
-        android:layout_alignEnd="@+id/Card"
-        android:text="Add to Wishlist"
-        app:backgroundTint="@color/purple_700"
-        app:cornerRadius="0dp"
-        app:icon="@drawable/ic_baseline_add_24"
-        app:iconGravity="textStart" />
+                <LinearLayout
+                    android:id="@+id/Set"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-</RelativeLayout>
+                    <ImageView
+                        android:id="@+id/ivSymbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/symbol_sample"
+                        android:contentDescription="An Icon representing a pokemon set" />
+
+                    <TextView
+                        android:id="@+id/tvSet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Base"
+                        android:gravity="center_horizontal"
+                        style="@style/AudioFileInfoOverlayText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:textStyle="bold"
+                        android:text="Set" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#4e5359" />
+
+                <LinearLayout
+                    android:id="@+id/Series"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSeries"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Platinum" />
+
+                    <TextView
+                        style="@style/AudioFileInfoOverlayText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Series" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#4e5359" />
+
+                <LinearLayout
+                    android:id="@+id/Number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:textStyle="bold"
+                    style="@style/AudioFileInfoOverlayText"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 / 16"
+                        style="@style/AudioFileInfoOverlayText"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:textStyle="bold"
+                        android:text="Number" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/Card3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Card2"
+            android:layout_alignStart="@+id/Card"
+            android:layout_alignEnd="@+id/Card"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="0dp"
+            android:backgroundTint="#2c2f33">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:layout_below="@id/ivLogo"
+                android:orientation="horizontal"
+                android:background="#2c2f33">
+
+                <LinearLayout
+                    android:id="@+id/Rarity"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvRarity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rare"
+                        style="@style/AudioFileInfoOverlayText"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:text="Rarity" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#4e5359" />
+
+                <LinearLayout
+                    android:id="@+id/Artist"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvArtist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atsuko Nishida"
+                        android:gravity="center_horizontal"
+                        style="@style/AudioFileInfoOverlayText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:textStyle="bold"
+                        android:text="Artist" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#4e5359" />
+
+                <LinearLayout
+                    android:id="@+id/Legality"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvLegality"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Legal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        style="@style/AudioFileInfoOverlayText"
+                        android:text="Legality" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+</ScrollView>

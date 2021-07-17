@@ -3,6 +3,7 @@ package android.example.dex.ui.fragments;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.CollectionAdapter;
 import android.example.dex.R;
+import android.example.dex.ui.adapters.CollectionViewHolder;
 import android.example.dex.viewmodel.CollectionViewModel;
 import android.example.dex.viewmodel.WishViewModel;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,10 +51,12 @@ public class CollectionFragment extends Fragment {
 
         RecyclerView rvCollection = view.findViewById(R.id.rvCollection);
         TextView tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
+        TextView tvCardCount = view.findViewById(R.id.tvCardCount);
 
         final CollectionAdapter adapter = new CollectionAdapter(new CollectionAdapter.WordDiff());
         rvCollection.setAdapter(adapter);
         rvCollection.setLayoutManager(new LinearLayoutManager(getContext()));
+//        rvCollection.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         // mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
@@ -61,6 +69,7 @@ public class CollectionFragment extends Fragment {
         mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(pokemons);
+            tvCardCount.setText(String.valueOf(pokemons.size()));
         });
 
         // Set price

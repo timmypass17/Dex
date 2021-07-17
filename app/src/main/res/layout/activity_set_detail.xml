@@ -6,133 +6,154 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.SetDetailActivity"
-    android:padding="10dp"
-    android:background="#FAFAFA">
+    android:background="#23272a">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="30dp">
-                <ImageView
-                    android:id="@+id/ivLogo"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:contentDescription="A banner of the pokemon set"
-                    app:srcCompat="@drawable/logo_sample" />
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/Description"
+            android:id="@+id/Set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/logo"
-            android:layout_margin="1dp">
+            android:layout_margin="1dp"
+            android:backgroundTint="#4e5359">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="100"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/Title"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="33"
-                    android:padding="10dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/ivSymbol"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        app:srcCompat="@drawable/symbol_sample"
-                        android:contentDescription="An Icon representing a pokemon set" />
-
-                    <TextView
-                        android:id="@+id/tvSet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Guardians Rising"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSeries"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sun &amp; Moon" />
-
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="A banner of the pokemon set"
+                    app:srcCompat="@drawable/logo_sample" />
 
                 <LinearLayout
-                    android:id="@+id/Count"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="33"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:layout_below="@id/ivLogo"
+                    android:orientation="horizontal"
+                    android:background="#2c2f33">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/Title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tvCardCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="145"
-                        android:textSize="24sp" />
+                        <ImageView
+                            android:id="@+id/ivSymbol"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/symbol_sample"
+                            android:contentDescription="An Icon representing a pokemon set" />
+
+                        <TextView
+                            android:id="@+id/tvSet"
+                            style="@style/AudioFileInfoOverlayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="Guardians Rising" />
+
+                        <TextView
+                            android:id="@+id/tvSeries"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/AudioFileInfoOverlayText"
+                            android:text="Sun &amp; Moon" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#4e5359" />
+
+                    <LinearLayout
+                        android:id="@+id/Count"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvCardCount"
+                            style="@style/AudioFileInfoOverlayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100/200"
+                            android:textColor="#7289da"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            style="@style/AudioFileInfoOverlayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Owned" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#4e5359" />
+
+                    <LinearLayout
+                        android:id="@+id/Date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvReleaseDate"
+                            style="@style/AudioFileInfoOverlayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Feburary 17, 2001"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            style="@style/AudioFileInfoOverlayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Released" />
+                    </LinearLayout>
+
                 </LinearLayout>
+            </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/Date"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="33"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Released"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvReleaseDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2017/05/05"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPokemons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Description"
-            android:layout_marginTop="20dp">
+            android:layout_below="@+id/Set"
+            android:padding="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 

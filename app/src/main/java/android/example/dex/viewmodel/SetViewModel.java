@@ -1,6 +1,7 @@
 package android.example.dex.viewmodel;
 
 import android.app.Application;
+import android.example.dex.CollectionRepository;
 import android.example.dex.SetRepository;
 import android.example.dex.db.PokemonRoomDatabase;
 import android.example.dex.db.entity.pokemon.Pokemon;
@@ -18,11 +19,13 @@ import java.util.List;
 public class SetViewModel extends AndroidViewModel {
 
     private SetRepository mSetRepository;
+    private CollectionRepository mCollectionRepository;
     private final LiveData<List<PokeSet>> mAllSets;
 
     public SetViewModel(@NonNull @NotNull Application application) {
         super(application);
         mSetRepository = new SetRepository(application);
+        mCollectionRepository = new CollectionRepository(application);
         mAllSets = mSetRepository.getAllSets();
     }
 

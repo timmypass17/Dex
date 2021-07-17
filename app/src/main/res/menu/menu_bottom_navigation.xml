@@ -7,11 +7,11 @@
         android:icon="@drawable/ic_baseline_all_inbox_24"
         android:title="Collection"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_wish"
-        android:icon="@drawable/ic_baseline_star_24"
-        android:title="Wishlist"
-        app:showAsAction="always" />
+<!--    <item-->
+<!--        android:id="@+id/action_wish"-->
+<!--        android:icon="@drawable/ic_baseline_bookmarks_24"-->
+<!--        android:title="Wishlist"-->
+<!--        app:showAsAction="always" />-->
     <item
         android:id="@+id/action_set"
         android:icon="@drawable/ic_baseline_auto_awesome_motion_24"

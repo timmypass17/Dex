@@ -16,6 +16,8 @@ public class TCGPlayer {
     @SerializedName("prices")
     public Prices prices;
 
+    public String updatedAt;
+
     public TCGPlayer() {}
 
     public String getUrl() {
@@ -25,4 +27,10 @@ public class TCGPlayer {
     public Prices getPrices() {
         return prices;
     }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+
 }

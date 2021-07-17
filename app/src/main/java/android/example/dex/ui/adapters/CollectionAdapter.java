@@ -1,11 +1,16 @@
 package android.example.dex.ui.adapters;
 
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.ui.MainActivity;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 

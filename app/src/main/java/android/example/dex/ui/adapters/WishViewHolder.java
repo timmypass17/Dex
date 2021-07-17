@@ -2,6 +2,7 @@ package android.example.dex.ui.adapters;
 
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.fragments.CollectionFragment;
 import android.example.dex.ui.fragments.WishFragment;
@@ -43,11 +44,7 @@ public class WishViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
-        if (pokemon.getTcgplayer() != null && pokemon.getTcgplayer().getPrices() != null) {
-            tvPrice.setText("$" + pokemon.getTcgplayer().getPrices().getPrice());
-        } else {
-            tvPrice.setText("No price found.");
-        }
+        tvPrice.setText(Prices.getPrice(pokemon));
         Glide.with(itemView)
                 .load(pokemon.getImages().getSmallImage())
                 .into(ivCardImage);

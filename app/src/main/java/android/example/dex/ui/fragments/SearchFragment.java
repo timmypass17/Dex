@@ -62,8 +62,8 @@ public class SearchFragment extends Fragment {
         btnSearch.setOnClickListener(v -> {
             String name = etSearch.getText().toString();
             mSearchViewModel.updateAllPokemonByName(name);
-            LiveData<List<Pokemon>> pokemons = mSearchViewModel.getAllPokemonByName();
-            pokemons.observe(getViewLifecycleOwner(), pokemons1 -> adapter.submitList(pokemons1));
+            mSearchViewModel.getAllPokemonByName().observe(getViewLifecycleOwner(), pokemons1 ->
+                    adapter.submitList(pokemons1));
         });
 
     }

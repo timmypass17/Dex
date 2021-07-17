@@ -32,6 +32,15 @@ public class Pokemon {
     @Embedded
     public SetID set;
 
+    public String rarity;
+
+    public String artist;
+
+    @Embedded
+    public Legalities legalities;
+
+    public String number;
+
     public int isOwned = 0;
 
     public int isWish = 0;
@@ -69,5 +78,21 @@ public class Pokemon {
 
     public SetID getSetID() {
         return set;
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public Legalities getLegalities() {
+        return legalities;
+    }
+
+    public String getNumber() {
+        return number;
     }
 }

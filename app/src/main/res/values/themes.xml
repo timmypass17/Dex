@@ -3,7 +3,7 @@
     <style name="Theme.Dex" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#2c2f33</item>
-        <item name="colorPrimaryVariant">#23272a</item>
+        <item name="colorPrimaryVariant">#1b1f21</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#7289da</item>

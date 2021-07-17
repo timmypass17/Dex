@@ -3,11 +3,12 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardCollectionItem"
+    android:id="@+id/cardPokemonItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="0dp"
-    app:cardElevation="5dp">
+    app:cardElevation="5dp"
+    android:backgroundTint="#2c2f33">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
 
         <ImageView
             android:id="@+id/ivCardImage"
-            android:layout_width="40dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/card_sample" />
@@ -29,27 +30,60 @@
 
             <TextView
                 android:id="@+id/tvName"
+                style="@style/AudioFileInfoOverlayText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="14sp"
                 tools:text="Venusaur" />
 
             <TextView
                 android:id="@+id/tvPrice"
+                style="@style/AudioFileInfoOverlayText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvName"
                 android:layout_alignStart="@+id/tvName"
-                android:text="$20.95" />
+                android:text="$20.95"
+                android:textColor="#7289da" />
+
+            <TextView
+                android:id="@+id/tvCardType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPrice"
+                android:layout_alignStart="@+id/tvName"
+                style="@style/AudioFileInfoOverlayText"
+                android:text="Reverse Hoil" />
+
+            <TextView
+                android:id="@+id/tvSet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvCardType"
+                android:layout_alignStart="@id/tvName"
+                style="@style/AudioFileInfoOverlayText"
+                android:text="Dragon Vault" />
+
+            <TextView
+                android:id="@+id/tvRarity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSet"
+                android:layout_alignStart="@id/tvName"
+                style="@style/AudioFileInfoOverlayText"
+                android:text="Rare" />
+
 
             <Button
                 android:id="@+id/btnDeletePokemon"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                app:icon="@drawable/ic_baseline_close_24"
+                android:layout_centerVertical="true"
+                app:icon="@drawable/ic_baseline_delete_24"
                 app:iconTint="#7289da" />
 
 

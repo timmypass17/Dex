@@ -29,12 +29,14 @@ public interface CollectionDao {
     @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name ASC ")
     LiveData<List<Pokemon>> getOwnedPokemons();
 
-    // Get normal price
     @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isOwned = 1")
     LiveData<SumPojo> getCollectionPrice();
 
     @Query("SELECT * FROM pokemon_table WHERE name = :name")
     LiveData<List<Pokemon>> getPokemonByName(String name);
+
+    @Query("SELECT * FROM pokemon_table WHERE setID = :set")
+    LiveData<List<Pokemon>> getPokemonBySet(String set);
 
     @Query("UPDATE pokemon_table SET isOwned = 1 WHERE id = :id")
     void addToCollection(String id);
@@ -53,5 +55,6 @@ public interface CollectionDao {
 
     @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isWish = 1")
     LiveData<SumPojo> getWishlistPrice();
+
 
 }
