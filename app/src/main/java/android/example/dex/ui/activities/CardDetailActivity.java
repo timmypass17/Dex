@@ -1,7 +1,9 @@
 package android.example.dex.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NavUtils;
 import androidx.lifecycle.LiveData;
 
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.example.dex.viewmodel.WishViewModel;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -55,6 +58,8 @@ public class CardDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_detail);
+        // Back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
         mCollectionViewModel = MainActivity.mCollectionViewModel;
@@ -130,5 +135,16 @@ public class CardDetailActivity extends AppCompatActivity {
             Log.d("ImplicitIntents", "Can't handle this!");
         }
         Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

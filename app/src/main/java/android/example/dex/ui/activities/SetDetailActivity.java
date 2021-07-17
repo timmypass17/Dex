@@ -1,6 +1,8 @@
 package android.example.dex.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -17,6 +19,7 @@ import android.example.dex.db.entity.set.PokeSet;
 import android.example.dex.ui.adapters.SearchAdapter;
 import android.example.dex.viewmodel.SearchViewModel;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +50,8 @@ public class SetDetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_detail);
+        // Back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView rvPokemons = findViewById(R.id.rvPokemons);
         final SearchAdapter adapter = new SearchAdapter(new SearchAdapter.WordDiff());
@@ -82,4 +87,14 @@ public class SetDetailActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

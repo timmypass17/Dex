@@ -15,6 +15,9 @@ import androidx.room.Update;
 
 import java.util.List;
 
+// SQLite does not have a separate Boolean storage class.
+// Instead, Boolean values are stored as integers 0 (false) and 1 (true).
+
 @Dao
 public interface CollectionDao {
 
@@ -24,8 +27,6 @@ public interface CollectionDao {
     @Query("SELECT * FROM pokemon_table")
     LiveData<List<Pokemon>> getAllPokemons();
 
-    // SQLite does not have a separate Boolean storage class.
-    // Instead, Boolean values are stored as integers 0 (false) and 1 (true).
     @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name ASC ")
     LiveData<List<Pokemon>> getOwnedPokemons();
 
