@@ -26,13 +26,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
-    public static FragmentManager fragmentManager;
-    private BottomNavigationView bottomNavigationView;
-    public static CollectionViewModel mCollectionViewModel;
-    public static WishViewModel mWishViewModel;
-    public static SearchViewModel mSearchViewModel;
-    public static SetViewModel mSetViewModel;
+    private static final String TAG = "MainActivity";
+    private static FragmentManager fragmentManager;
+    private static CollectionViewModel mCollectionViewModel;
+    private static WishViewModel mWishViewModel;
+    private static SearchViewModel mSearchViewModel;
+    private static SetViewModel mSetViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +44,16 @@ public class MainActivity extends AppCompatActivity {
         mSetViewModel = new ViewModelProvider(this).get(SetViewModel.class);
 
         fragmentManager = getSupportFragmentManager();
-        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 Fragment fragment;
                 int itemID = item.getItemId();
                 String title;
-                // Switch to screen to whatever was selected in bottom nav
                 if (itemID == R.id.action_collection) {
                     fragment = new CollectionFragment();
                     title = "Collection";
-//                } else if (itemID == R.id.action_wish) {
-//                    // TODO: Wish List
-//                    fragment = new WishFragment();
-//                    title = "Wish";
                 } else if (itemID == R.id.action_set) {
                     fragment = new SetFragment();
                     title = "Set";
@@ -71,15 +65,30 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Unknown Fragment", Toast.LENGTH_SHORT).show();
                     title = "Error";
                 }
-                // Update action bar title
+                // Update action bar title, change fragment
                 setActionBarTitle(title);
-                // Change fragment
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_collection);
+    }
+
+    public static CollectionViewModel getmCollectionViewModel() {
+        return mCollectionViewModel;
+    }
+
+    public static WishViewModel getmWishViewModel() {
+        return mWishViewModel;
+    }
+
+    public static SearchViewModel getmSearchViewModel() {
+        return mSearchViewModel;
+    }
+
+    public static SetViewModel getmSetViewModel() {
+        return mSetViewModel;
     }
 
     public void setActionBarTitle(String title) {

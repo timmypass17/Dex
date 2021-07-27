@@ -29,12 +29,12 @@ import java.util.List;
 
 public class SetViewHolder extends RecyclerView.ViewHolder {
 
-    CardView cardView;
-    ImageView ivLogo;
-    TextView tvSet;
-    TextView tvSeries;
-    TextView tvTotal;
-    ProgressBar pgbTotal;
+    private final CardView cardView;
+    private final ImageView ivLogo;
+    private final TextView tvSet;
+    private final TextView tvSeries;
+    private final TextView tvTotal;
+    private final ProgressBar pgbTotal;
 
     public SetViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -50,13 +50,12 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
         Glide.with(ivLogo.getContext()).load(pokeSet.getmImages().getmLogo()).into(ivLogo);
         tvSet.setText(pokeSet.getmName());
         tvSeries.setText(pokeSet.getmSeries());
-        LiveData<List<Pokemon>> pokemons = MainActivity.mSetViewModel.getTotalFromSet(pokeSet.getId());
-        pokemons.observe((LifecycleOwner) itemView.getContext(), (Observer<List<Pokemon>>) pokemonList -> {
+        LiveData<List<Pokemon>> pokemons = MainActivity.getmSetViewModel().getAllPokemonFromSet(pokeSet.getId());
+        pokemons.observe((LifecycleOwner) itemView.getContext(), pokemonList -> {
             tvTotal.setText(pokemonList.size() + " / " + pokeSet.getmTotal());
             pgbTotal.setProgress(pokemonList.size());
             pgbTotal.setMax(Integer.parseInt(pokeSet.getmTotal()));
         });
-
 
         // Register click listener on card
         cardView.setOnClickListener(v -> {

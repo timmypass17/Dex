@@ -15,29 +15,17 @@ import java.util.List;
 public class SearchViewModel extends AndroidViewModel {
 
     private final CollectionRepository mCollectionRepository;
-    private LiveData<List<Pokemon>> mAllPokemonsByName;
-    private  LiveData<List<Pokemon>> mAllPokemonBySet;
 
     public SearchViewModel(@NonNull @NotNull Application application) {
         super(application);
         mCollectionRepository = new CollectionRepository(application);
-        mAllPokemonsByName = mCollectionRepository.getAllPokemonByName();
-        mAllPokemonBySet = mCollectionRepository.getmAllPokemonBySet();
     }
 
-    public LiveData<List<Pokemon>> getAllPokemonByName() {
-        return mAllPokemonsByName;
+    public LiveData<List<Pokemon>> getAllPokemonByName(String name) {
+        return mCollectionRepository.getAllPokemonByName(name);
     }
 
-    public void updateAllPokemonByName(String name) {
-        mAllPokemonsByName = mCollectionRepository.getNewPokemon(name);
-    }
-
-    public LiveData<List<Pokemon>> getAllPokemonBySet() {
-        return mAllPokemonBySet;
-    }
-
-    public void updateAllPokemonBySet(String set) {
-        mAllPokemonBySet = mCollectionRepository.getPokemonBySet(set);
+    public LiveData<List<Pokemon>> getAllPokemonBySet(String setId) {
+        return mCollectionRepository.getmAllPokemonBySet(setId);
     }
 }

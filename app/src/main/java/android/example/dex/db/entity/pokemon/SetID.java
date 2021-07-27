@@ -19,6 +19,9 @@ public class SetID {
     @ColumnInfo(name = "setTotal")
     public int total;
 
+    @ColumnInfo(name = "setReleaseDate")
+    public String releaseDate;
+
     public SetID(){};
 
     public String getId() {

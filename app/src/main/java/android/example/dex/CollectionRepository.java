@@ -32,10 +32,9 @@ public class CollectionRepository {
     private final CollectionDao mCollectionDao;
     private final LiveData<List<Pokemon>> mAllPokemons;
     private final LiveData<SumPojo> mTotalPrice;
-    private LiveData<List<Pokemon>> mAllPokemonByName; // TODO: Initialize mAllPokemonByName by something
-    private LiveData<List<Pokemon>> mWishListPokemons;
-    private LiveData<SumPojo> mWishPrice;
-    private LiveData<List<Pokemon>>  mAllPokemonBySet;
+    private final LiveData<List<Pokemon>> mWishListPokemons;
+    private final LiveData<SumPojo> mWishPrice;
+    private LiveData<List<Pokemon>> mAllPokemonBySet;
 
     public CollectionRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
@@ -44,26 +43,20 @@ public class CollectionRepository {
         mTotalPrice = mCollectionDao.getCollectionPrice();
         mWishListPokemons = mCollectionDao.getWishlistPokemons();
         mWishPrice = mCollectionDao.getWishlistPrice();
-        // populateCards();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-
-    public LiveData<List<Pokemon>> getAllPokemonByName() {
-        return mAllPokemonByName;
+    public LiveData<List<Pokemon>> getAllPokemonByName(String name) {
+        return mCollectionDao.getPokemonByName(name);
     }
 
     public LiveData<List<Pokemon>> getNewPokemon(String name) {
         return mCollectionDao.getPokemonByName(name);
     }
 
-    public LiveData<List<Pokemon>> getmAllPokemonBySet() {
-        return mAllPokemonBySet;
-    }
-
-    public LiveData<List<Pokemon>> getPokemonBySet(String set) {
-        return mCollectionDao.getPokemonBySet(set);
+    public LiveData<List<Pokemon>> getmAllPokemonBySet(String setId) {
+        return mCollectionDao.getPokemonBySet(setId);
     }
 
     public LiveData<List<Pokemon>> getWishListPokemons() {

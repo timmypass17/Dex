@@ -41,6 +41,23 @@ public class Pokemon {
 
     public String number;
 
+    public int card_number;
+
+    public void setCard_number(String number) {
+        StringBuilder n = new StringBuilder();
+        for (int i = 0; i < number.length(); i++) {
+            char c = number.charAt(i);
+            // Append numbers only
+            if (Character.isDigit(c)) {
+                n.append(c);
+            }
+        }
+        // If number is not empty, update number
+        if (!String.valueOf(n).equals("")) {
+            this.card_number = Integer.parseInt(String.valueOf(n));
+        }
+    }
+
     public int isOwned = 0;
 
     public int isWish = 0;
@@ -94,5 +111,9 @@ public class Pokemon {
 
     public String getNumber() {
         return number;
+    }
+
+    public int getCard_number() {
+        return card_number;
     }
 }

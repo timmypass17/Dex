@@ -1,9 +1,7 @@
 package android.example.dex.viewmodel;
 
 import android.app.Application;
-import android.example.dex.CollectionRepository;
 import android.example.dex.SetRepository;
-import android.example.dex.db.PokemonRoomDatabase;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
 
@@ -18,14 +16,12 @@ import java.util.List;
 // ViewModel takes care of holding and processing all the data needed for the UI
 public class SetViewModel extends AndroidViewModel {
 
-    private SetRepository mSetRepository;
-    private CollectionRepository mCollectionRepository;
+    private final SetRepository mSetRepository;
     private final LiveData<List<PokeSet>> mAllSets;
 
     public SetViewModel(@NonNull @NotNull Application application) {
         super(application);
         mSetRepository = new SetRepository(application);
-        mCollectionRepository = new CollectionRepository(application);
         mAllSets = mSetRepository.getAllSets();
     }
 
@@ -34,7 +30,23 @@ public class SetViewModel extends AndroidViewModel {
         return mAllSets;
     }
 
-    public LiveData<List<Pokemon>> getTotalFromSet(String id) {
-        return mSetRepository.getTotalFromSet(id);
+    public LiveData<List<PokeSet>> getOldSet() {
+        return mSetRepository.getOldSet();
+    }
+
+    public LiveData<List<PokeSet>> getNewSet() {
+        return mSetRepository.getNewSet();
+    }
+
+    public LiveData<List<PokeSet>> getAlphabetizedSetAsc() {
+        return mSetRepository.getAlphabetizedSetAsc();
+    }
+
+    public LiveData<List<PokeSet>> getAlphabetizedSetDesc() {
+        return mSetRepository.getAlphabetizedSetDesc();
+    }
+
+    public LiveData<List<Pokemon>> getAllPokemonFromSet(String id) {
+        return mSetRepository.getAllPokemonFromSet(id);
     }
 }

@@ -33,10 +33,10 @@ public interface CollectionDao {
     @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isOwned = 1")
     LiveData<SumPojo> getCollectionPrice();
 
-    @Query("SELECT * FROM pokemon_table WHERE name = :name")
+    @Query("SELECT * FROM pokemon_table WHERE name = :name ORDER BY setReleaseDate")
     LiveData<List<Pokemon>> getPokemonByName(String name);
 
-    @Query("SELECT * FROM pokemon_table WHERE setID = :set")
+    @Query("SELECT * FROM pokemon_table WHERE setID = :set ORDER BY card_number ASC")
     LiveData<List<Pokemon>> getPokemonBySet(String set);
 
     @Query("UPDATE pokemon_table SET isOwned = 1 WHERE id = :id")

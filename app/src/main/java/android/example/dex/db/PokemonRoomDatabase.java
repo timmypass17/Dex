@@ -115,6 +115,8 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                             List<Pokemon> pokeData = pokeResponse.getPokemons();
                             for (Pokemon pokemon : pokeData) {
                                 databaseWriteExecutor.execute(() -> {
+                                    // Update card_number
+                                    pokemon.setCard_number(pokemon.getNumber());
                                     mCollectionDao.insert(pokemon);
                                 });
                             }

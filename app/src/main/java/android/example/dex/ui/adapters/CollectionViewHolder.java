@@ -70,7 +70,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
         btnDeletePokemon.setOnClickListener(v -> {
             Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from collection...", Snackbar.LENGTH_SHORT).show();
-            MainActivity.mCollectionViewModel.removeFromCollection(pokemon.getId());
+            MainActivity.getmCollectionViewModel().removeFromCollection(pokemon.getId());
         });
 
         // 1. Register click listener on card

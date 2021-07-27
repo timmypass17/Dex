@@ -51,7 +51,7 @@ public class WishViewHolder extends RecyclerView.ViewHolder {
 
         btnRemoveFromWishlist.setOnClickListener(v -> {
             Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from wishlist...", Snackbar.LENGTH_SHORT).show();
-            MainActivity.mWishViewModel.removeFromWishlist(pokemon.getId());
+            MainActivity.getmWishViewModel().removeFromWishlist(pokemon.getId());
         });
     }
 }

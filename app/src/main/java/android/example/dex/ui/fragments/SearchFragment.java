@@ -54,18 +54,21 @@ public class SearchFragment extends Fragment {
         rvPokemons.setAdapter(adapter);
         rvPokemons.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-//        mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        mSearchViewModel = MainActivity.mSearchViewModel;
+        // mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        mSearchViewModel = MainActivity.getmSearchViewModel();
+
+        // Default cards init
+        mSearchViewModel.getAllPokemonByName("Pikachu").observe(getViewLifecycleOwner(), pokemons -> {
+            Log.d("SearchFragment","Getting more pikachues");
+            adapter.submitList(pokemons);
+        });
 
         EditText etSearch = view.findViewById(R.id.etSearch);
         Button btnSearch = view.findViewById(R.id.btnGetPokemons);
         btnSearch.setOnClickListener(v -> {
             String name = etSearch.getText().toString();
-            mSearchViewModel.updateAllPokemonByName(name);
-            mSearchViewModel.getAllPokemonByName().observe(getViewLifecycleOwner(), pokemons1 ->
-                    adapter.submitList(pokemons1));
+            mSearchViewModel.getAllPokemonByName(name).observe(getViewLifecycleOwner(), pokemons ->
+                    adapter.submitList(pokemons));
         });
-
     }
-
 }

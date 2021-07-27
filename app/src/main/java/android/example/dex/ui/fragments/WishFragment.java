@@ -51,7 +51,7 @@ public class WishFragment extends Fragment {
         rvWishlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
 //        mWishViewModel = new ViewModelProvider(this).get(WishViewModel.class);
-        mWishViewModel = MainActivity.mWishViewModel;
+        mWishViewModel = MainActivity.getmWishViewModel();
 
         mWishViewModel.getWishlistPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             adapter.submitList(pokemons);

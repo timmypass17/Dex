@@ -18,8 +18,17 @@ public interface SetDao {
     void insert(PokeSet pokeSet);
 
     @Query("SELECT * FROM set_table ORDER BY mReleaseDate ASC")
-    LiveData<List<PokeSet>> getAlphabetizedSets();
+    LiveData<List<PokeSet>> getOldSet();
+
+    @Query("SELECT * FROM set_table ORDER BY mReleaseDate DESC")
+    LiveData<List<PokeSet>> getNewSet();
+
+    @Query("SELECT * FROM set_table ORDER BY mName ASC")
+    LiveData<List<PokeSet>> getAlphabetizedSetAsc();
+
+    @Query("SELECT * FROM set_table ORDER BY mName DESC")
+    LiveData<List<PokeSet>> getAlphabetizedSetDesc();
 
     @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 AND setID = :id")
-    LiveData<List<Pokemon>> getTotalFromSet(String id);
+    LiveData<List<Pokemon>> getAllPokemonFromSet(String id);
 }

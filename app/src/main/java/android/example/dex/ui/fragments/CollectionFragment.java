@@ -61,7 +61,7 @@ public class CollectionFragment extends Fragment {
         // Get a new or existing ViewModel from the ViewModelProvider.
         // mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
 
-        mCollectionViewModel = MainActivity.mCollectionViewModel;
+        mCollectionViewModel = MainActivity.getmCollectionViewModel();
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is

@@ -34,14 +34,29 @@ public class SetRepository {
     public SetRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mSetDao = db.setDao();
-        mAllSets = mSetDao.getAlphabetizedSets();
+        mAllSets = mSetDao.getOldSet(); // Set default order
     }
 
     public LiveData<List<PokeSet>> getAllSets() {
         return mAllSets;
     }
 
-    public LiveData<List<Pokemon>> getTotalFromSet(String id) {
-        return mSetDao.getTotalFromSet(id);
+    public LiveData<List<PokeSet>> getOldSet() {
+        return mSetDao.getOldSet();
+    }
+
+    public LiveData<List<PokeSet>> getNewSet() {
+        return mSetDao.getNewSet();
+    }
+
+    public LiveData<List<PokeSet>> getAlphabetizedSetAsc() {
+        return mSetDao.getAlphabetizedSetAsc();
+    }
+    public LiveData<List<PokeSet>> getAlphabetizedSetDesc() {
+        return mSetDao.getAlphabetizedSetDesc();
+    }
+
+    public LiveData<List<Pokemon>> getAllPokemonFromSet(String id) {
+        return mSetDao.getAllPokemonFromSet(id);
     }
 }
