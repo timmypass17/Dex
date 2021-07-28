@@ -6,9 +6,13 @@ import android.example.dex.R;
 import android.example.dex.ui.adapters.CollectionViewHolder;
 import android.example.dex.viewmodel.CollectionViewModel;
 import android.example.dex.viewmodel.WishViewModel;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 public class CollectionFragment extends Fragment {
 
     public CollectionViewModel mCollectionViewModel;
+    private RecyclerView rvCollection;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -41,6 +46,8 @@ public class CollectionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Enable action bar menu
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_collection, container, false);
     }
@@ -49,25 +56,17 @@ public class CollectionFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView rvCollection = view.findViewById(R.id.rvCollection);
+        rvCollection = view.findViewById(R.id.rvCollection);
         TextView tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
         TextView tvCardCount = view.findViewById(R.id.tvCardCount);
 
         final CollectionAdapter adapter = new CollectionAdapter(new CollectionAdapter.WordDiff());
         rvCollection.setAdapter(adapter);
         rvCollection.setLayoutManager(new LinearLayoutManager(getContext()));
-//        rvCollection.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
-        // Get a new or existing ViewModel from the ViewModelProvider.
-        // mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
 
         mCollectionViewModel = MainActivity.getmCollectionViewModel();
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
         mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
-            // Update the cached copy of the words in the adapter.
             adapter.submitList(pokemons);
             tvCardCount.setText(String.valueOf(pokemons.size()));
         });
@@ -76,10 +75,27 @@ public class CollectionFragment extends Fragment {
         mCollectionViewModel.getTotalPrice().observe(getViewLifecycleOwner(), sumPojo -> {
             tvTotalPrice.setText(sumPojo.getNormalAndHoilPrice());
         });
-        // Equivalent to...
-        // SumPojo sumPojo = mPokemonViewModel.getTotalPrice();
-        // tvTotalPrice.setText(String.valueOf(sumPojo.getNormalAndHoilPrice()));
+    }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_collection, menu);
+
+        // Get handle on menu item
+        MenuItem miDelete = menu.findItem(R.id.action_delete);
+
+        // Menu item click listener to display delete button
+        miDelete.setOnMenuItemClickListener(item -> showDeleteButton());
+    }
+
+    // Show delete option
+    private boolean showDeleteButton() {
+        for (int i = 0; i < rvCollection.getChildCount(); i++) {
+            CollectionViewHolder holder = (CollectionViewHolder) rvCollection.findViewHolderForAdapterPosition(i);
+            holder.btnDeletePokemon.setVisibility(View.VISIBLE);
+        }
+        return true;
     }
 
 }

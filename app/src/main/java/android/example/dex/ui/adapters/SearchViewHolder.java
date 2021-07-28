@@ -24,7 +24,7 @@ import org.parceler.Parcels;
 public class SearchViewHolder extends RecyclerView.ViewHolder {
 
     private final CardView cardPokemon;
-    private final ImageView ivCard;
+    public final ImageView ivCard;
 
     public SearchViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);

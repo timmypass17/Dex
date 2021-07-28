@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/empty2"
+        android:icon="@drawable/ic_baseline_more_vert_24"
+        android:title="Three dots"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/empty"
+                android:icon="@drawable/ic_baseline_sort_24"
+                android:title="Sort By"
+                app:showAsAction="always">
+                <menu>
+                    <item
+                        android:id="@+id/action_sort_new"
+                        android:icon="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        android:title="Newest"
+                        app:showAsAction="ifRoom" />
+                    <item
+                        android:id="@+id/action_sort_old"
+                        android:icon="@drawable/ic_baseline_keyboard_arrow_up_24"
+                        android:title="Oldest"
+                        app:showAsAction="ifRoom" />
+                    <item
+                        android:id="@+id/action_sort_name_asc"
+                        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+                        android:title="Alphabetical (A-Z)"
+                        app:showAsAction="ifRoom" />
+                    <item
+                        android:id="@+id/action_sort_name_desc"
+                        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+                        android:title="Alphabetical (Z-A)"
+                        app:showAsAction="ifRoom" />
+                </menu>
+            </item>
+
+            <item
+                android:id="@+id/action_show_all"
+                android:icon="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:title="Show All"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/action_show_owned"
+                android:icon="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:title="Show Owned"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+
+</menu>

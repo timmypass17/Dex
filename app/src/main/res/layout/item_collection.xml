@@ -84,7 +84,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 app:icon="@drawable/ic_baseline_delete_24"
-                app:iconTint="#7289da" />
+                app:iconTint="#7289da"
+                android:visibility="invisible"/>
 
 
         </RelativeLayout>
