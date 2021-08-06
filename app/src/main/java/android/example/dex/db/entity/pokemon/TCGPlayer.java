@@ -1,5 +1,6 @@
 package android.example.dex.db.entity.pokemon;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 
 import com.google.gson.annotations.SerializedName;

@@ -33,11 +33,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+
 
 public class CollectionFragment extends Fragment {
 
-    public CollectionViewModel mCollectionViewModel;
+    private CollectionViewModel mCollectionViewModel;
+    private CollectionAdapter mCollectionAdapter;
     private RecyclerView rvCollection;
+    private TextView tvTotalPrice;
+    private TextView tvCardCount;
 
     public CollectionFragment() {
         // Required empty public constructor
@@ -56,24 +61,24 @@ public class CollectionFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mCollectionViewModel = MainActivity.getmCollectionViewModel();
         rvCollection = view.findViewById(R.id.rvCollection);
-        TextView tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
-        TextView tvCardCount = view.findViewById(R.id.tvCardCount);
+        tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
+        tvCardCount = view.findViewById(R.id.tvCardCount);
 
-        final CollectionAdapter adapter = new CollectionAdapter(new CollectionAdapter.WordDiff());
-        rvCollection.setAdapter(adapter);
+        mCollectionAdapter = new CollectionAdapter(new CollectionAdapter.WordDiff());
+        rvCollection.setAdapter(mCollectionAdapter);
         rvCollection.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mCollectionViewModel = MainActivity.getmCollectionViewModel();
-
         mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
-            adapter.submitList(pokemons);
+            mCollectionAdapter.submitList(pokemons);
             tvCardCount.setText(String.valueOf(pokemons.size()));
         });
 
-        // Set price
-        mCollectionViewModel.getTotalPrice().observe(getViewLifecycleOwner(), sumPojo -> {
-            tvTotalPrice.setText(sumPojo.getNormalAndHoilPrice());
+        // Set collection worth
+        mCollectionViewModel.getmHighestCollectionPrice().observe(getViewLifecycleOwner(), price -> {
+            DecimalFormat moneyFormat = new DecimalFormat("$0.00");
+            tvTotalPrice.setText(moneyFormat.format(price));
         });
     }
 
@@ -83,7 +88,20 @@ public class CollectionFragment extends Fragment {
         inflater.inflate(R.menu.menu_collection, menu);
 
         // Get handle on menu item
+        MenuItem miSort = menu.findItem(R.id.Sort);
+        MenuItem miSortNew = menu.findItem(R.id.action_sort_new); // Newest
+        MenuItem miSortOld = menu.findItem(R.id.action_sort_old); // Oldest
+        MenuItem miSortNameAsc = menu.findItem(R.id.action_sort_name_asc);   // A-Z
+        MenuItem miSortNameDesc = menu.findItem(R.id.action_sort_name_desc); // Z-A
         MenuItem miDelete = menu.findItem(R.id.action_delete);
+
+        // Change color of icons
+        miSort.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
+        miSortNew.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
+        miSortOld.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
+        miSortNameAsc.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
+        miSortNameDesc.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
+        miDelete.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
 
         // Menu item click listener to display delete button
         miDelete.setOnMenuItemClickListener(item -> showDeleteButton());

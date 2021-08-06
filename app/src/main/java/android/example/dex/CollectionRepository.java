@@ -5,24 +5,10 @@ import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.PokemonRoomDatabase;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.pokemon.SumPojo;
-import android.example.dex.db.entity.set.PokeSet;
-import android.example.dex.network.PokeResponse;
-import android.example.dex.network.PokeService;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.io.IOException;
 import java.util.List;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 // Repositories are meant to mediate between different data sources.
 // The Repository implements the logic for deciding whether to fetch data from a network
@@ -31,32 +17,33 @@ public class CollectionRepository {
 
     private final CollectionDao mCollectionDao;
     private final LiveData<List<Pokemon>> mAllPokemons;
-    private final LiveData<SumPojo> mTotalPrice;
+    private final LiveData<SumPojo> mCollectionPrice;
     private final LiveData<List<Pokemon>> mWishListPokemons;
     private final LiveData<SumPojo> mWishPrice;
     private LiveData<List<Pokemon>> mAllPokemonBySet;
+    private final LiveData<Double> mHighestCollectionPrice;
 
     public CollectionRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mCollectionDao = db.collectionDao();
         mAllPokemons = mCollectionDao.getOwnedPokemons();
-        mTotalPrice = mCollectionDao.getCollectionPrice();
+        mCollectionPrice = mCollectionDao.getCollectionPrice();
         mWishListPokemons = mCollectionDao.getWishlistPokemons();
         mWishPrice = mCollectionDao.getWishlistPrice();
+        mHighestCollectionPrice = mCollectionDao.getHighestCollectionPrice();
     }
-
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     public LiveData<List<Pokemon>> getAllPokemonByName(String name) {
-        return mCollectionDao.getPokemonByName(name);
-    }
-
-    public LiveData<List<Pokemon>> getNewPokemon(String name) {
-        return mCollectionDao.getPokemonByName(name);
+        return mCollectionDao.getPokemonByName("%" + name + "%");
     }
 
     public LiveData<List<Pokemon>> getmAllPokemonBySet(String setId) {
         return mCollectionDao.getPokemonBySet(setId);
+    }
+
+    public LiveData<Double> getmHighestCollectionPrice() {
+        return mHighestCollectionPrice;
     }
 
     public LiveData<List<Pokemon>> getWishListPokemons() {
@@ -67,8 +54,8 @@ public class CollectionRepository {
         return mAllPokemons;
     }
 
-    public LiveData<SumPojo> getTotalPrice() {
-        return mTotalPrice;
+    public LiveData<SumPojo> getCollectionPrice() {
+        return mCollectionPrice;
     }
 
     public LiveData<SumPojo> getWishPrice() {

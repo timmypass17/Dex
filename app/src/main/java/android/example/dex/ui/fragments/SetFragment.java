@@ -35,9 +35,9 @@ import java.util.List;
 
 public class SetFragment extends Fragment {
 
-    public SetViewModel mSetViewModel;
+    private SetViewModel mSetViewModel;
     private RecyclerView rvSet;
-    private SetAdapter adapter;
+    private SetAdapter mSetAdapter;
 
     public SetFragment() {
         // Required empty public constructor
@@ -55,16 +55,15 @@ public class SetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvSet = view.findViewById(R.id.rvSet);
-        adapter = new SetAdapter(new SetAdapter.WordDiff());
-        rvSet.setAdapter(adapter);
+        mSetAdapter = new SetAdapter(new SetAdapter.WordDiff());
+        rvSet.setAdapter(mSetAdapter);
         rvSet.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mSetViewModel = MainActivity.getmSetViewModel();
-
         mSetViewModel.getAllSets().observe(getViewLifecycleOwner(), pokeSets -> {
             // Update the cached copy of the words in the adapter.
-            adapter.submitList(pokeSets);
-            adapter.notifyDataSetChanged();
+            mSetAdapter.submitList(pokeSets);
+            mSetAdapter.notifyDataSetChanged();
         });
     }
 
@@ -85,35 +84,35 @@ public class SetFragment extends Fragment {
         miSortNameAsc.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
         miSortNameDesc.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
 
-        // Set menu click listener to sort/update recycler view items
-        miSortNew.setOnMenuItemClickListener(item -> updateSetItem(item));
-        miSortOld.setOnMenuItemClickListener(item -> updateSetItem(item));
-        miSortNameAsc.setOnMenuItemClickListener(item -> updateSetItem(item));
-        miSortNameDesc.setOnMenuItemClickListener(item -> updateSetItem(item));
+        // Set menu click listener to sort recycler view items
+        miSortNew.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortOld.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortNameAsc.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortNameDesc.setOnMenuItemClickListener(item -> sortSetItem(item));
 
     }
 
     // Updates recycler view data by name or date
-    private boolean updateSetItem(MenuItem menuItem) {
+    private boolean sortSetItem(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.action_sort_new) {
             mSetViewModel.getNewSet().observe(getViewLifecycleOwner(), pokeSets -> {
-                adapter.submitList(pokeSets);
-                adapter.notifyDataSetChanged();
+                mSetAdapter.submitList(pokeSets);
+                mSetAdapter.notifyDataSetChanged();
             });
         } else if (menuItem.getItemId() == R.id.action_sort_old) {
             mSetViewModel.getOldSet().observe(getViewLifecycleOwner(), pokeSets -> {
-                adapter.submitList(pokeSets);
-                adapter.notifyDataSetChanged();
+                mSetAdapter.submitList(pokeSets);
+                mSetAdapter.notifyDataSetChanged();
             });
         } else if (menuItem.getItemId() == R.id.action_sort_name_asc) {
             mSetViewModel.getAlphabetizedSetAsc().observe(getViewLifecycleOwner(), pokeSets -> {
-                adapter.submitList(pokeSets);
-                adapter.notifyDataSetChanged();
+                mSetAdapter.submitList(pokeSets);
+                mSetAdapter.notifyDataSetChanged();
             });
         } else if (menuItem.getItemId() == R.id.action_sort_name_desc) {
             mSetViewModel.getAlphabetizedSetDesc().observe(getViewLifecycleOwner(), pokeSets -> {
-                adapter.submitList(pokeSets);
-                adapter.notifyDataSetChanged();
+                mSetAdapter.submitList(pokeSets);
+                mSetAdapter.notifyDataSetChanged();
             });
         }
         return true;

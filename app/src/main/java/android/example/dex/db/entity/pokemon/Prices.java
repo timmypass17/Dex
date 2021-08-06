@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.text.DecimalFormat;
+
 @Parcel
 public class Prices {
 
@@ -29,6 +31,11 @@ public class Prices {
     @Nullable
     public FirstEditionHolofoil firstEditionHolofoil;
 
+    public double highestPrice;
+
+    public void setHighestPrice(double highestPrice) {
+        this.highestPrice = highestPrice;
+    }
 
     @Nullable
     public Normal getNormal() {
@@ -50,7 +57,8 @@ public class Prices {
 
     public static String getPrice(Pokemon pokemon) {
         // Recall: Some cards do not even have TCGPlayer for some reason
-        String price = "$0.00";
+        DecimalFormat moneyFormat = new DecimalFormat("$0.00");
+        double price = 0.00;
         TCGPlayer tcgPlayer = pokemon.getTcgplayer();
         // Null checking json values
         if (tcgPlayer != null) {
@@ -59,19 +67,19 @@ public class Prices {
             ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
             FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
             if (normal != null) {
-                price = "$" + normal.getMarket();
+                price = normal.getMarket();
             }
             if (holofoil != null) {
-                price = "$" + holofoil.getMarket();
+                price = holofoil.getMarket();
             }
             if (reverseHolofoil != null) {
-                price = "$" + reverseHolofoil.getMarket();
+                price = reverseHolofoil.getMarket();
             }
             if (firstEditionHolofoil != null) {
-                price = "$" + firstEditionHolofoil.getMarket();
+                price = firstEditionHolofoil.getMarket();
             }
         }
-        return price;
+        return moneyFormat.format(price);
     }
 
     public static String getPriceType(Pokemon pokemon) {
@@ -86,7 +94,7 @@ public class Prices {
                 priceType = "Normal";
             }
             if (holofoil != null) {
-                priceType = "Hoilfoil";
+                priceType = "Holofoil";
             }
             if (reverseHolofoil != null) {
                 priceType = "Reverse Holofoil";
@@ -96,6 +104,32 @@ public class Prices {
             }
         }
         return priceType;
+    }
+
+    public static double getHighestPrice(Pokemon pokemon) {
+        // Recall: Some cards do not even have TCGPlayer for some reason
+        double price = 0.00;
+        TCGPlayer tcgPlayer = pokemon.getTcgplayer();
+        // Null checking json values
+        if (tcgPlayer != null) {
+            Normal normal = tcgPlayer.getPrices().getNormal();
+            Holofoil holofoil = tcgPlayer.getPrices().getHolofoil();
+            ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
+            FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
+            if (normal != null) {
+                price = normal.getMarket();
+            }
+            if (holofoil != null) {
+                price = holofoil.getMarket();
+            }
+            if (reverseHolofoil != null) {
+                price = reverseHolofoil.getMarket();
+            }
+            if (firstEditionHolofoil != null) {
+                price = firstEditionHolofoil.getMarket();
+            }
+        }
+        return price;
     }
 
     @Parcel

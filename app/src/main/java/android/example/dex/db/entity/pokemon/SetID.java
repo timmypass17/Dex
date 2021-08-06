@@ -1,6 +1,7 @@
 package android.example.dex.db.entity.pokemon;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 
 import org.parceler.Parcel;
 
@@ -22,6 +23,9 @@ public class SetID {
     @ColumnInfo(name = "setReleaseDate")
     public String releaseDate;
 
+    @Embedded
+    public PokemonSetImage images;
+
     public SetID(){};
 
     public String getId() {
@@ -38,5 +42,17 @@ public class SetID {
 
     public int getTotal() {
         return total;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getReleaseYear() {
+        return releaseDate.substring(0, 4);
+    }
+
+    public PokemonSetImage getImages() {
+        return images;
     }
 }

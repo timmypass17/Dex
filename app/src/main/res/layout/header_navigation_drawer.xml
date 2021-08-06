@@ -32,7 +32,6 @@
             android:shadowRadius="1"
             android:text="Pokemon TCG collection"
             android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@color/white"
-            android:textStyle="italic" />
+            android:textColor="@color/white" />
 
 </LinearLayout>

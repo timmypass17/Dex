@@ -5,6 +5,7 @@ import android.example.dex.CollectionRepository;
 import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.dao.SetDao;
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.db.entity.set.PokeSet;
 import android.example.dex.network.PokeResponse;
 import android.example.dex.network.PokeService;
@@ -111,12 +112,15 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                     public void onResponse(Call<PokeResponse> call, retrofit2.Response<PokeResponse> response) {
                         PokeResponse pokeResponse = response.body();
                         if (pokeResponse != null) {
-                            Log.d("CollectionRepository", "onSuccess: Getting data");
+                            Log.d("PokemonRoomDataBase", "onSuccess: Getting data");
                             List<Pokemon> pokeData = pokeResponse.getPokemons();
                             for (Pokemon pokemon : pokeData) {
                                 databaseWriteExecutor.execute(() -> {
                                     // Update card_number
                                     pokemon.setCard_number(pokemon.getNumber());
+                                    if (pokemon.getTcgplayer() != null) {
+                                        pokemon.getTcgplayer().getPrices().setHighestPrice(Prices.getHighestPrice(pokemon));
+                                    }
                                     mCollectionDao.insert(pokemon);
                                 });
                             }
@@ -125,7 +129,7 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
 
                     @Override
                     public void onFailure(Call<PokeResponse> call, Throwable t) {
-                        Log.d("CollectionRepository", "onFailure: Fail to get data", t);
+                        Log.d("PokemonRoomDataBase", "onFailure: Fail to get data", t);
                     }
                 });
                 pageNum += 1;
@@ -155,7 +159,7 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
 
                 @Override
                 public void onFailure(Call<PokeSetResponse> call, Throwable t) {
-                    Log.d("SetRepository", "onFailure", t);
+                    Log.d("PokemonRoomDataBase", "onFailure", t);
                 }
             });
             Log.d("PokemonRoomDatabase", "Getting Set data");

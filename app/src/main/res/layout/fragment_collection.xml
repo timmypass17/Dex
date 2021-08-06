@@ -3,23 +3,19 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#23272a">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.MainActivity"
+        android:padding="16dp">
 
         <LinearLayout
             android:id="@+id/Header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal"
-            android:background="#2c2f33">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,25 +27,20 @@
 
                 <TextView
                     android:id="@+id/CollectionWorth"
-                    style="@style/AudioFileInfoOverlayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:text="Collection Worth"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="14sp" />
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvTotalPrice"
-                    style="@style/AudioFileInfoOverlayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/CollectionWorth"
                     android:layout_centerHorizontal="true"
                     android:text="$0.00"
                     android:textColor="#7289da"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,33 +53,38 @@
 
                 <TextView
                     android:id="@+id/CollectionCount"
-                    style="@style/AudioFileInfoOverlayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cards"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tvCardCount"
-                    style="@style/AudioFileInfoOverlayText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/CollectionWorth"
                     android:layout_centerHorizontal="true"
                     android:text="0"
                     android:textColor="#7289da"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp" />
             </LinearLayout>
-
         </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/Header"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="?android:attr/listDivider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCollection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Header"/>
+            android:layout_below="@id/divider" />
 
     </RelativeLayout>
 

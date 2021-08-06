@@ -7,6 +7,8 @@ import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.viewmodel.CollectionViewModel;
 import android.example.dex.viewmodel.WishViewModel;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NavUtils;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.parceler.Parcels;
@@ -33,20 +36,21 @@ public class CardDetailActivity extends AppCompatActivity {
 
     private CollectionViewModel mCollectionViewModel;
     private WishViewModel mWishViewModel;
-
-    private View contextView;
     private Button btnAddToCollection;
     private Button btnAddToWishlist;
     private ImageView ivCardImage;
     private CardView cardPrice;
     private TextView tvTypePrice;
     private TextView tvPrice;
+    private ImageView ivSymbol;
     private TextView tvSet;
     private TextView tvSeries;
     private TextView tvNumber;
     private TextView tvRarity;
     private TextView tvArtist;
     private TextView tvLegality;
+    private View contextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class CardDetailActivity extends AppCompatActivity {
         cardPrice = findViewById(R.id.cardPrice);
         tvTypePrice = findViewById(R.id.tvTypePrice);
         tvPrice = findViewById(R.id.tvPrice);
+        ivSymbol = findViewById(R.id.ivSymbol);
         tvSet = findViewById(R.id.tvSet);
         tvSeries = findViewById(R.id.tvSeries);
         tvNumber = findViewById(R.id.tvNumber);
@@ -84,8 +89,10 @@ public class CardDetailActivity extends AppCompatActivity {
     private void bind(Pokemon pokemon) {
         Glide.with(this)
                 .load(pokemon.getImages().getLargeImage())
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(ivCardImage);
         tvPrice.setText(Prices.getPrice(pokemon));
+        Glide.with(this).load(pokemon.getSetID().getImages().getSymbol()).into(ivSymbol);
         tvTypePrice.setText(Prices.getPriceType(pokemon));
         tvSet.setText(pokemon.getSetID().getName());
         tvSeries.setText(pokemon.getSetID().getSeries());
@@ -97,10 +104,8 @@ public class CardDetailActivity extends AppCompatActivity {
 
         // Button to add card to collection
         btnAddToCollection.setOnClickListener(v -> updateCollection(pokemon));
-
         // Button to add card to wishlist
         btnAddToWishlist.setOnClickListener(v -> updateWishlist(pokemon));
-
         // Button to navigate to purchase website
         cardPrice.setOnClickListener(v -> goToPurchaseSite(pokemon));
     }

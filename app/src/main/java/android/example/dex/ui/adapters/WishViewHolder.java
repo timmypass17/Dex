@@ -45,9 +45,7 @@ public class WishViewHolder extends RecyclerView.ViewHolder {
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
         tvPrice.setText(Prices.getPrice(pokemon));
-        Glide.with(itemView)
-                .load(pokemon.getImages().getSmallImage())
-                .into(ivCardImage);
+        Glide.with(itemView).load(pokemon.getImages().getSmallImage()).into(ivCardImage);
 
         btnRemoveFromWishlist.setOnClickListener(v -> {
             Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from wishlist...", Snackbar.LENGTH_SHORT).show();

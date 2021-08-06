@@ -16,6 +16,7 @@ import android.example.dex.ui.fragments.CollectionFragment;
 import android.example.dex.R;
 import android.example.dex.ui.fragments.SearchFragment;
 import android.example.dex.ui.fragments.SetFragment;
+import android.example.dex.ui.fragments.StatFragment;
 import android.example.dex.ui.fragments.WishFragment;
 import android.example.dex.viewmodel.CollectionViewModel;
 import android.example.dex.viewmodel.SearchViewModel;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private static WishViewModel mWishViewModel;
     private static SearchViewModel mSearchViewModel;
     private static SetViewModel mSetViewModel;
-
     private DrawerLayout drawerLayout;
     private NavigationView nvDrawer;
 
@@ -153,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemID == R.id.nav_wish_fragment) {
             fragment = new WishFragment();
             title = "Wish";
-
+        } else if (itemID == R.id.nav_stat_fragment) {
+            fragment = new StatFragment();
+            title = "Stat";
         } else if (itemID == R.id.nav_github) {
             Uri webpage = Uri.parse("https://github.com/timmypass17");
             Intent i = new Intent(Intent.ACTION_VIEW, webpage);
@@ -163,8 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ImplicitIntents", "Can't handle this!");
             }
             return;
-        }
-        else {
+        } else {
             fragment = new CollectionFragment();
             Toast.makeText(MainActivity.this, "Unknown Fragment", Toast.LENGTH_SHORT).show();
         }

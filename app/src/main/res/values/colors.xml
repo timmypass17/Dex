@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#7289da</color>
+    <color name="common_gray">#9d9d9d</color>
+    <color name="rare_blue">#0070dd</color>
+    <color name="epic_purple">#a335ee</color>
+    <color name="legendary_orange">#ff8000</color>
+    <color name="green">#46e370</color>
+    <color name="default_text">#757575</color>
+    <color name="default_bar">#90B0F8</color>
 </resources>

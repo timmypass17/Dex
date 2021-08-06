@@ -41,8 +41,10 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private SearchViewModel mSearchViewModel;
-    private SearchAdapter adapter;
+    private SearchAdapter mSearchAdapter;
     private RecyclerView rvPokemons;
+    private EditText etSearch;
+    private Button btnSearch;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -60,26 +62,29 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get handle on views
         rvPokemons = view.findViewById(R.id.rvPokemons);
-        adapter = new SearchAdapter(new SearchAdapter.WordDiff());
-        rvPokemons.setAdapter(adapter);
+        etSearch = view.findViewById(R.id.etSearch);
+        btnSearch = view.findViewById(R.id.btnGetPokemons);
+
+        // Set Adapter
+        mSearchAdapter = new SearchAdapter(new SearchAdapter.WordDiff());
+        rvPokemons.setAdapter(mSearchAdapter);
         rvPokemons.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         // mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         mSearchViewModel = MainActivity.getmSearchViewModel();
 
-        // Default cards init
+        // Initialize default search query
         mSearchViewModel.getAllPokemonByName("Pikachu").observe(getViewLifecycleOwner(), pokemons -> {
-            Log.d("SearchFragment","Getting more pikachues");
-            adapter.submitList(pokemons);
+            mSearchAdapter.submitList(pokemons);
         });
 
-        EditText etSearch = view.findViewById(R.id.etSearch);
-        Button btnSearch = view.findViewById(R.id.btnGetPokemons);
+        // Search button to query pokemons
         btnSearch.setOnClickListener(v -> {
             String name = etSearch.getText().toString();
             mSearchViewModel.getAllPokemonByName(name).observe(getViewLifecycleOwner(), pokemons ->
-                    adapter.submitList(pokemons));
+                    mSearchAdapter.submitList(pokemons));
         });
     }
 
@@ -88,30 +93,32 @@ public class SearchFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_search, menu);
 
+        // Get handle on menu items
         MenuItem miShowAll = menu.findItem(R.id.action_show_all);
         MenuItem miShowOwned = menu.findItem(R.id.action_show_owned);
 
+        // Set menu item onClick listener
         miShowAll.setOnMenuItemClickListener(item -> showAllCards());
         miShowOwned.setOnMenuItemClickListener(item -> showOwnedCards());
     }
 
-    // Make all cards show color
+    // Show all cards color
     private boolean showAllCards() {
         for (int i = 0; i < rvPokemons.getChildCount(); i++) {
             SearchViewHolder holder = (SearchViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
             // Remove gray filter
-            holder.ivCard.setColorFilter(null);
+            holder.ivCard.clearColorFilter();;
         }
         return true;
     }
 
-    // Apply gray filter on unowned cards
+    // Show cards color on owned cards only
     private boolean showOwnedCards() {
         // Gray filter
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
         for (int i = 0; i < rvPokemons.getChildCount(); i++) {
-            Pokemon pokemon = adapter.getCurrentList().get(i);
+            Pokemon pokemon = mSearchAdapter.getCurrentList().get(i);
             SearchViewHolder holder = (SearchViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
             // If card is not owned
             if (pokemon.isOwned != 1) {

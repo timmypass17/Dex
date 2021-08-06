@@ -1,6 +1,7 @@
 package android.example.dex.db.entity.pokemon;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -116,4 +117,5 @@ public class Pokemon {
     public int getCard_number() {
         return card_number;
     }
+
 }

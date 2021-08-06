@@ -2,6 +2,7 @@ package android.example.dex.db.dao;
 
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.pokemon.PokemonUpdate;
+import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.db.entity.pokemon.SumPojo;
 import android.example.dex.db.entity.set.PokeSet;
 
@@ -30,10 +31,15 @@ public interface CollectionDao {
     @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name ASC ")
     LiveData<List<Pokemon>> getOwnedPokemons();
 
-    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isOwned = 1")
+    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal," +
+            "SUM(reverseHolofoil_market) as reverseHoilTotal, SUM(firstEditionHolofoil_market) as firstEditionTotal" +
+            " FROM pokemon_table WHERE isOwned = 1")
     LiveData<SumPojo> getCollectionPrice();
 
-    @Query("SELECT * FROM pokemon_table WHERE name = :name ORDER BY setReleaseDate")
+    @Query("SELECT SUM(highestPrice) as highest FROM pokemon_table WHERE isOwned = 1")
+    LiveData<Double> getHighestCollectionPrice();
+
+    @Query("SELECT * FROM pokemon_table WHERE name LIKE :name ORDER BY setReleaseDate")
     LiveData<List<Pokemon>> getPokemonByName(String name);
 
     @Query("SELECT * FROM pokemon_table WHERE setID = :set ORDER BY card_number ASC")
@@ -54,8 +60,9 @@ public interface CollectionDao {
     @Query("UPDATE pokemon_table SET isWish = 0 WHERE id = :id")
     void removeFromWishlist(String id);
 
-    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal FROM pokemon_table WHERE isWish = 1")
+    @Query("SELECT SUM(normal_market) as normalTotal, SUM(holofoil_market) as hoilTotal," +
+            "SUM(reverseHolofoil_market) as reverseHoilTotal, SUM(firstEditionHolofoil_market) as firstEditionTotal" +
+            " FROM pokemon_table WHERE isWish = 1")
     LiveData<SumPojo> getWishlistPrice();
-
 
 }

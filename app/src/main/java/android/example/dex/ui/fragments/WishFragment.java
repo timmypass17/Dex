@@ -25,7 +25,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class WishFragment extends Fragment {
 
-    public WishViewModel mWishViewModel;
+    private WishViewModel mWishViewModel;
+    private RecyclerView rvWishlist;
+    private WishAdapter mWishAdapter;
+    private TextView tvWishlistPrice;
+    private TextView tvCardCount;
 
     public WishFragment() {
         // Required empty public constructor
@@ -42,24 +46,26 @@ public class WishFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tvWishlistPrice = view.findViewById(R.id.tvWishlistPrice);
-        TextView tvCardCount = view.findViewById(R.id.tvWishlistCount);
+        // Get handle on views
+        tvWishlistPrice = view.findViewById(R.id.tvWishlistPrice);
+        tvCardCount = view.findViewById(R.id.tvWishlistCount);
+        rvWishlist = view.findViewById(R.id.rvWishlist);
 
-        RecyclerView rvWishlist = view.findViewById(R.id.rvWishlist);
-        final WishAdapter adapter = new WishAdapter(new WishAdapter.WordDiff());
-        rvWishlist.setAdapter(adapter);
+        // Set Adapter
+        mWishAdapter = new WishAdapter(new WishAdapter.WordDiff());
+        rvWishlist.setAdapter(mWishAdapter);
         rvWishlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
 //        mWishViewModel = new ViewModelProvider(this).get(WishViewModel.class);
         mWishViewModel = MainActivity.getmWishViewModel();
 
         mWishViewModel.getWishlistPokemons().observe(getViewLifecycleOwner(), pokemons -> {
-            adapter.submitList(pokemons);
+            mWishAdapter.submitList(pokemons);
             tvCardCount.setText(String.valueOf(pokemons.size()));
         });
 
         mWishViewModel.getWishPrice().observe(getViewLifecycleOwner(), sumPojo -> {
-            tvWishlistPrice.setText(sumPojo.getNormalAndHoilPrice());
+            tvWishlistPrice.setText(sumPojo.getCollectionPrice());
         });
     }
 }

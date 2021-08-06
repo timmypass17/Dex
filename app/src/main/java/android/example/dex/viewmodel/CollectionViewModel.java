@@ -21,13 +21,15 @@ public class CollectionViewModel extends AndroidViewModel {
 
     private final CollectionRepository mRepository;
     private final LiveData<List<Pokemon>> mAllPokemons;
-    private final LiveData<SumPojo> mTotalPrice;
+    private final LiveData<SumPojo> mCollectionPrice;
+    private final LiveData<Double> mHighestCollectionPrice;
 
     public CollectionViewModel(@NonNull @NotNull Application application) {
         super(application);
         mRepository = new CollectionRepository(application);
         mAllPokemons = mRepository.getAllPokemons(); // Intialized the allPokemons LiveData using the repository
-        mTotalPrice = mRepository.getTotalPrice();
+        mCollectionPrice = mRepository.getCollectionPrice();
+        mHighestCollectionPrice = mRepository.getmHighestCollectionPrice();
     }
 
     // Return a cached list of pokemons
@@ -35,8 +37,12 @@ public class CollectionViewModel extends AndroidViewModel {
         return mAllPokemons;
     }
 
-    public LiveData<SumPojo> getTotalPrice() {
-        return mTotalPrice;
+    public LiveData<SumPojo> getCollectionPrice() {
+        return mCollectionPrice;
+    }
+
+    public LiveData<Double> getmHighestCollectionPrice() {
+        return mHighestCollectionPrice;
     }
 
     // Implementation of addToCollection() is encapsulated from the UI.

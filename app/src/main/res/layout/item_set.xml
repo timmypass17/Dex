@@ -11,15 +11,23 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/vert_bar"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/divider"
+            android:layout_alignParentTop="true"
+            android:background="@color/default_text" />
 
         <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/vert_bar"
+            android:layout_marginStart="20dp"
             tools:srcCompat="@drawable/logo_sample" />
 
         <TextView
@@ -33,12 +41,14 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             tools:text="Sword and Shield" />
 
+
         <TextView
             android:id="@+id/tvSeries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSet"
             android:layout_alignStart="@+id/tvSet"
+            android:textSize="14dp"
             tools:text="Base" />
 
         <TextView
@@ -47,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSeries"
             android:layout_alignStart="@+id/tvSet"
-            tools:text="70  / 143" />
+            tools:text="70 / 143 (50%)" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -64,6 +74,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivLogo"
+            android:layout_alignStart="@+id/ivLogo"
+            android:layout_alignEnd="@+id/ivLogo"
             android:indeterminate="false"
             tools:max="100"
             tools:progress="50" />
