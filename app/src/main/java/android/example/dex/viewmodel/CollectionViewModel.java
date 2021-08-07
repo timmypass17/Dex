@@ -54,4 +54,27 @@ public class CollectionViewModel extends AndroidViewModel {
         mRepository.removeFromCollection(id);
     }
 
+    public LiveData<List<Pokemon>> getNewerPokemons() {
+        return mRepository.getNewerPokemons();
+    }
+
+    public LiveData<List<Pokemon>> getOlderPokemons() {
+        return mRepository.getOlderPokemons();
+    }
+
+    public LiveData<List<Pokemon>> getAlphabetizedPokemonAsc() {
+        return mRepository.getAlphabetizedPokemonAsc();
+    }
+
+    public LiveData<List<Pokemon>> getAlphabetizedPokemonDesc() {
+        return mRepository.getAlphabetizedPokemonDesc();
+    }
+
+    public LiveData<List<Pokemon>> getExpensivePokemons(){
+        return mRepository.getExpensivePokemons();
+    }
+
+    public LiveData<List<Pokemon>> getCheapestPokemons(){
+        return mRepository.getCheapestPokemons();
+    }
 }

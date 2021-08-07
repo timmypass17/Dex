@@ -120,6 +120,7 @@ public abstract class PokemonRoomDatabase extends RoomDatabase {
                                     pokemon.setCard_number(pokemon.getNumber());
                                     if (pokemon.getTcgplayer() != null) {
                                         pokemon.getTcgplayer().getPrices().setHighestPrice(Prices.getHighestPrice(pokemon));
+//                                        pokemon.getTcgplayer().getPrices().setHighestPriceInt(Prices.getHighestPrice(pokemon));
                                     }
                                     mCollectionDao.insert(pokemon);
                                 });

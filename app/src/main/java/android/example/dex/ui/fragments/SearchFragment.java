@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -32,6 +33,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +48,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView rvPokemons;
     private EditText etSearch;
     private Button btnSearch;
+    private FloatingActionButton fabUpNavigation;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -66,7 +70,8 @@ public class SearchFragment extends Fragment {
         rvPokemons = view.findViewById(R.id.rvPokemons);
         etSearch = view.findViewById(R.id.etSearch);
         btnSearch = view.findViewById(R.id.btnGetPokemons);
-
+        fabUpNavigation = view.findViewById(R.id.fabUpNavigation);
+        NestedScrollView nestedScroll = view.findViewById(R.id.nestedScroll);
         // Set Adapter
         mSearchAdapter = new SearchAdapter(new SearchAdapter.WordDiff());
         rvPokemons.setAdapter(mSearchAdapter);
@@ -85,6 +90,13 @@ public class SearchFragment extends Fragment {
             String name = etSearch.getText().toString();
             mSearchViewModel.getAllPokemonByName(name).observe(getViewLifecycleOwner(), pokemons ->
                     mSearchAdapter.submitList(pokemons));
+        });
+
+        fabUpNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nestedScroll.smoothScrollTo(0, etSearch.getTop());
+            }
         });
     }
 

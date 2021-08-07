@@ -78,7 +78,11 @@ public class CollectionFragment extends Fragment {
         // Set collection worth
         mCollectionViewModel.getmHighestCollectionPrice().observe(getViewLifecycleOwner(), price -> {
             DecimalFormat moneyFormat = new DecimalFormat("$0.00");
-            tvTotalPrice.setText(moneyFormat.format(price));
+            if (price != null) {
+                tvTotalPrice.setText(moneyFormat.format(price));
+            } else {
+                tvTotalPrice.setText("$0.00");
+            }
         });
     }
 
@@ -93,6 +97,8 @@ public class CollectionFragment extends Fragment {
         MenuItem miSortOld = menu.findItem(R.id.action_sort_old); // Oldest
         MenuItem miSortNameAsc = menu.findItem(R.id.action_sort_name_asc);   // A-Z
         MenuItem miSortNameDesc = menu.findItem(R.id.action_sort_name_desc); // Z-A
+        MenuItem miSortExpensive = menu.findItem(R.id.action_sort_expensive);
+        MenuItem miSortCheapest = menu.findItem(R.id.action_sort_cheapest);
         MenuItem miDelete = menu.findItem(R.id.action_delete);
 
         // Change color of icons
@@ -103,8 +109,50 @@ public class CollectionFragment extends Fragment {
         miSortNameDesc.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
         miDelete.getIcon().setColorFilter(getResources().getColor(R.color.blue), PorterDuff.Mode.SRC_ATOP);
 
+        // Set menu click listener to sort recycler view items
+        miSortNew.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortOld.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortNameAsc.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortNameDesc.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortExpensive.setOnMenuItemClickListener(item -> sortSetItem(item));
+        miSortCheapest.setOnMenuItemClickListener(item -> sortSetItem(item));
         // Menu item click listener to display delete button
         miDelete.setOnMenuItemClickListener(item -> showDeleteButton());
+    }
+
+    private boolean sortSetItem(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.action_sort_new) {
+            mCollectionViewModel.getNewerPokemons().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        } else if (menuItem.getItemId() == R.id.action_sort_old) {
+            mCollectionViewModel.getOlderPokemons().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        } else if (menuItem.getItemId() == R.id.action_sort_name_asc) {
+            mCollectionViewModel.getAlphabetizedPokemonAsc().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        } else if (menuItem.getItemId() == R.id.action_sort_name_desc) {
+            mCollectionViewModel.getAlphabetizedPokemonDesc().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        } else if (menuItem.getItemId() == R.id.action_sort_expensive) {
+            mCollectionViewModel.getExpensivePokemons().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        } else if (menuItem.getItemId() == R.id.action_sort_cheapest) {
+            mCollectionViewModel.getCheapestPokemons().observe(getViewLifecycleOwner(), pokemons -> {
+                mCollectionAdapter.submitList(pokemons);
+                mCollectionAdapter.notifyDataSetChanged();
+            });
+        }
+        return true;
     }
 
     // Show delete option

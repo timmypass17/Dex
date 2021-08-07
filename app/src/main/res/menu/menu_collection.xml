@@ -37,6 +37,16 @@
                         android:icon="@drawable/ic_baseline_sort_by_alpha_24"
                         android:title="Alphabetical (Z-A)"
                         app:showAsAction="ifRoom" />
+                    <item
+                        android:id="@+id/action_sort_expensive"
+                        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+                        android:title="Highest Price"
+                        app:showAsAction="ifRoom" />
+                    <item
+                        android:id="@+id/action_sort_cheapest"
+                        android:icon="@drawable/ic_baseline_sort_by_alpha_24"
+                        android:title="Lowest Price"
+                        app:showAsAction="ifRoom" />
                 </menu>
 
             </item>

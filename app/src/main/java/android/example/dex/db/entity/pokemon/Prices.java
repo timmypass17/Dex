@@ -37,6 +37,12 @@ public class Prices {
         this.highestPrice = highestPrice;
     }
 
+//    public int highestPriceInt;
+//
+//    public void setHighestPriceInt(double highestPrice) {
+//        this.highestPriceInt = (int) highestPrice;
+//    }
+
     @Nullable
     public Normal getNormal() {
         return normal;

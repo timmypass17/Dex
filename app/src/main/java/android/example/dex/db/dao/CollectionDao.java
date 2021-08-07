@@ -65,4 +65,21 @@ public interface CollectionDao {
             " FROM pokemon_table WHERE isWish = 1")
     LiveData<SumPojo> getWishlistPrice();
 
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY setReleaseDate DESC")
+    LiveData<List<Pokemon>> getNewerPokemons();
+
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY setReleaseDate ASC")
+    LiveData<List<Pokemon>> getOlderPokemons();
+
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name ASC")
+    LiveData<List<Pokemon>> getAlphabetizedPokemonAsc();
+
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY name DESC")
+    LiveData<List<Pokemon>> getAlphabetizedPokemonDesc();
+
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY highestPrice DESC")
+    LiveData<List<Pokemon>> getExpensivePokemons();
+
+    @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 ORDER BY highestPrice ASC")
+    LiveData<List<Pokemon>> getCheapestPokemons();
 }

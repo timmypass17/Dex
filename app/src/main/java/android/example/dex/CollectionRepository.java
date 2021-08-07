@@ -93,4 +93,27 @@ public class CollectionRepository {
         });
     }
 
+    public LiveData<List<Pokemon>> getNewerPokemons() {
+        return mCollectionDao.getNewerPokemons();
+    }
+
+    public LiveData<List<Pokemon>> getOlderPokemons() {
+        return mCollectionDao.getOlderPokemons();
+    }
+
+    public LiveData<List<Pokemon>> getAlphabetizedPokemonAsc() {
+        return mCollectionDao.getAlphabetizedPokemonAsc();
+    }
+
+    public LiveData<List<Pokemon>> getAlphabetizedPokemonDesc() {
+        return mCollectionDao.getAlphabetizedPokemonDesc();
+    }
+
+    public LiveData<List<Pokemon>> getExpensivePokemons(){
+        return mCollectionDao.getExpensivePokemons();
+    }
+
+    public LiveData<List<Pokemon>> getCheapestPokemons(){
+        return mCollectionDao.getCheapestPokemons();
+    }
 }
