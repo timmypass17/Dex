@@ -10,17 +10,15 @@ public class PokeSetImage {
     // Empty constructor needed by the parceler library
     public PokeSetImage() {}
 
-    @SerializedName("symbol")
-    public String mSymbol;
+    public String symbol;
 
-    @SerializedName("logo")
-    public String mLogo;
+    public String logo;
 
-    public String getmSymbol() {
-        return mSymbol;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public String getmLogo() {
-        return mLogo;
+    public String getLogo() {
+        return logo;
     }
 }

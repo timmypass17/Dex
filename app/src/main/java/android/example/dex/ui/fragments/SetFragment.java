@@ -1,22 +1,17 @@
 package android.example.dex.ui.fragments;
 
-import android.example.dex.db.entity.set.PokeSet;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.SetAdapter;
-import android.example.dex.viewmodel.SetViewModel;
+import android.example.dex.db.viewmodel.SetViewModel;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,17 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.example.dex.R;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class SetFragment extends Fragment {
 
+    private static final String TAG = "SetFragment";
     private SetViewModel mSetViewModel;
     private RecyclerView rvSet;
     private SetAdapter mSetAdapter;
@@ -54,11 +44,13 @@ public class SetFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get handle on views
         rvSet = view.findViewById(R.id.rvSet);
         mSetAdapter = new SetAdapter(new SetAdapter.WordDiff());
         rvSet.setAdapter(mSetAdapter);
         rvSet.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Update set list
         mSetViewModel = MainActivity.getmSetViewModel();
         mSetViewModel.getAllSets().observe(getViewLifecycleOwner(), pokeSets -> {
             // Update the cached copy of the words in the adapter.

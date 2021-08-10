@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.Dictionary;
 import java.util.Hashtable;
 
 @Parcel
@@ -18,34 +17,44 @@ public class PokeSet {
 
     @PrimaryKey
     @NonNull
-    @SerializedName("id")
-    public String mId;
+    public String id;
 
-    @SerializedName("name")
-    public String mName;
+    public String name;
 
-    @SerializedName("series")
-    public String mSeries;
+    public String series;
 
-    @SerializedName("total")
-    public String mTotal;
+    public String total;
 
-    @SerializedName("releaseDate")
-    public String mReleaseDate;
+    public String releaseDate;
 
     @Embedded
-    @SerializedName("images")
-    public PokeSetImage mImages;
+    public PokeSetImage images;
 
     // Empty constructor needed by the parceler library
     public PokeSet() {}
 
-    public String getmTotal() {
-        return mTotal;
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public PokeSetImage getImages() {
+        return images;
+    }
+
+    public String getTotal() {
+        return total;
     }
 
     public String getReleaseDate() {
-        return mReleaseDate;
+        return releaseDate;
     }
 
     public String getReleaseDateFormatted(String date) {
@@ -71,21 +80,5 @@ public class PokeSet {
         String month = months.get(date_parts[1]);
         String day = date_parts[2];
         return month + " " + day + ", " +year;
-    }
-
-    public String getId() {
-        return mId;
-    }
-
-    public String getmName() {
-        return mName;
-    }
-
-    public String getmSeries() {
-        return mSeries;
-    }
-
-    public PokeSetImage getmImages() {
-        return mImages;
     }
 }

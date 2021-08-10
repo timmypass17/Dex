@@ -5,10 +5,8 @@ import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.ui.MainActivity;
-import android.example.dex.viewmodel.CollectionViewModel;
-import android.example.dex.viewmodel.WishViewModel;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.example.dex.db.viewmodel.CollectionViewModel;
+import android.example.dex.db.viewmodel.WishViewModel;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.NavUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,8 +29,13 @@ import org.parceler.Parcels;
 
 import java.util.Objects;
 
+import static android.example.dex.utilities.PokeUtil.getHighestPrice;
+import static android.example.dex.utilities.PokeUtil.getPriceFormatted;
+import static android.example.dex.utilities.PokeUtil.getPriceType;
+
 public class CardDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = "CardDetailActivity";
     private CollectionViewModel mCollectionViewModel;
     private WishViewModel mWishViewModel;
     private Button btnAddToCollection;
@@ -91,9 +93,9 @@ public class CardDetailActivity extends AppCompatActivity {
                 .load(pokemon.getImages().getLargeImage())
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(ivCardImage);
-        tvPrice.setText(Prices.getPrice(pokemon));
+        tvPrice.setText(getPriceFormatted(getHighestPrice(pokemon)));
         Glide.with(this).load(pokemon.getSetID().getImages().getSymbol()).into(ivSymbol);
-        tvTypePrice.setText(Prices.getPriceType(pokemon));
+        tvTypePrice.setText(getPriceType(pokemon));
         tvSet.setText(pokemon.getSetID().getName());
         tvSeries.setText(pokemon.getSetID().getSeries());
         tvNumber.setText(pokemon.getCard_number() + " / " + pokemon.getSetID().getTotal());
@@ -128,7 +130,7 @@ public class CardDetailActivity extends AppCompatActivity {
         // If card is owned
         if (pokemon.isOwned == 1) {
             Snackbar.make(contextView, "Removing \"" + pokemon.getName() + "\" to collection...", Snackbar.LENGTH_SHORT).show();
-            // Remove from colleciton
+            // Remove from collection
             mCollectionViewModel.removeFromCollection(pokemon.getId());
             // Update to show "Not Owned"
             btnAddToCollection.setText("Not Owned");

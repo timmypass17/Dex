@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 @Parcel
-public class Image {
+public class PokeImage {
 
-    public Image(){}
+    public PokeImage(){}
 
     @SerializedName("small")
     public String smallImage;

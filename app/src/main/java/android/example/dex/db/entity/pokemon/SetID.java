@@ -24,7 +24,7 @@ public class SetID {
     public String releaseDate;
 
     @Embedded
-    public PokemonSetImage images;
+    public PokeSymbol images;
 
     public SetID(){};
 
@@ -52,7 +52,7 @@ public class SetID {
         return releaseDate.substring(0, 4);
     }
 
-    public PokemonSetImage getImages() {
+    public PokeSymbol getImages() {
         return images;
     }
 }

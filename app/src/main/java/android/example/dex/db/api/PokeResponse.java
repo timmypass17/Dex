@@ -1,4 +1,4 @@
-package android.example.dex.network;
+package android.example.dex.db.api;
 
 import android.example.dex.db.entity.pokemon.Pokemon;
 
@@ -19,11 +19,5 @@ public class PokeResponse {
     public List<Pokemon> getPokemons() {
         return pokemons;
     }
-// wat this for
-//    public static PokeResponse parseJSON(String response) {
-//        Gson gson = new GsonBuilder().create();
-//        PokeResponse pokemonResponse = gson.fromJson(response, PokeResponse.class);
-//        return pokemonResponse;
-//    }
 
 }

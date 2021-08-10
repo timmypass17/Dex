@@ -3,23 +3,17 @@ package android.example.dex.ui.adapters;
 import android.content.Intent;
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
-import android.example.dex.db.entity.pokemon.Prices;
-import android.example.dex.db.entity.pokemon.TCGPlayer;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.activities.CardDetailActivity;
-import android.example.dex.ui.fragments.CollectionFragment;
-import android.example.dex.viewmodel.CollectionViewModel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,7 +22,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
+
+import static android.example.dex.utilities.PaletteUtil.getBorderColor;
+import static android.example.dex.utilities.PaletteUtil.getColorText;
+import static android.example.dex.utilities.PaletteUtil.getRarityBorderColor;
+import static android.example.dex.utilities.PaletteUtil.getRarityColorText;
+import static android.example.dex.utilities.PokeUtil.getHighestPrice;
+import static android.example.dex.utilities.PokeUtil.getPriceFormatted;
+import static android.example.dex.utilities.PokeUtil.getPriceType;
 
 public class CollectionViewHolder extends RecyclerView.ViewHolder {
 
@@ -63,80 +64,27 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
         tvSet.setText(pokemon.getSetID().getName());
-        tvPrice.setText(Prices.getPrice(pokemon));
-        chipCardType.setText(Prices.getPriceType(pokemon));
+        tvPrice.setText(getPriceFormatted(getHighestPrice(pokemon)));
+        chipCardType.setText(getPriceType(pokemon));
         chipRarity.setText(pokemon.getRarity());
         chipRarity.setTextAppearanceResource(getRarityColorText(pokemon.getRarity()));
         chipRarity.setChipStrokeColorResource(getRarityBorderColor(pokemon.getRarity()));
         tvSetDate.setText("(" + pokemon.getSetID().getReleaseYear() + ")");
-        chipCardType.setTextAppearanceResource(getColorText(Prices.getPriceType(pokemon)));
-        chipCardType.setChipStrokeColorResource(getBorderColor(Prices.getPriceType(pokemon)));
+        chipCardType.setTextAppearanceResource(getColorText(getPriceType(pokemon)));
+        chipCardType.setChipStrokeColorResource(getBorderColor(getPriceType(pokemon)));
         Glide.with(itemView).load(pokemon.getImages().getSmallImage()).into(ivCardImage);
         btnDeletePokemon.setOnClickListener(v -> {
             Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from collection...", Snackbar.LENGTH_SHORT).show();
             MainActivity.getmCollectionViewModel().removeFromCollection(pokemon.getId());
         });
 
-        // 1. Register click listener on card
+        // Card onClick to navigate to CardDetail activity
         cardPokemon.setOnClickListener(v -> {
-            // 2. Navigate to a new activity on tap
             Intent i = new Intent(cardPokemon.getContext(), CardDetailActivity.class);
-            // 3. Pass pokemon object into details activity through parcel
+            // Pass pokemon object into details activity through parcel
             i.putExtra("pokeCard", Parcels.wrap(pokemon));
-            // 4. Begin navigation
             cardPokemon.getContext().startActivity(i);
         });
     }
 
-    private int getColorText(String cardType) {
-        if (cardType.equals("1st")) {
-            return R.style.ChipLegendary;
-        } else if (cardType.equals("R.Holo")) {
-            return R.style.ChipRare;
-        } else if (cardType.equals("Holo")) {
-            return R.style.ChipRare;
-        } else if (cardType.equals("Norm")) {
-            return R.style.ChipCommon;
-        } else {
-            return R.color.black;
-        }
-    }
-
-    private int getBorderColor(String cardType) {
-        if (cardType.equals("1st")) {
-            return R.color.legendary_orange;
-        } else if (cardType.equals("R.Holo")) {
-            return R.color.rare_blue;
-        } else if (cardType.equals("Holo")) {
-            return R.color.rare_blue;
-        } else if (cardType.equals("Norm")) {
-            return R.color.common_gray;
-        } else {
-            return R.color.black;
-        }
-    }
-
-    private int getRarityColorText(String rarity) {
-        if (rarity.equals("Common")) {
-            return R.style.ChipCommon;
-        } else if (rarity.equals("Uncommon")) {
-            return R.style.ChipRare;
-        } else if (rarity.equals("Rare") || rarity.equals("Promo")) {
-            return R.style.ChipEpic;
-        } else {
-            return R.style.ChipLegendary;
-        }
-    }
-
-    private int getRarityBorderColor(String rarity) {
-        if (rarity.equals("Common")) {
-            return R.color.common_gray;
-        } else if (rarity.equals("Uncommon")) {
-            return R.color.rare_blue;
-        } else if (rarity.equals("Rare") || rarity.equals("Promo")) {
-            return R.color.epic_purple;
-        } else {
-            return R.color.legendary_orange;
-        }
-    }
 }

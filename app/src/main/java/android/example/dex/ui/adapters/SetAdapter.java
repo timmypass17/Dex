@@ -37,7 +37,7 @@ public class SetAdapter extends ListAdapter<PokeSet, SetViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull PokeSet oldItem, @NonNull PokeSet newItem) {
-            return oldItem.getmName().equals(newItem.getmName());
+            return oldItem.getName().equals(newItem.getName());
         }
     }
 

@@ -1,27 +1,15 @@
-package android.example.dex;
+package android.example.dex.db.repository;
 
 import android.app.Application;
 import android.example.dex.db.PokemonRoomDatabase;
 import android.example.dex.db.dao.SetDao;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
-import android.example.dex.network.PokeService;
-import android.example.dex.network.PokeSetResponse;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.io.IOException;
 import java.util.List;
 
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 // Repository modules handle data operations.
 // They provide a clean API so that the rest of the app can retrieve this data easily.
 // They know where to get the data from and what API calls to make when data is updated.
@@ -41,6 +29,11 @@ public class SetRepository {
         return mAllSets;
     }
 
+    public LiveData<List<Pokemon>> getmAllPokemonBySet(String setId) {
+        return mSetDao.getPokemonBySet(setId);
+    }
+
+    // Get sets in sorted order
     public LiveData<List<PokeSet>> getOldSet() {
         return mSetDao.getOldSet();
     }

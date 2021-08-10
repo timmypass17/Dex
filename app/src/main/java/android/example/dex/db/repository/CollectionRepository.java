@@ -1,10 +1,9 @@
-package android.example.dex;
+package android.example.dex.db.repository;
 
 import android.app.Application;
-import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.PokemonRoomDatabase;
+import android.example.dex.db.dao.CollectionDao;
 import android.example.dex.db.entity.pokemon.Pokemon;
-import android.example.dex.db.entity.pokemon.SumPojo;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,20 +16,13 @@ public class CollectionRepository {
 
     private final CollectionDao mCollectionDao;
     private final LiveData<List<Pokemon>> mAllPokemons;
-    private final LiveData<SumPojo> mCollectionPrice;
-    private final LiveData<List<Pokemon>> mWishListPokemons;
-    private final LiveData<SumPojo> mWishPrice;
-    private LiveData<List<Pokemon>> mAllPokemonBySet;
-    private final LiveData<Double> mHighestCollectionPrice;
+    private final LiveData<Double> getCollectionPrice;
 
     public CollectionRepository(Application application) {
         PokemonRoomDatabase db = PokemonRoomDatabase.getDatabase(application);
         mCollectionDao = db.collectionDao();
         mAllPokemons = mCollectionDao.getOwnedPokemons();
-        mCollectionPrice = mCollectionDao.getCollectionPrice();
-        mWishListPokemons = mCollectionDao.getWishlistPokemons();
-        mWishPrice = mCollectionDao.getWishlistPrice();
-        mHighestCollectionPrice = mCollectionDao.getHighestCollectionPrice();
+        getCollectionPrice = mCollectionDao.getCollectionPrice();
     }
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
@@ -38,32 +30,12 @@ public class CollectionRepository {
         return mCollectionDao.getPokemonByName("%" + name + "%");
     }
 
-    public LiveData<List<Pokemon>> getmAllPokemonBySet(String setId) {
-        return mCollectionDao.getPokemonBySet(setId);
-    }
-
-    public LiveData<Double> getmHighestCollectionPrice() {
-        return mHighestCollectionPrice;
-    }
-
-    public LiveData<List<Pokemon>> getWishListPokemons() {
-        return mWishListPokemons;
+    public LiveData<Double> getCollectionPrice() {
+        return getCollectionPrice;
     }
 
     public LiveData<List<Pokemon>> getAllPokemons() {
         return mAllPokemons;
-    }
-
-    public LiveData<SumPojo> getCollectionPrice() {
-        return mCollectionPrice;
-    }
-
-    public LiveData<SumPojo> getWishPrice() {
-        return mWishPrice;
-    }
-
-    public LiveData<List<Pokemon>> getAllPokemonBySet() {
-        return mAllPokemonBySet;
     }
 
     // 1. You must call this on a non-UI thread or your app will throw an exception.
@@ -81,18 +53,7 @@ public class CollectionRepository {
         });
     }
 
-    public void addToWishlist(String id) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCollectionDao.addToWishlist(id);
-        });
-    }
-
-    public void removeFromWishlist(String id) {
-        PokemonRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mCollectionDao.removeFromWishlist(id);
-        });
-    }
-
+    // Get Pokemons in sorted order
     public LiveData<List<Pokemon>> getNewerPokemons() {
         return mCollectionDao.getNewerPokemons();
     }

@@ -1,9 +1,6 @@
 package android.example.dex.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -11,29 +8,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.example.dex.CollectionRepository;
 import android.example.dex.ui.fragments.CollectionFragment;
 import android.example.dex.R;
 import android.example.dex.ui.fragments.SearchFragment;
 import android.example.dex.ui.fragments.SetFragment;
-import android.example.dex.ui.fragments.StatFragment;
 import android.example.dex.ui.fragments.WishFragment;
-import android.example.dex.viewmodel.CollectionViewModel;
-import android.example.dex.viewmodel.SearchViewModel;
-import android.example.dex.viewmodel.SetViewModel;
-import android.example.dex.viewmodel.WishViewModel;
+import android.example.dex.db.viewmodel.CollectionViewModel;
+import android.example.dex.db.viewmodel.SearchViewModel;
+import android.example.dex.db.viewmodel.SetViewModel;
+import android.example.dex.db.viewmodel.WishViewModel;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
-
-import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Set hamburger icon
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
-        // Find our drawer view
+        // Setup hamburger menu
         drawerLayout = findViewById(R.id.drawer_layout);
-        // Find our navigation view
         nvDrawer = findViewById(R.id.navigation_view);
-        // Setup drawer view
         setupDrawerContent(nvDrawer);
 
+        // Get viewmodels
         mCollectionViewModel = new ViewModelProvider(this).get(CollectionViewModel.class);
         mWishViewModel = new ViewModelProvider(this).get(WishViewModel.class);
         mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         mSetViewModel = new ViewModelProvider(this).get(SetViewModel.class);
 
+        // Bottom Navigation click listener to navigate between fragments
         fragmentManager = getSupportFragmentManager();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -96,26 +87,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_collection);
     }
 
-    public static CollectionViewModel getmCollectionViewModel() {
-        return mCollectionViewModel;
-    }
-
-    public static WishViewModel getmWishViewModel() {
-        return mWishViewModel;
-    }
-
-    public static SearchViewModel getmSearchViewModel() {
-        return mSearchViewModel;
-    }
-
-    public static SetViewModel getmSetViewModel() {
-        return mSetViewModel;
-    }
-
-    public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
@@ -136,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
+    private void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         int itemID = menuItem.getItemId();
@@ -153,16 +124,13 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemID == R.id.nav_wish_fragment) {
             fragment = new WishFragment();
             title = "Wish";
-        } else if (itemID == R.id.nav_stat_fragment) {
-            fragment = new StatFragment();
-            title = "Stat";
         } else if (itemID == R.id.nav_github) {
             Uri webpage = Uri.parse("https://github.com/timmypass17");
             Intent i = new Intent(Intent.ACTION_VIEW, webpage);
             if (i.resolveActivity(getPackageManager()) != null) {
                 startActivity(i);
             } else {
-                Log.d("ImplicitIntents", "Can't handle this!");
+                Log.d(TAG, " ImplicitIntents, can't handle this!");
             }
             return;
         } else {
@@ -183,4 +151,26 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
 
     }
+
+    private void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    // Getters
+    public static CollectionViewModel getmCollectionViewModel() {
+        return mCollectionViewModel;
+    }
+
+    public static WishViewModel getmWishViewModel() {
+        return mWishViewModel;
+    }
+
+    public static SearchViewModel getmSearchViewModel() {
+        return mSearchViewModel;
+    }
+
+    public static SetViewModel getmSetViewModel() {
+        return mSetViewModel;
+    }
+
 }

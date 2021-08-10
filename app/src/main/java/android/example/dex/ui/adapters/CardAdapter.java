@@ -9,21 +9,21 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SearchAdapter extends ListAdapter<Pokemon, SearchViewHolder> {
+public class CardAdapter extends ListAdapter<Pokemon, CardViewHolder> {
 
-    public SearchAdapter(@NonNull @NotNull DiffUtil.ItemCallback<Pokemon> diffCallback) {
+    public CardAdapter(@NonNull @NotNull DiffUtil.ItemCallback<Pokemon> diffCallback) {
         super(diffCallback);
     }
 
     @NonNull
     @NotNull
     @Override
-    public SearchViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return SearchViewHolder.create(parent);
+    public CardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        return CardViewHolder.create(parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull CardViewHolder holder, int position) {
         Pokemon pokemon = getItem(position);
         holder.bind(pokemon);
     }

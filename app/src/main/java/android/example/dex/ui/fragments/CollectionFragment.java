@@ -4,11 +4,9 @@ import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.CollectionAdapter;
 import android.example.dex.R;
 import android.example.dex.ui.adapters.CollectionViewHolder;
-import android.example.dex.viewmodel.CollectionViewModel;
-import android.example.dex.viewmodel.WishViewModel;
+import android.example.dex.db.viewmodel.CollectionViewModel;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,28 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 
-
 public class CollectionFragment extends Fragment {
 
+    private static final String TAG = "CollectionFragment";
     private CollectionViewModel mCollectionViewModel;
     private CollectionAdapter mCollectionAdapter;
     private RecyclerView rvCollection;
@@ -61,22 +51,25 @@ public class CollectionFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Get handle on views
         mCollectionViewModel = MainActivity.getmCollectionViewModel();
         rvCollection = view.findViewById(R.id.rvCollection);
         tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
         tvCardCount = view.findViewById(R.id.tvCardCount);
 
+        // Set Adapter
         mCollectionAdapter = new CollectionAdapter(new CollectionAdapter.WordDiff());
         rvCollection.setAdapter(mCollectionAdapter);
         rvCollection.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Update collection list
         mCollectionViewModel.getAllPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             mCollectionAdapter.submitList(pokemons);
             tvCardCount.setText(String.valueOf(pokemons.size()));
         });
 
         // Set collection worth
-        mCollectionViewModel.getmHighestCollectionPrice().observe(getViewLifecycleOwner(), price -> {
+        mCollectionViewModel.getCollectionPrice().observe(getViewLifecycleOwner(), price -> {
             DecimalFormat moneyFormat = new DecimalFormat("$0.00");
             if (price != null) {
                 tvTotalPrice.setText(moneyFormat.format(price));

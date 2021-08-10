@@ -1,5 +1,7 @@
 package android.example.dex.db.entity.pokemon;
 
+import android.example.dex.utilities.PokeUtil;
+
 import androidx.annotation.Nullable;
 import androidx.room.Embedded;
 
@@ -8,6 +10,10 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 import java.text.DecimalFormat;
+
+import static android.example.dex.utilities.PokeUtil.getAvailableCardType;
+
+// Recall: @Embedded - Table now looks like holofoil_low, holofoil_mid, holofoil_market...
 
 @Parcel
 public class Prices {
@@ -18,7 +24,7 @@ public class Prices {
     @Nullable
     public Normal normal;
 
-    @Embedded(prefix = "holofoil_") // Table now looks like holofoil_low, holofoil_mid, holofoil_market...
+    @Embedded(prefix = "holofoil_")
     @Nullable
     public Holofoil holofoil;
 
@@ -37,12 +43,6 @@ public class Prices {
         this.highestPrice = highestPrice;
     }
 
-//    public int highestPriceInt;
-//
-//    public void setHighestPriceInt(double highestPrice) {
-//        this.highestPriceInt = (int) highestPrice;
-//    }
-
     @Nullable
     public Normal getNormal() {
         return normal;
@@ -59,83 +59,6 @@ public class Prices {
     @Nullable
     public FirstEditionHolofoil getFirstEditionHolofoil() {
         return firstEditionHolofoil;
-    }
-
-    public static String getPrice(Pokemon pokemon) {
-        // Recall: Some cards do not even have TCGPlayer for some reason
-        DecimalFormat moneyFormat = new DecimalFormat("$0.00");
-        double price = 0.00;
-        TCGPlayer tcgPlayer = pokemon.getTcgplayer();
-        // Null checking json values
-        if (tcgPlayer != null) {
-            Normal normal = tcgPlayer.getPrices().getNormal();
-            Holofoil holofoil = tcgPlayer.getPrices().getHolofoil();
-            ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
-            FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
-            if (normal != null) {
-                price = normal.getMarket();
-            }
-            if (holofoil != null) {
-                price = holofoil.getMarket();
-            }
-            if (reverseHolofoil != null) {
-                price = reverseHolofoil.getMarket();
-            }
-            if (firstEditionHolofoil != null) {
-                price = firstEditionHolofoil.getMarket();
-            }
-        }
-        return moneyFormat.format(price);
-    }
-
-    public static String getPriceType(Pokemon pokemon) {
-        String priceType = "N/A";
-        TCGPlayer tcgPlayer = pokemon.getTcgplayer();
-        if (tcgPlayer != null) {
-            Normal normal = tcgPlayer.getPrices().getNormal();
-            Holofoil holofoil = tcgPlayer.getPrices().getHolofoil();
-            ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
-            FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
-            if (normal != null) {
-                priceType = "Norm";
-            }
-            if (holofoil != null) {
-                priceType = "Holo";
-            }
-            if (reverseHolofoil != null) {
-                priceType = "R.Holo";
-            }
-            if (firstEditionHolofoil != null) {
-                priceType = "1st";
-            }
-        }
-        return priceType;
-    }
-
-    public static double getHighestPrice(Pokemon pokemon) {
-        // Recall: Some cards do not even have TCGPlayer for some reason
-        double price = 0.00;
-        TCGPlayer tcgPlayer = pokemon.getTcgplayer();
-        // Null checking json values
-        if (tcgPlayer != null) {
-            Normal normal = tcgPlayer.getPrices().getNormal();
-            Holofoil holofoil = tcgPlayer.getPrices().getHolofoil();
-            ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
-            FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
-            if (normal != null) {
-                price = normal.getMarket();
-            }
-            if (holofoil != null) {
-                price = holofoil.getMarket();
-            }
-            if (reverseHolofoil != null) {
-                price = reverseHolofoil.getMarket();
-            }
-            if (firstEditionHolofoil != null) {
-                price = firstEditionHolofoil.getMarket();
-            }
-        }
-        return price;
     }
 
     @Parcel

@@ -3,14 +3,12 @@ package android.example.dex.ui.fragments;
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.ui.MainActivity;
-import android.example.dex.ui.adapters.CollectionViewHolder;
-import android.example.dex.ui.adapters.SearchAdapter;
-import android.example.dex.ui.adapters.SearchViewHolder;
-import android.example.dex.viewmodel.SearchViewModel;
+import android.example.dex.ui.adapters.CardAdapter;
+import android.example.dex.ui.adapters.CardViewHolder;
+import android.example.dex.db.viewmodel.SearchViewModel;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,32 +17,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SearchFragment extends Fragment {
 
+    private static final String TAG = "SearchFragment";
     private SearchViewModel mSearchViewModel;
-    private SearchAdapter mSearchAdapter;
+    private CardAdapter mCardAdapter;
     private RecyclerView rvPokemons;
     private EditText etSearch;
     private Button btnSearch;
@@ -72,32 +61,29 @@ public class SearchFragment extends Fragment {
         btnSearch = view.findViewById(R.id.btnGetPokemons);
         fabUpNavigation = view.findViewById(R.id.fabUpNavigation);
         NestedScrollView nestedScroll = view.findViewById(R.id.nestedScroll);
+
         // Set Adapter
-        mSearchAdapter = new SearchAdapter(new SearchAdapter.WordDiff());
-        rvPokemons.setAdapter(mSearchAdapter);
+        mCardAdapter = new CardAdapter(new CardAdapter.WordDiff());
+        rvPokemons.setAdapter(mCardAdapter);
         rvPokemons.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         // mSearchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         mSearchViewModel = MainActivity.getmSearchViewModel();
 
-        // Initialize default search query
+        // Initialize default search list
         mSearchViewModel.getAllPokemonByName("Pikachu").observe(getViewLifecycleOwner(), pokemons -> {
-            mSearchAdapter.submitList(pokemons);
+            mCardAdapter.submitList(pokemons);
         });
 
-        // Search button to query pokemons
+        // Search button listener to query pokemons
         btnSearch.setOnClickListener(v -> {
             String name = etSearch.getText().toString();
             mSearchViewModel.getAllPokemonByName(name).observe(getViewLifecycleOwner(), pokemons ->
-                    mSearchAdapter.submitList(pokemons));
+                    mCardAdapter.submitList(pokemons));
         });
 
-        fabUpNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nestedScroll.smoothScrollTo(0, etSearch.getTop());
-            }
-        });
+        // Fab upward navigation button
+        fabUpNavigation.setOnClickListener(v -> nestedScroll.smoothScrollTo(0, etSearch.getTop()));
     }
 
     @Override
@@ -117,7 +103,7 @@ public class SearchFragment extends Fragment {
     // Show all cards color
     private boolean showAllCards() {
         for (int i = 0; i < rvPokemons.getChildCount(); i++) {
-            SearchViewHolder holder = (SearchViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
+            CardViewHolder holder = (CardViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
             // Remove gray filter
             holder.ivCard.clearColorFilter();;
         }
@@ -130,8 +116,8 @@ public class SearchFragment extends Fragment {
         ColorMatrix matrix = new ColorMatrix();
         matrix.setSaturation(0);
         for (int i = 0; i < rvPokemons.getChildCount(); i++) {
-            Pokemon pokemon = mSearchAdapter.getCurrentList().get(i);
-            SearchViewHolder holder = (SearchViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
+            Pokemon pokemon = mCardAdapter.getCurrentList().get(i);
+            CardViewHolder holder = (CardViewHolder) rvPokemons.findViewHolderForAdapterPosition(i);
             // If card is not owned
             if (pokemon.isOwned != 1) {
                 // Apply gray filter

@@ -17,16 +17,20 @@ public interface SetDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(PokeSet pokeSet);
 
-    @Query("SELECT * FROM set_table ORDER BY mReleaseDate ASC")
+    @Query("SELECT * FROM pokemon_table WHERE setID = :set ORDER BY card_number ASC")
+    LiveData<List<Pokemon>> getPokemonBySet(String set);
+
+    // Sorting methods
+    @Query("SELECT * FROM set_table ORDER BY releaseDate ASC")
     LiveData<List<PokeSet>> getOldSet();
 
-    @Query("SELECT * FROM set_table ORDER BY mReleaseDate DESC")
+    @Query("SELECT * FROM set_table ORDER BY releaseDate DESC")
     LiveData<List<PokeSet>> getNewSet();
 
-    @Query("SELECT * FROM set_table ORDER BY mName ASC")
+    @Query("SELECT * FROM set_table ORDER BY name ASC")
     LiveData<List<PokeSet>> getAlphabetizedSetAsc();
 
-    @Query("SELECT * FROM set_table ORDER BY mName DESC")
+    @Query("SELECT * FROM set_table ORDER BY name DESC")
     LiveData<List<PokeSet>> getAlphabetizedSetDesc();
 
     @Query("SELECT * FROM pokemon_table WHERE isOwned = 1 AND setID = :id")

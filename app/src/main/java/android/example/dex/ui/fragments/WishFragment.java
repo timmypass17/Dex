@@ -2,15 +2,12 @@ package android.example.dex.ui.fragments;
 
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.adapters.WishAdapter;
-import android.example.dex.ui.adapters.WishViewHolder;
-import android.example.dex.viewmodel.CollectionViewModel;
-import android.example.dex.viewmodel.WishViewModel;
+import android.example.dex.db.viewmodel.WishViewModel;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,16 +53,17 @@ public class WishFragment extends Fragment {
         rvWishlist.setAdapter(mWishAdapter);
         rvWishlist.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//        mWishViewModel = new ViewModelProvider(this).get(WishViewModel.class);
         mWishViewModel = MainActivity.getmWishViewModel();
 
+        // Update wishlist cards
         mWishViewModel.getWishlistPokemons().observe(getViewLifecycleOwner(), pokemons -> {
             mWishAdapter.submitList(pokemons);
             tvCardCount.setText(String.valueOf(pokemons.size()));
         });
 
-        mWishViewModel.getWishPrice().observe(getViewLifecycleOwner(), sumPojo -> {
-            tvWishlistPrice.setText(sumPojo.getCollectionPrice());
+        // Update wishlist price
+        mWishViewModel.getWishPrice().observe(getViewLifecycleOwner(), price -> {
+            tvWishlistPrice.setText(String.valueOf(price));
         });
     }
 }

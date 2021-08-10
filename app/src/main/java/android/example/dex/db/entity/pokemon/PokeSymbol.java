@@ -5,9 +5,9 @@ import androidx.room.ColumnInfo;
 import org.parceler.Parcel;
 
 @Parcel
-public class PokemonSetImage {
+public class PokeSymbol {
 
-    public PokemonSetImage() {}
+    public PokeSymbol() {}
 
     @ColumnInfo(name = "setSymbolImage")
     public String symbol;

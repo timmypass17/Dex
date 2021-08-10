@@ -1,9 +1,8 @@
-package android.example.dex.viewmodel;
+package android.example.dex.db.viewmodel;
 
 import android.app.Application;
-import android.example.dex.CollectionRepository;
 import android.example.dex.db.entity.pokemon.Pokemon;
-import android.example.dex.db.entity.pokemon.SumPojo;
+import android.example.dex.db.repository.CollectionRepository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,15 +20,13 @@ public class CollectionViewModel extends AndroidViewModel {
 
     private final CollectionRepository mRepository;
     private final LiveData<List<Pokemon>> mAllPokemons;
-    private final LiveData<SumPojo> mCollectionPrice;
     private final LiveData<Double> mHighestCollectionPrice;
 
     public CollectionViewModel(@NonNull @NotNull Application application) {
         super(application);
         mRepository = new CollectionRepository(application);
         mAllPokemons = mRepository.getAllPokemons(); // Intialized the allPokemons LiveData using the repository
-        mCollectionPrice = mRepository.getCollectionPrice();
-        mHighestCollectionPrice = mRepository.getmHighestCollectionPrice();
+        mHighestCollectionPrice = mRepository.getCollectionPrice();
     }
 
     // Return a cached list of pokemons
@@ -37,11 +34,7 @@ public class CollectionViewModel extends AndroidViewModel {
         return mAllPokemons;
     }
 
-    public LiveData<SumPojo> getCollectionPrice() {
-        return mCollectionPrice;
-    }
-
-    public LiveData<Double> getmHighestCollectionPrice() {
+    public LiveData<Double> getCollectionPrice() {
         return mHighestCollectionPrice;
     }
 

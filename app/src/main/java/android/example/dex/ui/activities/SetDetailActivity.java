@@ -1,26 +1,19 @@
 package android.example.dex.ui.activities;
 
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
 import android.example.dex.ui.MainActivity;
-import android.example.dex.ui.adapters.SearchAdapter;
-import android.example.dex.viewmodel.SearchViewModel;
-import android.example.dex.viewmodel.SetViewModel;
+import android.example.dex.ui.adapters.CardAdapter;
+import android.example.dex.db.viewmodel.SearchViewModel;
+import android.example.dex.utilities.PokeUtil;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,10 +24,13 @@ import org.parceler.Parcels;
 import java.util.List;
 import java.util.Objects;
 
+import static android.example.dex.utilities.PokeUtil.getTotalOwned;
+
 public class SetDetailActivity extends AppCompatActivity{
 
+    private static final String TAG = "SetDetailActivity";
     private SearchViewModel mSearchViewModel;
-    private SearchAdapter searchAdapter;
+    private CardAdapter cardAdapter;
     private RecyclerView rvPokemons;
     private ImageView ivLogo;
     private ImageView ivSymbol;
@@ -53,8 +49,8 @@ public class SetDetailActivity extends AppCompatActivity{
 
         // Adapter
         rvPokemons = findViewById(R.id.rvPokemons);
-        searchAdapter = new SearchAdapter(new SearchAdapter.WordDiff());
-        rvPokemons.setAdapter(searchAdapter);
+        cardAdapter = new CardAdapter(new CardAdapter.WordDiff());
+        rvPokemons.setAdapter(cardAdapter);
         rvPokemons.setLayoutManager(new GridLayoutManager(this, 3));
 
         // Get handle on views
@@ -73,27 +69,17 @@ public class SetDetailActivity extends AppCompatActivity{
     }
 
     private void bind(PokeSet pokeSet) {
-        Glide.with(this).load(pokeSet.getmImages().getmLogo()).into(ivLogo);
-        Glide.with(this).load(pokeSet.getmImages().getmSymbol()).into(ivSymbol);
-        tvSetName.setText(pokeSet.getmName());
-        tvSeries.setText(pokeSet.getmSeries());
+        Glide.with(this).load(pokeSet.getImages().getLogo()).into(ivLogo);
+        Glide.with(this).load(pokeSet.getImages().getSymbol()).into(ivSymbol);
+        tvSetName.setText(pokeSet.getName());
+        tvSeries.setText(pokeSet.getSeries());
         tvReleaseDate.setText(pokeSet.getReleaseDateFormatted(pokeSet.getReleaseDate()));
 
         // Add Observer to update recyclerview of cards (Recall: updates whenever dataset changes)
         mSearchViewModel.getAllPokemonBySet(pokeSet.getId()).observe(this, pokemons -> {
-            searchAdapter.submitList(pokemons);
-            tvCardCount.setText(getTotalOwned(pokemons) + " / " + pokeSet.getmTotal());
+            cardAdapter.submitList(pokemons);
+            tvCardCount.setText(getTotalOwned(pokemons) + " / " + pokeSet.getTotal());
         });
-    }
-
-    private int getTotalOwned(List<Pokemon> pokemonList) {
-        int ownedCount = 0;
-        for (Pokemon pokemon : pokemonList) {
-            if (pokemon.isOwned == 1) {
-                ownedCount += 1;
-            }
-        }
-        return ownedCount;
     }
 
     // Back button

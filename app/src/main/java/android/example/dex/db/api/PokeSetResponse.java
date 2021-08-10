@@ -1,4 +1,4 @@
-package android.example.dex.network;
+package android.example.dex.db.api;
 
 import android.example.dex.db.entity.set.PokeSet;
 

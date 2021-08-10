@@ -1,7 +1,8 @@
 package android.example.dex.db.entity.pokemon;
 
+import android.example.dex.utilities.PokeUtil;
+
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,11 +10,16 @@ import androidx.room.PrimaryKey;
 import org.parceler.Parcel;
 
 // Note: Retrofit- Use @SerializedName tag if name is not the same as json key.
-//       (I just add it for consistency)
-
+//       Room - Use @Embedded, table representing Pokemon object now contains columns in SetID
 @Parcel
 @Entity(tableName = "pokemon_table")
 public class Pokemon {
+
+    public Pokemon(String name){
+        this.name = name;
+    }
+    // Empty constructor required for parcel
+    public Pokemon(){}
 
     @PrimaryKey
     @NonNull
@@ -24,12 +30,11 @@ public class Pokemon {
     public String supertype;
 
     @Embedded
-    public Image images;
+    public PokeImage images;
 
     @Embedded
     public TCGPlayer tcgplayer;
 
-    // Table representing Pokemon object now contains columns in SetID
     @Embedded
     public SetID set;
 
@@ -44,35 +49,9 @@ public class Pokemon {
 
     public int card_number;
 
-    public void setCard_number(String number) {
-        StringBuilder n = new StringBuilder();
-        for (int i = 0; i < number.length(); i++) {
-            char c = number.charAt(i);
-            // Append numbers only
-            if (Character.isDigit(c)) {
-                n.append(c);
-            }
-        }
-        // If number is not empty, update number
-        if (!String.valueOf(n).equals("")) {
-            this.card_number = Integer.parseInt(String.valueOf(n));
-        }
-    }
-
     public int isOwned = 0;
 
     public int isWish = 0;
-
-    public void setIsWish(int isWish) {
-        this.isWish = isWish;
-    }
-
-    public Pokemon(String name){
-        this.name = name;
-    }
-
-    // Empty constructor required for parcel
-    public Pokemon(){}
 
     public String getName() {
         return name;
@@ -86,7 +65,7 @@ public class Pokemon {
         return id;
     }
 
-    public Image getImages() {
+    public PokeImage getImages() {
         return images;
     }
 
@@ -118,4 +97,11 @@ public class Pokemon {
         return card_number;
     }
 
+    public void setCard_number(String number) {
+        String cardNumber = PokeUtil.getCardNumber(number);
+        // If number is not empty, update number
+        if (!cardNumber.equals("")) {
+            this.card_number = Integer.parseInt(String.valueOf(cardNumber));
+        }
+    }
 }

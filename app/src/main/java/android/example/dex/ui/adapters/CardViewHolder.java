@@ -1,6 +1,5 @@
 package android.example.dex.ui.adapters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.example.dex.R;
 import android.example.dex.db.entity.pokemon.Pokemon;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,21 +23,21 @@ import com.bumptech.glide.request.RequestOptions;
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
-public class SearchViewHolder extends RecyclerView.ViewHolder {
+public class CardViewHolder extends RecyclerView.ViewHolder {
 
     private final CardView cardPokemon;
     public final ImageView ivCard;
 
-    public SearchViewHolder(@NonNull @NotNull View itemView) {
+    public CardViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
         cardPokemon = itemView.findViewById(R.id.cardPokemon);
         ivCard = itemView.findViewById(R.id.ivCard);
     }
 
-    public static SearchViewHolder create(ViewGroup parent) {
+    public static CardViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_pokemon, parent, false);
-        return new SearchViewHolder(view);
+        return new CardViewHolder(view);
     }
 
     public void bind(Pokemon pokemon) {
@@ -52,29 +50,23 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
                 .apply(new RequestOptions().override(400, 600))
                 .into(ivCard);
 
-        // Apply gray filter to owned cards
-        ColorMatrix matrix = new ColorMatrix();
-        matrix.setSaturation(0);
-        ivCard.setColorFilter(new ColorMatrixColorFilter(matrix));
-
         // Remove gray filter to owned cards
         if (pokemon.isOwned == 1) {
             ivCard.clearColorFilter();
+        } else {
+            // Apply gray filter to owned cards
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+            ivCard.setColorFilter(new ColorMatrixColorFilter(matrix));
         }
 
-        // Card Onclick listener
+        // Card onClick to navigate to CardDetail activity
         cardPokemon.setOnClickListener(v -> {
-            // 1. Navigate to a new activity on tap
             Intent i = new Intent(itemView.getContext(), CardDetailActivity.class);
-            // 2. Pass pokemon object into details activity through parcel
+            // Pass pokemon object into details activity through parcel
             i.putExtra("pokeCard", Parcels.wrap(pokemon));
-            // 3. Add transition
-            // Recall: Add android:transitionName="profile" to res/layout
-//            ActivityOptionsCompat options = ActivityOptionsCompat.
-//                    makeSceneTransitionAnimation((Activity) itemView.getContext(), ivCard, "profile");
-            // 4. Begin navigation
-//            itemView.getContext().startActivity(i, options.toBundle());
             itemView.getContext().startActivity(i);
         });
     }
+
 }

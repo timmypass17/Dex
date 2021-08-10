@@ -1,8 +1,9 @@
-package android.example.dex.viewmodel;
+package android.example.dex.db.viewmodel;
 
 import android.app.Application;
-import android.example.dex.CollectionRepository;
+import android.example.dex.db.repository.CollectionRepository;
 import android.example.dex.db.entity.pokemon.Pokemon;
+import android.example.dex.db.repository.SetRepository;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -15,10 +16,12 @@ import java.util.List;
 public class SearchViewModel extends AndroidViewModel {
 
     private final CollectionRepository mCollectionRepository;
+    private final SetRepository mSetRepository;
 
     public SearchViewModel(@NonNull @NotNull Application application) {
         super(application);
         mCollectionRepository = new CollectionRepository(application);
+        mSetRepository = new SetRepository(application);
     }
 
     public LiveData<List<Pokemon>> getAllPokemonByName(String name) {
@@ -26,6 +29,6 @@ public class SearchViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Pokemon>> getAllPokemonBySet(String setId) {
-        return mCollectionRepository.getmAllPokemonBySet(setId);
+        return mSetRepository.getmAllPokemonBySet(setId);
     }
 }

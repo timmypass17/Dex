@@ -1,7 +1,7 @@
-package android.example.dex.viewmodel;
+package android.example.dex.db.viewmodel;
 
 import android.app.Application;
-import android.example.dex.SetRepository;
+import android.example.dex.db.repository.SetRepository;
 import android.example.dex.db.entity.pokemon.Pokemon;
 import android.example.dex.db.entity.set.PokeSet;
 

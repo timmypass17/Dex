@@ -18,7 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.palette.graphics.Palette;
@@ -58,10 +57,11 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(PokeSet pokeSet) {
-
+        tvSet.setText(pokeSet.getName());
+        tvSeries.setText(pokeSet.getSeries());
         Glide.with(ivLogo.getContext())
                 .asBitmap()
-                .load(pokeSet.getmImages().getmLogo())
+                .load(pokeSet.getImages().getLogo())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<Bitmap>() {
                     @Override
@@ -73,36 +73,7 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
                     public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                         if (resource != null) {
                             Palette.from(resource).generate(palette -> {
-                                // Get the "vibrant" color swatch based on the bitmap
-                                Palette.Swatch light_vibrant = palette.getLightVibrantSwatch();
-                                Palette.Swatch dominant = palette.getDominantSwatch();
-                                // Get pokemon list
-                                LiveData<List<Pokemon>> pokemons = MainActivity.getmSetViewModel().getAllPokemonFromSet(pokeSet.getId());
-                                pokemons.observe((LifecycleOwner) itemView.getContext(), pokemonList -> {
-                                    int card_owned = pokemonList.size();
-                                    int set_total = Integer.parseInt(pokeSet.getmTotal());
-                                    int percentage_owned = (int) (((double)card_owned / set_total) * 100);
-                                    if (percentage_owned == 100) {
-                                        if (light_vibrant != null) {
-                                            tvTotal.setTextColor(light_vibrant.getRgb());
-                                        } else if (dominant != null) {
-                                            tvTotal.setTextColor(dominant.getRgb());
-                                        }
-                                    } else {
-                                        tvTotal.setTextColor(itemView.getContext().getResources().getColor(R.color.default_text));
-                                    }
-                                });
-                                // Change vert_bar color
-                                if (light_vibrant != null) {
-                                    vert_bar.setBackgroundColor(light_vibrant.getRgb());
-                                    pgbTotal.setProgressTintList(ColorStateList.valueOf(light_vibrant.getRgb()));
-                                } else if (dominant != null){
-                                    // Darker colors did not have light swatches
-                                    vert_bar.setBackgroundColor(dominant.getRgb());
-                                    pgbTotal.setProgressTintList(ColorStateList.valueOf(dominant.getRgb()));
-                                } else {
-                                    vert_bar.setBackgroundColor(ivLogo.getContext().getResources().getColor(R.color.default_bar));
-                                }
+                                setPalette(palette, pokeSet);
                             });
                         }
                         return false;
@@ -110,12 +81,11 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
                 })
                 .into(ivLogo);
 
-        tvSet.setText(pokeSet.getmName());
-        tvSeries.setText(pokeSet.getmSeries());
+        // Update text colors, progress bar
         LiveData<List<Pokemon>> pokemons = MainActivity.getmSetViewModel().getAllPokemonFromSet(pokeSet.getId());
         pokemons.observe((LifecycleOwner) itemView.getContext(), pokemonList -> {
             int card_owned = pokemonList.size();
-            int set_total = Integer.parseInt(pokeSet.getmTotal());
+            int set_total = Integer.parseInt(pokeSet.getTotal());
             int percentage_owned = (int) (((double)card_owned / set_total) * 100);
             if (percentage_owned == 100) {
                 tvTotal.setTextColor(itemView.getContext().getResources().getColor(R.color.blue));
@@ -124,18 +94,48 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
             }
             tvTotal.setText(+ card_owned + " / " + set_total + "  (" + percentage_owned + "%)");
             pgbTotal.setProgress(pokemonList.size());
-            pgbTotal.setMax(Integer.parseInt(pokeSet.getmTotal()));
+            pgbTotal.setMax(Integer.parseInt(pokeSet.getTotal()));
         });
 
-        // Register click listener on card
+        // Card onclick listener to SetDetailActivity
         cardView.setOnClickListener(v -> {
-            // 1. Navigate to a new activity on tap
             Intent i = new Intent(cardView.getContext(), SetDetailActivity.class);
-            // 2. Pass pokeSet object into details activity through parcel
             i.putExtra("pokeSet", Parcels.wrap(pokeSet));
-            // 3. Begin navigation
             cardView.getContext().startActivity(i);
         });
+    }
+
+    private void setPalette(Palette palette, PokeSet pokeSet) {
+        // Get the "vibrant" color swatch based on the bitmap
+        Palette.Swatch light_vibrant = palette.getLightVibrantSwatch();
+        Palette.Swatch dominant = palette.getDominantSwatch();
+        // Get pokemon list
+        LiveData<List<Pokemon>> pokemons = MainActivity.getmSetViewModel().getAllPokemonFromSet(pokeSet.getId());
+        pokemons.observe((LifecycleOwner) itemView.getContext(), pokemonList -> {
+            int card_owned = pokemonList.size();
+            int set_total = Integer.parseInt(pokeSet.getTotal());
+            int percentage_owned = (int) (((double) card_owned / set_total) * 100);
+            if (percentage_owned == 100) {
+                if (light_vibrant != null) {
+                    tvTotal.setTextColor(light_vibrant.getRgb());
+                } else if (dominant != null) {
+                    tvTotal.setTextColor(dominant.getRgb());
+                }
+            } else {
+                tvTotal.setTextColor(itemView.getContext().getResources().getColor(R.color.default_text));
+            }
+        });
+        // Change vert_bar color
+        if (light_vibrant != null) {
+            vert_bar.setBackgroundColor(light_vibrant.getRgb());
+            pgbTotal.setProgressTintList(ColorStateList.valueOf(light_vibrant.getRgb()));
+        } else if (dominant != null) {
+            // Darker colors did not have light swatches
+            vert_bar.setBackgroundColor(dominant.getRgb());
+            pgbTotal.setProgressTintList(ColorStateList.valueOf(dominant.getRgb()));
+        } else {
+            vert_bar.setBackgroundColor(ivLogo.getContext().getResources().getColor(R.color.default_bar));
+        }
     }
 
     static SetViewHolder create(ViewGroup parent) {

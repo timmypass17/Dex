@@ -6,6 +6,7 @@ import android.example.dex.db.entity.pokemon.Prices;
 import android.example.dex.ui.MainActivity;
 import android.example.dex.ui.fragments.CollectionFragment;
 import android.example.dex.ui.fragments.WishFragment;
+import android.example.dex.utilities.PokeUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,10 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
+
+import static android.example.dex.utilities.PokeUtil.getHighestPrice;
+import static android.example.dex.utilities.PokeUtil.getPriceFormatted;
+import static android.example.dex.utilities.PokeUtil.getPriceType;
 
 public class WishViewHolder extends RecyclerView.ViewHolder {
 
@@ -44,9 +49,10 @@ public class WishViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Pokemon pokemon) {
         tvName.setText(pokemon.getName());
-        tvPrice.setText(Prices.getPrice(pokemon));
+        tvPrice.setText(getPriceFormatted(getHighestPrice(pokemon)));
         Glide.with(itemView).load(pokemon.getImages().getSmallImage()).into(ivCardImage);
 
+        // Button onClick to remove card from wishlist
         btnRemoveFromWishlist.setOnClickListener(v -> {
             Snackbar.make(v, "Removing \"" + pokemon.getName() + "\" from wishlist...", Snackbar.LENGTH_SHORT).show();
             MainActivity.getmWishViewModel().removeFromWishlist(pokemon.getId());
