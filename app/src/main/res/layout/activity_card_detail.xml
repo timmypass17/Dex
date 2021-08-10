@@ -15,8 +15,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/Card"
-            android:layout_width="match_parent"
-            android:layout_height="480dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:layout_marginStart="24dp"
@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/ivCardImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
                 android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
                 app:srcCompat="@drawable/card_big_sample" />
@@ -82,7 +82,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="$9.50"
-                    android:textColor="#7289da"
+                    android:textColor="@color/blue"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 

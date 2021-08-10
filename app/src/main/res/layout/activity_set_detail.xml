@@ -51,7 +51,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="5dp"
-                        android:gravity="center_horizontal"
+                        android:gravity="center_horizontal|center_vertical"
                         android:orientation="vertical">
 
                         <ImageView
@@ -73,13 +73,14 @@
                             android:id="@+id/tvSeries"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/AudioFileInfoOverlayText"
-                            android:text="Sun &amp; Moon" />
+                            android:text="Sun &amp; Moon"
+                            android:textColor="@android:color/tertiary_text_light"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
                     <View
-                        android:id="@+id/divider2"
+                        android:id="@+id/divider1"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
@@ -101,14 +102,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100/200"
-                            android:textColor="#7289da"
-                            android:textSize="14sp" />
+                            android:textColor="#7289da" />
 
                         <TextView
                             style="@style/AudioFileInfoOverlayText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Owned" />
+
                     </LinearLayout>
 
                     <View
@@ -134,13 +135,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Feburary 17, 2001"
-                            android:textSize="14sp" />
+                            />
 
                         <TextView
-                            style="@style/AudioFileInfoOverlayText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Released" />
+                            android:text="Released"
+                            android:textColor="@color/common_gray"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                 </LinearLayout>

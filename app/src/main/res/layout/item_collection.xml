@@ -83,22 +83,22 @@
                 app:chipStrokeWidth="1.5dp"
                 android:textSize="12dp"/>
 
-<!--            <com.google.android.material.chip.Chip-->
-<!--                android:id="@+id/chipRarity"-->
-<!--                style="@style/AudioFileInfoOverlayText"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_below="@id/tvPrice"-->
-<!--                android:layout_alignTop="@+id/chipCardType"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_toEndOf="@id/chipCardType"-->
-<!--                android:text="Rare"-->
-<!--                android:textColor="@color/blue"-->
-<!--                app:chipBackgroundColor="@color/white"-->
-<!--                app:chipCornerRadius="4dp"-->
-<!--                app:chipMinTouchTargetSize="32dp"-->
-<!--                app:chipStrokeColor="@color/blue"-->
-<!--                app:chipStrokeWidth="1.5dp"  />-->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRarity"
+                style="@style/AudioFileInfoOverlayText"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@id/tvPrice"
+                android:layout_alignTop="@+id/chipCardType"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@id/chipCardType"
+                android:text="Rare"
+                android:textColor="@color/blue"
+                app:chipBackgroundColor="@color/white"
+                app:chipCornerRadius="4dp"
+                app:chipMinTouchTargetSize="32dp"
+                app:chipStrokeColor="@color/blue"
+                app:chipStrokeWidth="1.5dp" />
 
             <Button
                 android:id="@+id/btnDeletePokemon"

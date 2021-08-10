@@ -77,7 +77,7 @@ public class SetDetailActivity extends AppCompatActivity{
         Glide.with(this).load(pokeSet.getmImages().getmSymbol()).into(ivSymbol);
         tvSetName.setText(pokeSet.getmName());
         tvSeries.setText(pokeSet.getmSeries());
-        tvReleaseDate.setText(pokeSet.getReleaseDate());
+        tvReleaseDate.setText(pokeSet.getReleaseDateFormatted(pokeSet.getReleaseDate()));
 
         // Add Observer to update recyclerview of cards (Recall: updates whenever dataset changes)
         mSearchViewModel.getAllPokemonBySet(pokeSet.getId()).observe(this, pokemons -> {

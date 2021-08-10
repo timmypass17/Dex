@@ -76,6 +76,22 @@ public class SetViewHolder extends RecyclerView.ViewHolder {
                                 // Get the "vibrant" color swatch based on the bitmap
                                 Palette.Swatch light_vibrant = palette.getLightVibrantSwatch();
                                 Palette.Swatch dominant = palette.getDominantSwatch();
+                                // Get pokemon list
+                                LiveData<List<Pokemon>> pokemons = MainActivity.getmSetViewModel().getAllPokemonFromSet(pokeSet.getId());
+                                pokemons.observe((LifecycleOwner) itemView.getContext(), pokemonList -> {
+                                    int card_owned = pokemonList.size();
+                                    int set_total = Integer.parseInt(pokeSet.getmTotal());
+                                    int percentage_owned = (int) (((double)card_owned / set_total) * 100);
+                                    if (percentage_owned == 100) {
+                                        if (light_vibrant != null) {
+                                            tvTotal.setTextColor(light_vibrant.getRgb());
+                                        } else if (dominant != null) {
+                                            tvTotal.setTextColor(dominant.getRgb());
+                                        }
+                                    } else {
+                                        tvTotal.setTextColor(itemView.getContext().getResources().getColor(R.color.default_text));
+                                    }
+                                });
                                 // Change vert_bar color
                                 if (light_vibrant != null) {
                                     vert_bar.setBackgroundColor(light_vibrant.getRgb());

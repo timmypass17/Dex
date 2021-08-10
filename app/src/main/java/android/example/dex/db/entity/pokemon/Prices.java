@@ -97,16 +97,16 @@ public class Prices {
             ReverseHolofoil reverseHolofoil = tcgPlayer.getPrices().getReverseHolofoil();
             FirstEditionHolofoil firstEditionHolofoil = tcgPlayer.getPrices().getFirstEditionHolofoil();
             if (normal != null) {
-                priceType = "Normal";
+                priceType = "Norm";
             }
             if (holofoil != null) {
-                priceType = "Holofoil";
+                priceType = "Holo";
             }
             if (reverseHolofoil != null) {
-                priceType = "Reverse Holofoil";
+                priceType = "R.Holo";
             }
             if (firstEditionHolofoil != null) {
-                priceType = "1st Edition Holofoil";
+                priceType = "1st";
             }
         }
         return priceType;

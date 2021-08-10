@@ -15,4 +15,5 @@
     <color name="green">#46e370</color>
     <color name="default_text">#757575</color>
     <color name="default_bar">#90B0F8</color>
+    <color name="secondary_text">#d9d9d9</color>
 </resources>

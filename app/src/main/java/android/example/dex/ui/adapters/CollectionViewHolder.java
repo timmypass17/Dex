@@ -37,6 +37,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvName;
     private final TextView tvPrice;
     private final Chip chipCardType;
+    private final Chip chipRarity;
     private final TextView tvSet;
     public final Button btnDeletePokemon;
     private final TextView tvSetDate;
@@ -48,6 +49,7 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         tvName = itemView.findViewById(R.id.tvName);
         tvPrice = itemView.findViewById(R.id.tvPrice);
         chipCardType = itemView.findViewById(R.id.chipCardType);
+        chipRarity = itemView.findViewById(R.id.chipRarity);
         tvSet = itemView.findViewById(R.id.tvSet);
         btnDeletePokemon = itemView.findViewById(R.id.btnDeletePokemon);
         tvSetDate = itemView.findViewById(R.id.tvSetDate);
@@ -63,6 +65,9 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
         tvSet.setText(pokemon.getSetID().getName());
         tvPrice.setText(Prices.getPrice(pokemon));
         chipCardType.setText(Prices.getPriceType(pokemon));
+        chipRarity.setText(pokemon.getRarity());
+        chipRarity.setTextAppearanceResource(getRarityColorText(pokemon.getRarity()));
+        chipRarity.setChipStrokeColorResource(getRarityBorderColor(pokemon.getRarity()));
         tvSetDate.setText("(" + pokemon.getSetID().getReleaseYear() + ")");
         chipCardType.setTextAppearanceResource(getColorText(Prices.getPriceType(pokemon)));
         chipCardType.setChipStrokeColorResource(getBorderColor(Prices.getPriceType(pokemon)));
@@ -84,13 +89,13 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     private int getColorText(String cardType) {
-        if (cardType.equals("1st Edition Holofoil")) {
+        if (cardType.equals("1st")) {
             return R.style.ChipLegendary;
-        } else if (cardType.equals("Reverse Holofoil")) {
-            return R.style.ChipEpic;
-        } else if (cardType.equals("Holofoil")) {
+        } else if (cardType.equals("R.Holo")) {
             return R.style.ChipRare;
-        } else if (cardType.equals("Normal")) {
+        } else if (cardType.equals("Holo")) {
+            return R.style.ChipRare;
+        } else if (cardType.equals("Norm")) {
             return R.style.ChipCommon;
         } else {
             return R.color.black;
@@ -98,16 +103,40 @@ public class CollectionViewHolder extends RecyclerView.ViewHolder {
     }
 
     private int getBorderColor(String cardType) {
-        if (cardType.equals("1st Edition Holofoil")) {
+        if (cardType.equals("1st")) {
             return R.color.legendary_orange;
-        } else if (cardType.equals("Reverse Holofoil")) {
-            return R.color.epic_purple;
-        } else if (cardType.equals("Holofoil")) {
+        } else if (cardType.equals("R.Holo")) {
             return R.color.rare_blue;
-        } else if (cardType.equals("Normal")) {
+        } else if (cardType.equals("Holo")) {
+            return R.color.rare_blue;
+        } else if (cardType.equals("Norm")) {
             return R.color.common_gray;
         } else {
             return R.color.black;
+        }
+    }
+
+    private int getRarityColorText(String rarity) {
+        if (rarity.equals("Common")) {
+            return R.style.ChipCommon;
+        } else if (rarity.equals("Uncommon")) {
+            return R.style.ChipRare;
+        } else if (rarity.equals("Rare") || rarity.equals("Promo")) {
+            return R.style.ChipEpic;
+        } else {
+            return R.style.ChipLegendary;
+        }
+    }
+
+    private int getRarityBorderColor(String rarity) {
+        if (rarity.equals("Common")) {
+            return R.color.common_gray;
+        } else if (rarity.equals("Uncommon")) {
+            return R.color.rare_blue;
+        } else if (rarity.equals("Rare") || rarity.equals("Promo")) {
+            return R.color.epic_purple;
+        } else {
+            return R.color.legendary_orange;
         }
     }
 }
