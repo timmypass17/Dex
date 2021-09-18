@@ -4,6 +4,8 @@ A card collection app that allows users to store their pokemon card collection o
 
 Dex uses the [Pokémon TCG API](https://docs.pokemontcg.io/) and follows the [MVVM architecture pattern](https://developer.android.com/jetpack/guide) using [Room](https://developer.android.com/training/data-storage/room) & [Retrofit](https://square.github.io/retrofit/) to cache and make network requests.
 
+*Note to self: I will probably remake this app in kotlin once I get more comfortable working with databases.*
+
 ## Screenshots
 ![Collection View](https://github.com/timmypass17/dex/blob/main/collection.PNG)
 ![Card Detail View](https://github.com/timmypass17/dex/blob/main/card_detail.PNG)
@@ -11,33 +13,6 @@ Dex uses the [Pokémon TCG API](https://docs.pokemontcg.io/) and follows the [MV
 ![Set Detail View](https://github.com/timmypass17/dex/blob/main/set_detail.PNG)
 ![Search View](https://github.com/timmypass17/dex/blob/main/search.PNG)
 
-## Getting Started (WIP)
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
 
 ## Libraries Used
 
